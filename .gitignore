@@ -55,6 +55,8 @@ dkms.conf
 .vscode/
 .idea/
 cmake-build-debug/
+sprites/
+Makefile
 *.sh
 .tags
 .DS_STORE

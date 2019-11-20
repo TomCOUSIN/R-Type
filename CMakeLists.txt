@@ -19,16 +19,46 @@ ELSE (${APPLE})
     conan_basic_setup()
 ENDIF (${APPLE})
 
-# Set Variable
-SET(SERVER_SRC src/server/)
-SET(CLIENT_SRC src/client/)
+# Set source path variable
+SET(SRC src/)
+SET(INTERFACE_SRC ${SRC}interface/)
+SET(SHARED_SRC ${SRC}shared/)
+SET(SERVER_SRC ${SRC}server/)
+SET(CLIENT_SRC ${SRC}client/)
 
-# Create executable
-add_executable(r-type_server
+SET(ENGINE_SRC ${SHARED_SRC}engine/)
+SET(MODULE_SRC ${ENGINE_SRC}module/)
+SET(GRAPHIC_MODULE_SRC ${MODULE_SRC}graphic/)
+
+# Include directories
+include_directories(${INTERFACE_SRC})
+include_directories(${ENGINE_SRC})
+include_directories(${GRAPHIC_MODULE_SRC})
+
+# Set source files variable
+SET(INTERFACE
+        ${INTERFACE_SRC}IGraphicModule.hpp
+        ${INTERFACE_SRC}IGameEngine.hpp)
+
+SET(SHARED
+        ${ENGINE_SRC}GameEngine.cpp
+        ${ENGINE_SRC}GameEngine.hpp
+        ${GRAPHIC_MODULE_SRC}SfmlGraphicModule.cpp
+        ${GRAPHIC_MODULE_SRC}SfmlGraphicModule.hpp)
+
+SET(SERVER
+        ${SHARED}
+        ${INTERFACE}
         ${SERVER_SRC}main.cpp)
 
-add_executable(r-type_client
+SET(CLIENT
+        ${SHARED}
+        ${INTERFACE}
         ${CLIENT_SRC}main.cpp)
+
+# Create executable
+add_executable(r-type_server ${SERVER})
+add_executable(r-type_client ${CLIENT})
 
 # Link library to executable
 target_link_libraries(r-type_server ${CONAN_LIBS})
