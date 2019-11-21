@@ -17,7 +17,7 @@ namespace rtype {
             // @MARK Public
             public:
 
-            // @MARK Destructor
+            // @MARK Virtual destructor
             virtual ~IGameEngine() = default;
         };
     }

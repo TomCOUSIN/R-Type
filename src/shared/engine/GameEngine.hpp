@@ -9,7 +9,6 @@
 #define CPP_RTYPE_2019_GAMEENGINE_HPP
 
 #include <iostream>
-#include "IGraphicModule.hpp"
 #include "IGameEngine.hpp"
 
 namespace rtype {
@@ -24,12 +23,6 @@ namespace rtype {
             // @MARK Constructor / Destructor
             GameEngine() = default;
             ~GameEngine() final = default;
-
-            // @MARK Private
-            private:
-
-            // @MARK Attributes
-            std::unique_ptr<module::IGraphicModule> _graphic_module;
         };
     }
 }

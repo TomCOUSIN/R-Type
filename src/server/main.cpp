@@ -5,7 +5,7 @@
 ** Created by tomcousin,
 */
 
-/*
+/**
  * @brief Main function for the r-type-server program
  *
  * @return 0 if no error occurred

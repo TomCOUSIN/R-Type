@@ -55,7 +55,7 @@ dkms.conf
 .vscode/
 .idea/
 cmake-build-debug/
-sprites/
+assets/sprites/
 Makefile
 *.sh
 .tags
