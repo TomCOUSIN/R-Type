@@ -63,6 +63,11 @@ log/
 *.pdf
 *.log
 
+#executable
+r-type_client
+r-type_server
+unit_tests
+
 # Vagrant files
 Vagrantfile
 
