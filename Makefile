@@ -27,7 +27,7 @@ DOC_FOLDER		=	doc/
 
 BIN_FOLDER		=	$(addprefix $(BUILD_FOLDER), bin/)
 
-all:			$(CLIENT_NAME) $(SERVER_NAME) $(TESTS_NAME)
+all:			$(CLIENT_NAME) $(SERVER_NAME)
 
 tests_run:		$(TESTS_NAME)
 
