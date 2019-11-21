@@ -42,8 +42,9 @@ unsigned long rtype::engine::entity::EntityManager::generateUniqueId()
 /**
  * @brief Remove an Entity from the list
  *
- * @param Id of the entity to remove
- * @return True on success / False on failure
+ * @param entity_id of the entity to remove
+ * @return True on success
+ * @return False on failure
  */
 bool rtype::engine::entity::EntityManager::removeEntity(unsigned long entity_id)
 {
