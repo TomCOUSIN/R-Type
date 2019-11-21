@@ -35,8 +35,6 @@ SET(CLIENT_SRC ${SRC}client/)
 
 # Include directories
 include_directories(${INTERFACE_SRC})
-include_directories(${ENGINE_SRC})
-include_directories(${ENTITY_SRC})
 
 # Set source files variable
 SET(SERVER
@@ -44,6 +42,9 @@ SET(SERVER
 
 SET(CLIENT
         ${CLIENT_SRC}main.cpp)
+
+SET(UNIT_TESTS
+        ${TESTS_SRC}dumb_test.cpp)
 
 # Create executable
 add_executable(r-type_server ${SERVER} ${COMMON})
@@ -62,8 +63,8 @@ if (${CRITERION_FOUND})
     include_directories(${CRITERION_INCLUDE_DIRS})
 
     # Create executable
-    # add_executable(unit_tests {Tests source file here})
+    add_executable(unit_tests ${UNIT_TESTS})
 
     # Link executable to criterion
-    # target_link_libraries(unit_tests ${CRITERION_LIBRARIES})
+    target_link_libraries(unit_tests ${CRITERION_LIBRARIES})
 endif (${CRITERION_FOUND})

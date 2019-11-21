@@ -46,7 +46,6 @@ $(TESTS_NAME):	conan cmake
 				@make -C $(BUILD_FOLDER) $(TESTS_NAME) $(RM_OUTPUT)
 				@ln -s $(addprefix $(BIN_FOLDER), $(TESTS_NAME)) .
 				./$(TESTS_NAME)
-				@gcovr -r . --exclude $(TESTS_FOLDER)
 
 conan:
 				@mkdir -p $(BUILD_FOLDER)
