@@ -20,7 +20,7 @@ namespace rtype {
                 public:
 
                 // @MARK Constructor / Destructor
-                Entity(const unsigned long &unique_id);
+                explicit Entity(const unsigned long &unique_id);
                 ~Entity() = default;
 
                 // @MARK Getter

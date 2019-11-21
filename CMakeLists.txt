@@ -52,6 +52,8 @@ SET(INTERFACE
 SET(SHARED
         ${ENTITY_SRC}Entity.cpp
         ${ENTITY_SRC}Entity.hpp
+        ${ENTITY_SRC}EntityManager.cpp
+        ${ENTITY_SRC}EntityManager.hpp
         ${ENGINE_SRC}GameEngine.cpp
         ${ENGINE_SRC}GameEngine.hpp)
 
@@ -67,6 +69,7 @@ SET(CLIENT
 
 SET(UNIT_TESTS
         ${ENTITY_TESTS}entity_tests.cpp
+        ${ENTITY_TESTS}entity_manager_tests.cpp
         ${COMMON})
 
 # Create executable

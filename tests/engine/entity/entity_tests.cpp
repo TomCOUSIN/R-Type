@@ -10,6 +10,9 @@
 
 using namespace rtype::engine::entity;
 
+/**
+ * @brief Tests the creation of an Entity object
+ */
 Test(entity_tests, testing_creation)
 {
     Entity entity(1);
@@ -17,6 +20,9 @@ Test(entity_tests, testing_creation)
     cr_assert_eq(entity.getUniqueId(), 1);
 }
 
+/**
+ * @brief Tests the setter of an Entity object
+ */
 Test(entity_tests, testing_setter)
 {
     Entity entity(1);
