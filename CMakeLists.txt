@@ -54,6 +54,7 @@ SET(INTERFACE
 SET(SHARED
         ${COMPONENT_SRC}Position.cpp
         ${COMPONENT_SRC}Position.hpp
+        ${COMPONENT_SRC}ComponentManager.hpp
         ${ENTITY_SRC}Entity.cpp
         ${ENTITY_SRC}Entity.hpp
         ${ENTITY_SRC}EntityManager.cpp
@@ -73,6 +74,7 @@ SET(CLIENT
 
 SET(UNIT_TESTS
         ${COMPONENT_TESTS}position_tests.cpp
+        ${COMPONENT_TESTS}component_manager_tests.cpp
         ${ENTITY_TESTS}entity_tests.cpp
         ${ENTITY_TESTS}entity_manager_tests.cpp
         ${COMMON})
