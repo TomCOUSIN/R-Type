@@ -43,17 +43,13 @@ SET(ENTITY_TESTS ${ENGINE_TESTS}entity/)
 # Include directories
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
-include_directories(${SYSTEM_SRC})
 include_directories(${ENTITY_SRC})
 
 # Set source files variable
 SET(INTERFACE
-        ${INTERFACE_SRC}ISystem.hpp
         ${INTERFACE_SRC}IGameEngine.hpp)
 
 SET(SHARED
-        ${SYSTEM_SRC}System.hpp
-        ${SYSTEM_SRC}System.hpp
         ${ENTITY_SRC}Entity.cpp
         ${ENTITY_SRC}Entity.hpp
         ${ENGINE_SRC}GameEngine.cpp
