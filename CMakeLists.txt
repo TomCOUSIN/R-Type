@@ -34,22 +34,26 @@ SET(SERVER_SRC ${SRC}server/)
 SET(CLIENT_SRC ${SRC}client/)
 
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
-SET(SYSTEM_SRC ${ENGINE_SRC}system/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
+SET(COMPONENT_SRC ${ENGINE_SRC}components/)
 
 SET(ENGINE_TESTS ${TESTS_SRC}engine/)
 SET(ENTITY_TESTS ${ENGINE_TESTS}entity/)
+SET(COMPONENT_TESTS ${ENGINE_TESTS}components/)
 
 # Include directories
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
 include_directories(${ENTITY_SRC})
+include_directories(${COMPONENT_SRC})
 
 # Set source files variable
 SET(INTERFACE
         ${INTERFACE_SRC}IGameEngine.hpp)
 
 SET(SHARED
+        ${COMPONENT_SRC}Position.cpp
+        ${COMPONENT_SRC}Position.hpp
         ${ENTITY_SRC}Entity.cpp
         ${ENTITY_SRC}Entity.hpp
         ${ENTITY_SRC}EntityManager.cpp
@@ -68,6 +72,7 @@ SET(CLIENT
         ${CLIENT_SRC}main.cpp)
 
 SET(UNIT_TESTS
+        ${COMPONENT_TESTS}position_tests.cpp
         ${ENTITY_TESTS}entity_tests.cpp
         ${ENTITY_TESTS}entity_manager_tests.cpp
         ${COMMON})
