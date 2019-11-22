@@ -43,11 +43,11 @@ void rtype::engine::GameEngine::createEntity(std::string const &entity_name)
 
 /**
  * @brief Destroy an Entity from the GameEngine
+ *
  * @param entity_name The name of the Entity to destroy
  */
 void rtype::engine::GameEngine::destroyEntity(std::string const &entity_name)
 {
-    // TODO Loop in the ComponentManager vector
     _entity_manager.removeEntity(_entitys[entity_name]);
     _positions.removeComponentByEntity(_entitys[entity_name]);
     _directions.removeComponentByEntity(_entitys[entity_name]);

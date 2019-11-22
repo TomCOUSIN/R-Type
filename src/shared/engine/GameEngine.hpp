@@ -14,7 +14,6 @@
 #include "ComponentManager.hpp"
 #include "MovementSystem.hpp"
 #include "EntityManager.hpp"
-#include "IGameEngine.hpp"
 #include "Direction.hpp"
 #include "Position.hpp"
 #include "ISystem.hpp"
@@ -24,22 +23,22 @@ namespace rtype {
 
     namespace engine {
 
-        class GameEngine : public IGameEngine {
+        class GameEngine {
 
             // @MARK Public
             public:
 
             // @MARK Constructor / Destructor
             GameEngine();
-            ~GameEngine() final = default;
+            ~GameEngine() = default;
 
             // @MARK Methods
-            void update() final;
-            void createEntity(std::string const &entity_name) final;
-            void destroyEntity(std::string const &entity_name) final;
+            void update();
+            void createEntity(std::string const &entity_name);
+            void destroyEntity(std::string const &entity_name);
 
             // @MARK Getter
-            std::unordered_map<std::string, unsigned long> getEntitys() const final;
+            std::unordered_map<std::string, unsigned long> getEntitys() const;
 
             // @MARK Private
             private:
@@ -47,7 +46,6 @@ namespace rtype {
             // @MARK Attributes
             entity::EntityManager _entity_manager;
 
-            // TODO Create a vector of ComponentManager
             component::ComponentManager<component::Position> _positions;
             component::ComponentManager<component::Direction> _directions;
             component::ComponentManager<component::Speed> _speeds;

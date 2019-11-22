@@ -6,7 +6,7 @@
 */
 
 /**
- * @brief Main function for the r-type-client-program
+ * @brief Main function for the r-type_client program
  *
  * @return 0 if no error occurred
  */

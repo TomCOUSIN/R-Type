@@ -59,7 +59,6 @@ include_directories(${SYSTEM_MOVEMENT_SRC})
 
 # Set source files variable
 SET(INTERFACE
-        ${INTERFACE_SRC}IGameEngine.hpp
         ${INTERFACE_SRC}ISystem.hpp)
 
 SET(COMPONENT
