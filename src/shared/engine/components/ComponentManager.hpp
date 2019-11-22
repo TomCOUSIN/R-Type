@@ -38,6 +38,23 @@ namespace rtype {
                     return _component_list;
                 }
 
+                /**
+                 * @brief Get a specific component from the list
+                 *
+                 * @tparam C The component stored int the list
+                 * @return The specific component stored in the list
+                 */
+                C getComponentById(const unsigned long &entity_id) const {
+                    return _component_list.at(entity_id);
+                }
+
+                // @MARK Setter
+                void setComponentById(const unsigned long &entity_id, const C &component) {
+                    if (removeComponentByEntity(entity_id)) {
+                        addComponentToEntity(entity_id, component);
+                    }
+                }
+
                 // @MARK Methods
                 /**
                  * @brief Link a component with an Entity

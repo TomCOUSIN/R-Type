@@ -27,7 +27,7 @@ Test(component_speed_tests, testing_creation_without_parameters)
 {
     Speed speed;
 
-    cr_assert_eq(speed.getValue(), 1);
+    cr_assert_eq(speed.getValue(), 0);
 }
 
 /**

@@ -20,7 +20,7 @@ namespace rtype {
                 public:
 
                 // @MARK Constructor / Destructor
-                explicit Speed(const int &value = 1);
+                explicit Speed(const int &value = 0);
                 ~Speed() = default;
 
                 // @MARK Getter

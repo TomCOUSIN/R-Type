@@ -39,10 +39,13 @@ SET(COMPONENT_SRC ${ENGINE_SRC}components/)
 SET(COMPONENT_POSITION_SRC ${COMPONENT_SRC}position/)
 SET(COMPONENT_DIRECTION_SRC ${COMPONENT_SRC}direction/)
 SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
+SET(SYSTEM_SRC ${ENGINE_SRC}system/)
+SET(SYSTEM_MOVEMENT_SRC ${SYSTEM_SRC}movement/)
 
 SET(ENGINE_TESTS ${TESTS_SRC}engine/)
 SET(ENTITY_TESTS ${ENGINE_TESTS}entity/)
 SET(COMPONENT_TESTS ${ENGINE_TESTS}components/)
+SET(SYSTEM_TESTS ${ENGINE_TESTS}system/)
 
 # Include directories
 include_directories(${INTERFACE_SRC})
@@ -52,23 +55,36 @@ include_directories(${COMPONENT_SRC})
 include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
 include_directories(${COMPONENT_DIRECTION_SRC})
+include_directories(${SYSTEM_MOVEMENT_SRC})
 
 # Set source files variable
 SET(INTERFACE
-        ${INTERFACE_SRC}IGameEngine.hpp)
+        ${INTERFACE_SRC}IGameEngine.hpp
+        ${INTERFACE_SRC}ISystem.hpp)
 
-SET(SHARED
+SET(COMPONENT
         ${COMPONENT_DIRECTION_SRC}Direction.cpp
         ${COMPONENT_DIRECTION_SRC}Direction.hpp
         ${COMPONENT_POSITION_SRC}Position.cpp
         ${COMPONENT_POSITION_SRC}Position.hpp
         ${COMPONENT_SPEED_SRC}Speed.cpp
         ${COMPONENT_SPEED_SRC}Speed.hpp
-        ${COMPONENT_SRC}ComponentManager.hpp
+        ${COMPONENT_SRC}ComponentManager.hpp)
+
+SET(ENTITY
         ${ENTITY_SRC}Entity.cpp
         ${ENTITY_SRC}Entity.hpp
         ${ENTITY_SRC}EntityManager.cpp
-        ${ENTITY_SRC}EntityManager.hpp
+        ${ENTITY_SRC}EntityManager.hpp)
+
+SET(SYSTEM
+        ${SYSTEM_MOVEMENT_SRC}MovementSystem.cpp
+        ${SYSTEM_MOVEMENT_SRC}MovementSystem.hpp)
+
+SET(SHARED
+        ${COMPONENT}
+        ${ENTITY}
+        ${SYSTEM}
         ${ENGINE_SRC}GameEngine.cpp
         ${ENGINE_SRC}GameEngine.hpp)
 
@@ -89,6 +105,7 @@ SET(UNIT_TESTS
         ${COMPONENT_TESTS}component_manager_tests.cpp
         ${ENTITY_TESTS}entity_tests.cpp
         ${ENTITY_TESTS}entity_manager_tests.cpp
+        ${SYSTEM_TESTS}movement_system_tests.cpp
         ${COMMON})
 
 # Create executable
