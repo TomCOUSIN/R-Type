@@ -23,6 +23,23 @@ Test(engine_tests, testing_entity_creation)
 }
 
 /**
+ * @brief Test multiple Entity creation
+ */
+Test(engine_tests, testing_multiple_entity_creation)
+{
+    rtype::engine::GameEngine engine;
+
+    engine.createEntity("Tom");
+    engine.createEntity("Cousin");
+    engine.createEntity("Lucas");
+    engine.createEntity("Marandat");
+    cr_assert_eq(engine.getEntitys()["Tom"], 0);
+    cr_assert_eq(engine.getEntitys()["Cousin"], 1);
+    cr_assert_eq(engine.getEntitys()["Lucas"], 2);
+    cr_assert_eq(engine.getEntitys()["Marandat"], 3);
+}
+
+/**
  * @brief Test if the Entity is present in the array of GameEngine
  */
 Test(engine_tests, testing_entity_in_engine)
