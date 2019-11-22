@@ -29,7 +29,10 @@ namespace rtype {
                 // @MARK Setter
                 void setValue(const int &value);
 
+                // @MARK Private
                 private:
+
+                // @MARK Attributes
                 int _value;
             };
         }
