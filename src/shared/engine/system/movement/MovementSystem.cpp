@@ -21,24 +21,35 @@ rtype::engine::system::MovementSystem::MovementSystem(
     _position(position), _direction(direction), _speed(speed) {}
 
 /**
- * @brief Update Position values according to the Direction and Speed values
+ * @brief Update Position values if Entity has Direction and Speed component
  */
 void rtype::engine::system::MovementSystem::update()
 {
     for (auto &position: _position.getComponentList()) {
-        auto speed = _speed.getComponentById(position.first).getValue();
-        if (_direction.getComponentById(position.first).getUp()) {
-            position.second.setY(position.second.getY() - speed);
+        if (_speed.isEntityHasComponent(position.first) && _direction.isEntityHasComponent(position.first)) {
+            updatePosition(position.first, position.second);
         }
-        if (_direction.getComponentById(position.first).getDown()) {
-            position.second.setY(position.second.getY() + speed);
-        }
-        if (_direction.getComponentById(position.first).getRight()) {
-            position.second.setX(position.second.getX() + speed);
-        }
-        if (_direction.getComponentById(position.first).getLeft()) {
-            position.second.setX(position.second.getX() - speed);
-        }
-        _position.setComponentById(position.first, position.second);
+
     }
+}
+
+/**
+ * @brief Update the Position values according to the Direction and Speed values
+ */
+void rtype::engine::system::MovementSystem::updatePosition(unsigned long const &entity_id, component::Position &position)
+{
+    auto speed = _speed.getComponentById(entity_id).getValue();
+    if (_direction.getComponentById(entity_id).getUp()) {
+        position.setY(position.getY() - speed);
+    }
+    if (_direction.getComponentById(entity_id).getDown()) {
+        position.setY(position.getY() + speed);
+    }
+    if (_direction.getComponentById(entity_id).getRight()) {
+        position.setX(position.getX() + speed);
+    }
+    if (_direction.getComponentById(entity_id).getLeft()) {
+        position.setX(position.getX() - speed);
+    }
+    _position.setComponentById(entity_id, position);
 }

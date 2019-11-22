@@ -75,5 +75,3 @@ Test(movement_system_tests, testing_valid_multiple_update_function)
     cr_assert_float_eq(position.getComponentById(entity1.getUniqueId()).getX(), 2.0f, 0.0f);
     cr_assert_float_eq(position.getComponentById(entity2.getUniqueId()).getX(), 20.0f, 0.0f);
 }
-
-// TODO Test invalid update function

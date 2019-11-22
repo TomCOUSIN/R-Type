@@ -115,3 +115,28 @@ Test(component_manager_tests, testing_setter_with_id)
     cr_assert_float_eq(component_manager.getComponentById(entity.getUniqueId()).getX(), 2.0f, 0.0f);
     cr_assert_float_eq(component_manager.getComponentById(entity.getUniqueId()).getY(), 7.0f, 0.0f);
 }
+
+/**
+ * @brief Test the has component function
+ */
+Test(component_manager_tests, testing_valid_has_value)
+{
+    component::ComponentManager<component::Position> component_manager;
+    entity::EntityManager entity_manager;
+    component::Position position(5.0f, 12.0f);
+    entity::Entity entity = entity_manager.createNewEntity();
+
+    component_manager.addComponentToEntity(entity.getUniqueId(), position);
+    cr_assert(component_manager.isEntityHasComponent(entity.getUniqueId()));
+}
+
+/**
+ * @brief Test the has component function
+ */
+Test(component_manager_tests, testing_invalid_has_value)
+{
+    component::ComponentManager<component::Position> component_manager;
+    entity::EntityManager entity_manager;
+
+    cr_assert_not(component_manager.isEntityHasComponent(0));
+}

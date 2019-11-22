@@ -31,11 +31,14 @@ namespace rtype {
                                 component::ComponentManager<component::Speed> &speed);
                 ~MovementSystem() final = default;
 
-                // @MARK Methods
+                // @MARK PUBLIC Methods
                 void update() final;
 
                 // @MARK Private
                 private:
+
+                // @MARK PRIVATE Methods
+                void updatePosition(unsigned long const &entity_id, component::Position &position);
 
                 // @MARK Attributes
                 component::ComponentManager<component::Position> &_position;

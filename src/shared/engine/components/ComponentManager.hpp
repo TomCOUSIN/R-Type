@@ -93,6 +93,17 @@ namespace rtype {
                     }
                 }
 
+                /**
+                 * @brief Search if an Entity has a component
+                 *
+                 * @param entity_id The id of the Entity
+                 * @return True on success
+                 * @return False on failure
+                 */
+                bool isEntityHasComponent(unsigned long const &entity_id) const {
+                    return _component_list.find(entity_id) != _component_list.end();
+                }
+
                 // @MARK Private
                 private:
 
