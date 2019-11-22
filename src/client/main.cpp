@@ -5,6 +5,9 @@
 ** Created by tomcousin,
 */
 
+#include <iostream>
+#include "GameEngine.hpp"
+
 /**
  * @brief Main function for the r-type-client-program
  *
@@ -12,5 +15,9 @@
  */
 int main(void)
 {
+    rtype::engine::GameEngine engine;
+
+    engine.createEntity("Player");
+    engine.destroyEntity("Player");
     return 0;
 }

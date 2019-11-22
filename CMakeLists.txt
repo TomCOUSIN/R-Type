@@ -106,7 +106,7 @@ SET(UNIT_TESTS
         ${ENTITY_TESTS}entity_tests.cpp
         ${ENTITY_TESTS}entity_manager_tests.cpp
         ${SYSTEM_TESTS}movement_system_tests.cpp
-        ${COMMON})
+        ${COMMON} tests/engine/engine_tests.cpp)
 
 # Create executable
 add_executable(r-type_server ${SERVER} ${COMMON})

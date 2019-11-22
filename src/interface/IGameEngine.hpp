@@ -19,6 +19,12 @@ namespace rtype {
 
             // @MARK Virtual destructor
             virtual ~IGameEngine() = default;
+
+            // @MARK Methods
+            virtual void update() = 0;
+            virtual void createEntity(std::string const &entity_name) = 0;
+            virtual void destroyEntity(std::string const &entity_name) = 0;
+            virtual std::unordered_map<std::string, unsigned long> getEntitys() const = 0;
         };
     }
 }

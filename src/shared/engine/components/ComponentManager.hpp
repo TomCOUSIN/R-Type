@@ -17,6 +17,7 @@ namespace rtype {
 
         namespace component {
 
+            // TODO Create an Interface for component
             template <class C>
             class ComponentManager {
 
