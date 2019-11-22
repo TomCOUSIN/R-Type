@@ -36,6 +36,8 @@ SET(CLIENT_SRC ${SRC}client/)
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
 SET(COMPONENT_SRC ${ENGINE_SRC}components/)
+SET(COMPONENT_POSITION_SRC ${COMPONENT_SRC}position/)
+SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
 SET(ENGINE_TESTS ${TESTS_SRC}engine/)
 SET(ENTITY_TESTS ${ENGINE_TESTS}entity/)
@@ -46,14 +48,18 @@ include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
 include_directories(${ENTITY_SRC})
 include_directories(${COMPONENT_SRC})
+include_directories(${COMPONENT_POSITION_SRC})
+include_directories(${COMPONENT_SPEED_SRC})
 
 # Set source files variable
 SET(INTERFACE
         ${INTERFACE_SRC}IGameEngine.hpp)
 
 SET(SHARED
-        ${COMPONENT_SRC}Position.cpp
-        ${COMPONENT_SRC}Position.hpp
+        ${COMPONENT_POSITION_SRC}Position.cpp
+        ${COMPONENT_POSITION_SRC}Position.hpp
+        ${COMPONENT_SPEED_SRC}Speed.cpp
+        ${COMPONENT_SPEED_SRC}Speed.hpp
         ${COMPONENT_SRC}ComponentManager.hpp
         ${ENTITY_SRC}Entity.cpp
         ${ENTITY_SRC}Entity.hpp
@@ -74,6 +80,7 @@ SET(CLIENT
 
 SET(UNIT_TESTS
         ${COMPONENT_TESTS}position_tests.cpp
+        ${COMPONENT_TESTS}speed_tests.cpp
         ${COMPONENT_TESTS}component_manager_tests.cpp
         ${ENTITY_TESTS}entity_tests.cpp
         ${ENTITY_TESTS}entity_manager_tests.cpp
