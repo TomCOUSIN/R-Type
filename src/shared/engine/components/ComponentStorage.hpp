@@ -38,6 +38,64 @@ namespace rtype {
                  */
                 ~ComponentStorage() = default;
 
+                /**
+                 * @brief Add a new Entity to link the the Component
+                 *
+                 * @param entity The Entity to link with
+                 * @param component The Component to link with
+                 * @return true on success
+                 * @return false on failure
+                 */
+                bool addEntity(entity::Entity const &entity, C const &component) {
+                    if (_store.find(entity) == _store.end()) {
+                        _store.emplace(std::make_pair(entity, component));
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+
+                /**
+                 * @brief Remove an Entity linked to a Component
+                 *
+                 * @param entity The Entity to remove
+                 * @return true on success
+                 * @return false on failure
+                 */
+                bool removeEntity(entity::Entity const &entity) {
+                    if (_store.find(entity) == _store.end()) {
+                        return false;
+                    }
+                    else {
+                        _store.erase(_store.fin(entity));
+                        return true;
+                    }
+                }
+
+                /**
+                 * @brief Check if an Entity is linked to a Component
+                 *
+                 * @param entity The Entity to check
+                 * @return true on success
+                 * @return false on failure
+                 */
+                bool entityHasComponent(entity::Entity const &entity) {
+                    return _store.find(entity) != _store.end();
+                }
+
+                /**
+                 * @brief Get a Component linked to an Entity
+                 *
+                 * @param entity The Entity linked with the Component
+                 * @return A pointer to the Component on success
+                 * @return Null on failure
+                 */
+                C *getComponent(entity::Entity const &entity) {
+                    auto iterator = _store.find(entity);
+                    return iterator != _store.end() ? &iterator->second : nullptr;
+                }
+
                 private:
                 /**
                  * @brief The storage of the ComponentStorage

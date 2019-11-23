@@ -12,13 +12,21 @@ namespace rtype {
 
     namespace engine {
 
+        /**
+         * @brief The GameEngine that handle Entity, System and Component
+         */
         class GameEngine {
 
-            // @MARK Public
             public:
 
-            // @MARK Constructor / Destructor
+            /**
+             * @brief Construct a new GameEngine object
+             */
             GameEngine() = default;
+
+            /**
+             * @breif Destroy a GameEngine object
+             */
             ~GameEngine() = default;
         };
     }

@@ -35,20 +35,17 @@ SET(CLIENT_SRC ${SRC}client/)
 
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
+
 SET(COMPONENT_SRC ${ENGINE_SRC}components/)
 SET(COMPONENT_POSITION_SRC ${COMPONENT_SRC}position/)
-SET(COMPONENT_DIRECTION_SRC ${COMPONENT_SRC}direction/)
 SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
 # Include directories
-include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
 include_directories(${ENTITY_SRC})
 include_directories(${COMPONENT_SRC})
 include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
-include_directories(${COMPONENT_DIRECTION_SRC})
-include_directories(${SYSTEM_MOVEMENT_SRC})
 
 # Set source files variable
 SET(COMPONENT
@@ -67,8 +64,7 @@ SET(SHARED
         ${ENGINE_SRC}GameEngine.hpp)
 
 SET(COMMON
-        ${SHARED}
-        ${INTERFACE})
+        ${SHARED})
 
 SET(SERVER
         ${SERVER_SRC}main.cpp)
@@ -77,7 +73,7 @@ SET(CLIENT
         ${CLIENT_SRC}main.cpp)
 
 SET(UNIT_TESTS
-        ${TESTS_SRC}dumb_test.cpp)
+        ${TESTS_SRC}engine/component_storage_tests.cpp)
 
 # Create executable
 add_executable(r-type_server ${SERVER} ${COMMON})
