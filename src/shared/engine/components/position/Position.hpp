@@ -8,35 +8,41 @@
 #ifndef CPP_RTYPE_2019_POSITION_HPP
 #define CPP_RTYPE_2019_POSITION_HPP
 
+#include "Component.hpp"
+
 namespace rtype {
 
     namespace engine {
 
         namespace component {
 
-            class Position {
+            /**
+             * @brief A Component that handle the Position
+             */
+            struct Position : public Component {
 
-                // @MARK Public
-                public:
+                /**
+                 * @brief Constructor of the Component Position
+                 *
+                 * @param x The x value
+                 * @param y The y value
+                 */
+                explicit Position(float const &x = 0.0f, float const &y = 0.0f) : x(x), y(y) {};
 
-                // @MARK Constructor / Destructor
-                explicit Position(const float &x = 0, const float &y = 0);
-                ~Position() = default;
+                /**
+                 * @brief The x value of the Position
+                 */
+                float x;
 
-                // @MARK Getter
-                float getX() const;
-                float getY() const;
+                /**
+                 * @brief The y value of the Position
+                 */
+                float y;
 
-                // @MARK Setter
-                void setX(const float &x);
-                void setY(const float &y);
-
-                // @MARK Private
-                private:
-
-                // @MARK Attributes
-                float _x;
-                float _y;
+                /**
+                 * @brief The ComponentType of the Component
+                 */
+                static const ComponentType type = POSITION;
             };
         }
     }

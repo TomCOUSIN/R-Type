@@ -5,4 +5,9 @@
 ** Created by tomcousin,
 */
 
-#include "GameEngine.hpp"
+#include <criterion/criterion.h>
+
+Test(dumb_test, true_test)
+{
+    cr_assert(true);
+}

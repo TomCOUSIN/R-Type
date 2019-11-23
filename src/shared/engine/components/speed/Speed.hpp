@@ -8,32 +8,41 @@
 #ifndef CPP_RTYPE_2019_SPEED_HPP
 #define CPP_RTYPE_2019_SPEED_HPP
 
+#include "Component.hpp"
+
 namespace rtype {
 
     namespace engine {
 
         namespace component {
 
-            class Speed {
+            /**
+             * @brief A Component that handle the Speed
+             */
+            struct Speed : public Component {
 
-                // @MARK Public
-                public:
+                /**
+                 * @brief Constructor of the Component Speed
+                 *
+                 * @param x The x value
+                 * @param y The y value
+                 */
+                explicit Speed(float const &x = 0.0f, float const &y = 0.0f) : x(x), y(y) {};
 
-                // @MARK Constructor / Destructor
-                explicit Speed(const int &value = 0);
-                ~Speed() = default;
+                /**
+                 * @brief The x value of the Speed
+                 */
+                float x;
 
-                // @MARK Getter
-                int getValue() const;
+                /**
+                 * @brief The y value of the Speed
+                 */
+                float y;
 
-                // @MARK Setter
-                void setValue(const int &value);
-
-                // @MARK Private
-                private:
-
-                // @MARK Attributes
-                int _value;
+                /**
+                 * @brief The ComponentType of the Component
+                 */
+                static const ComponentType type = SPEED;
             };
         }
     }
