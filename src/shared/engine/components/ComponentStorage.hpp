@@ -68,7 +68,7 @@ namespace rtype {
                         return false;
                     }
                     else {
-                        _store.erase(_store.fin(entity));
+                        _store.erase(_store.find(entity));
                         return true;
                     }
                 }

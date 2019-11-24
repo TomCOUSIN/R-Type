@@ -7,7 +7,6 @@
 
 #include <criterion/criterion.h>
 #include "ComponentStorage.hpp"
-#include "Position.hpp"
 #include "Entity.hpp"
 
 using namespace rtype::engine;
@@ -17,10 +16,10 @@ using namespace rtype::engine;
  */
 Test(component_storage_tests, test_component_insertion)
 {
-    component::ComponentStorage<component::Position> storage;
+    component::ComponentStorage<component::Component> storage;
     entity::Entity entity = 0;
 
-    cr_assert(storage.addEntity(entity, component::Position()));
+    cr_assert(storage.addEntity(entity, component::Component()));
 }
 
 /**
@@ -28,11 +27,11 @@ Test(component_storage_tests, test_component_insertion)
  */
 Test(component_storage_tests, test_invalid_component_insertion)
 {
-    component::ComponentStorage<component::Position> storage;
+    component::ComponentStorage<component::Component> storage;
     entity::Entity entity = 0;
 
-    storage.addEntity(entity, component::Position());
-    cr_assert_not(storage.addEntity(entity, component::Position()));
+    storage.addEntity(entity, component::Component());
+    cr_assert_not(storage.addEntity(entity, component::Component()));
 }
 
 /**
@@ -40,10 +39,10 @@ Test(component_storage_tests, test_invalid_component_insertion)
  */
 Test(component_storage_tests, test_get_component)
 {
-    component::ComponentStorage<component::Position> storage;
+    component::ComponentStorage<component::Component> storage;
     entity::Entity entity = 0;
 
-    storage.addEntity(entity, component::Position());
+    storage.addEntity(entity, component::Component());
     cr_assert_not_null(storage.getComponent(entity));
 }
 
@@ -52,7 +51,7 @@ Test(component_storage_tests, test_get_component)
  */
 Test(component_storage_tests, test_invalid_get_component)
 {
-    component::ComponentStorage<component::Position> storage;
+    component::ComponentStorage<component::Component> storage;
     entity::Entity entity = 0;
 
     cr_assert_null(storage.getComponent(entity));

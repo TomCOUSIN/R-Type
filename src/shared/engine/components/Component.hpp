@@ -15,13 +15,9 @@ namespace rtype {
         namespace component {
 
             /**
-             * @brief Enum to define all the Component's type
+             * @brief Define the ComponentType
              */
-            enum ComponentType {
-                INVALID = 0,
-                POSITION = 1,
-                SPEED = 2
-            };
+            typedef unsigned long ComponentType;
 
             /**
              * @brief A basic Component
@@ -33,7 +29,7 @@ namespace rtype {
                  *
                  * By default it is set to INVALID
                  */
-                static const ComponentType type = INVALID;
+                static const ComponentType type = 0;
             };
         }
     }

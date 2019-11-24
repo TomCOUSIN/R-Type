@@ -33,6 +33,7 @@ SET(SHARED_SRC ${SRC}shared/)
 SET(SERVER_SRC ${SRC}server/)
 SET(CLIENT_SRC ${SRC}client/)
 
+SET(SFML_SRC ${SHARED_SRC}sfml/)
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
 
@@ -40,30 +41,39 @@ SET(COMPONENT_SRC ${ENGINE_SRC}components/)
 SET(COMPONENT_POSITION_SRC ${COMPONENT_SRC}position/)
 SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
+SET(SFML_COMPONENT_SRC ${SFML_SRC}component/)
 # Include directories
+include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
 include_directories(${ENTITY_SRC})
 include_directories(${COMPONENT_SRC})
 include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
+include_directories(${SFML_COMPONENT_SRC})
 
 # Set source files variable
+SET(INTERFACE
+        ${INTERFACE_SRC}ISystem.hpp)
+
 SET(COMPONENT
         ${COMPONENT_SRC}ComponentStorage.hpp
-        ${COMPONENT_POSITION_SRC}Position.hpp
-        ${COMPONENT_SPEED_SRC}Speed.hpp
         ${COMPONENT_SRC}Component.hpp)
 
 SET(ENTITY
         ${ENTITY_SRC}Entity.hpp)
 
+SET(SFML
+        ${SFML_COMPONENT_SRC}Position.hpp)
+
 SET(SHARED
-        ${COMPONENT}
+        ${SFML}
         ${ENTITY}
+        ${COMPONENT}
         ${ENGINE_SRC}GameEngine.cpp
         ${ENGINE_SRC}GameEngine.hpp)
 
 SET(COMMON
+        ${INTERFACE}
         ${SHARED})
 
 SET(SERVER
@@ -73,7 +83,7 @@ SET(CLIENT
         ${CLIENT_SRC}main.cpp)
 
 SET(UNIT_TESTS
-        ${TESTS_SRC}engine/component_storage_tests.cpp)
+        ${TESTS_SRC}component_storage_tests.cpp)
 
 # Create executable
 add_executable(r-type_server ${SERVER} ${COMMON})
