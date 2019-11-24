@@ -95,6 +95,18 @@ namespace rtype {
             void loadSystem(std::shared_ptr<ISystem> const &system);
 
             /**
+             * @brief Load an ISystem to update Entity's Component values
+             *
+             * @tparam S The type of the ISystem to use
+             * @tparam Params The parameters type needed to create the ISystem
+             * @param params The parameters value needed to create the ISystem
+             */
+            template<typename S, typename ...Params>
+            void loadSystem(Params&&... params) {
+                loadSystem(std::make_shared<S>((params)...));
+            }
+
+            /**
              * @brief Update all Entity's Component values
              *
              * @param delta The deltatime since last update
