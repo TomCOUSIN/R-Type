@@ -40,6 +40,32 @@ namespace rtype {
             ~GameEngine() = default;
 
             /**
+             * @brief Get A ComponentStorage according to the ComponentType
+             *
+             * @param type The type of the Component stored in the ComponentStorage
+             * @return The ComponentStorage
+             */
+            ComponentStorage<std::shared_ptr<Component>> getComponentStorage(ComponentType type) const;
+
+            /**
+             * @brief Get A ComponentStorage according to the Component
+             *
+             * @tparam C The Component stored in the ComponentStorage
+             * @return The ComponentStorage
+             */
+            template<typename C>
+            ComponentStorage<std::shared_ptr<Component>> getComponentStorage() const {
+                return getComponentStorage(C::type);
+            }
+
+            /**
+             * @brief Get The counter of Entity
+             *
+             * @return The counter of Entity
+             */
+            unsigned long getEntityCounter() const;
+
+            /**
              * @brief Create a new Entity
              *
              * @return The new Entity
@@ -74,10 +100,23 @@ namespace rtype {
              * @brief Link a Component to an Entity
              *
              * @param entity The Entity to link
-             * @param type The type of the Component to link
-             * @param component The Component to link
+             * @param type The type of the Component
+             * @param ptr The shared_ptr to the Component
              */
-            void linkEntityWithComponent(Entity const &entity, ComponentType type, Component const &component);
+            void linkEntityWithComponent(Entity const &entity, ComponentType type, std::shared_ptr<Component> ptr);
+
+            /**
+             * @brief Link a Component to an Entity
+             *
+             * @tparam C The type of the Component
+             * @tparam Params The parameters type needed to create the shared_ptr of Component
+             * @param entity The Entity to link
+             * @param params The parameters value needed to create the shared_ptr of Component
+             */
+            template<typename C, typename ...Params>
+            void linkEntityWithComponent(Entity const &entity, Params&&... params) {
+                linkEntityWithComponent(entity, C::type, std::make_shared<C>((params)...));
+            }
 
             /**
              * @brief Unlink a Component to an Entity
@@ -122,7 +161,7 @@ namespace rtype {
             /**
              * @brief The unordered_map of ComponentStorage to store multiple specific Component
              */
-            std::unordered_map<ComponentType, ComponentStorage<Component>> _component_store;
+            std::unordered_map<ComponentType, ComponentStorage<std::shared_ptr<Component>>> _component_store;
 
             /**
              * @brief The vector of ISystem to update all Entity's Component

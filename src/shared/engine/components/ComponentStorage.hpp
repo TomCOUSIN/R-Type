@@ -91,9 +91,9 @@ namespace rtype {
                  * @return A pointer to the Component on success
                  * @return Null on failure
                  */
-                C *getComponent(entity::Entity const &entity) {
+                C getComponent(entity::Entity const &entity) {
                     auto iterator = _store.find(entity);
-                    return iterator != _store.end() ? &iterator->second : nullptr;
+                    return iterator->second;
                 }
 
                 private:

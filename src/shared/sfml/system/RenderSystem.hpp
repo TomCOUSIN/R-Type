@@ -5,10 +5,11 @@
 ** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_INPUTSYSTEM_HPP
-#define CPP_RTYPE_2019_INPUTSYSTEM_HPP
+#ifndef CPP_RTYPE_2019_RENDERSYSTEM_HPP
+#define CPP_RTYPE_2019_RENDERSYSTEM_HPP
 
 #include <SFML/Graphics.hpp>
+#include "GameEngine.hpp"
 #include "ISystem.hpp"
 
 namespace rtype {
@@ -18,25 +19,23 @@ namespace rtype {
         namespace system {
 
             /**
-             * @brief An InputSystem to handle Event
+             * @brief The SFML RenderSystem to display sprites
              */
-            class InputSystem : public ISystem {
+            class RenderSystem : public ISystem {
 
                 public:
                 /**
-                 * @brief Construct a new InputSystem object
-                 *
-                 * @param window The sf::Window to use to catch input
+                 * @brief Construct a new RenderSystem
                  */
-                InputSystem(sf::RenderWindow &window);
+                RenderSystem(GameEngine &engine, sf::RenderWindow &window);
 
                 /**
-                 * @brief Destroy an InputSystem object
+                 * @brief Destroy a RenderSystem object
                  */
-                ~InputSystem() final = default;
+                ~RenderSystem() final = default;
 
                 /**
-                 * @brief Update sf::Event according to the sf::Window
+                 * @brief Update all Sprite according to Position
                  *
                  * @param delta The deltatime since last update
                  */
@@ -47,9 +46,14 @@ namespace rtype {
                  * @brief The window used to catch event
                  */
                 sf::RenderWindow &_window;
+
+                /**
+                 * @brief The engine to use to get Sprite Component
+                 */
+                GameEngine &_engine;
             };
         }
     }
 }
 
-#endif //CPP_RTYPE_2019_INPUTSYSTEM_HPP
+#endif //CPP_RTYPE_2019_RENDERSYSTEM_HPP

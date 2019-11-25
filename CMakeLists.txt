@@ -61,7 +61,10 @@ SET(ENTITY
 SET(SFML
         ${SFML_SYSTEM_SRC}InputSystem.cpp
         ${SFML_SYSTEM_SRC}InputSystem.hpp
-        ${SFML_COMPONENT_SRC}Position.hpp)
+        ${SFML_SYSTEM_SRC}RenderSystem.cpp
+        ${SFML_SYSTEM_SRC}RenderSystem.hpp
+        ${SFML_COMPONENT_SRC}Position.hpp
+        ${SFML_COMPONENT_SRC}Sprite.hpp)
 
 SET(SHARED
         ${SFML}

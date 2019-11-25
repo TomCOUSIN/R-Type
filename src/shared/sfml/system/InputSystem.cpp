@@ -7,7 +7,7 @@
 
 #include "InputSystem.hpp"
 
-rtype::engine::system::InputSystem::InputSystem(sf::Window &window) :
+rtype::engine::system::InputSystem::InputSystem(sf::RenderWindow &window) :
 _window(window) {}
 
 void rtype::engine::system::InputSystem::update(float const &delta)
