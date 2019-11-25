@@ -10,12 +10,6 @@ list(APPEND CMAKE_MODULE_PATH cmake_module)
 # Find for criterion to play tests
 include(cmake_module/FindCriterion.cmake)
 
-# Redefine c++ compiler version for MacOS
-IF (${APPLE})
-    set(CMAKE_C_COMPILER_VERSION "10")
-    set(CMAKE_CXX_COMPILER_VERSION "10")
-ENDIF (${APPLE})
-
 # Setup conan
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 
@@ -42,6 +36,7 @@ SET(COMPONENT_POSITION_SRC ${COMPONENT_SRC}position/)
 SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
 SET(SFML_COMPONENT_SRC ${SFML_SRC}component/)
+SET(SFML_SYSTEM_SRC ${SFML_SRC}system/)
 # Include directories
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
@@ -50,6 +45,7 @@ include_directories(${COMPONENT_SRC})
 include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
 include_directories(${SFML_COMPONENT_SRC})
+include_directories(${SFML_SYSTEM_SRC})
 
 # Set source files variable
 SET(INTERFACE
@@ -63,6 +59,8 @@ SET(ENTITY
         ${ENTITY_SRC}Entity.hpp)
 
 SET(SFML
+        ${SFML_SYSTEM_SRC}InputSystem.cpp
+        ${SFML_SYSTEM_SRC}InputSystem.hpp
         ${SFML_COMPONENT_SRC}Position.hpp)
 
 SET(SHARED
@@ -89,6 +87,7 @@ SET(UNIT_TESTS
 add_executable(r-type_server ${SERVER} ${COMMON})
 add_executable(r-type_client ${CLIENT} ${COMMON})
 
+message(${CONAN_LIBS})
 # Link library to executable
 target_link_libraries(r-type_server ${CONAN_LIBS})
 target_link_libraries(r-type_client ${CONAN_LIBS})
