@@ -5,14 +5,11 @@
 ** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_INPUTSYSTEM_HPP
-#define CPP_RTYPE_2019_INPUTSYSTEM_HPP
+#ifndef CPP_RTYPE_2019_POSITIONSYSTEM_HPP
+#define CPP_RTYPE_2019_POSITIONSYSTEM_HPP
 
-#include <vector>
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include <GameEngine.hpp>
 #include "ISystem.hpp"
-#include "Entity.hpp"
 
 namespace rtype {
 
@@ -21,27 +18,22 @@ namespace rtype {
         namespace system {
 
             /**
-             * @brief An InputSystem to handle Event
+             * @brief PositionSystem to update Sprite with Position
              */
-            class InputSystem : public engine::system::ISystem {
+            class PositionSystem : public engine::system::ISystem {
 
                 public:
                 /**
-                 * @brief Construct a new InputSystem object
+                 * @brief Construct a PositionSystem object
                  *
-                 * @param window The sf::Window to use to catch input
+                 * @param engine The GameEngine to use
                  */
-                InputSystem(sf::RenderWindow &window);
+                explicit PositionSystem(engine::GameEngine &engine);
+                ~PositionSystem() final = default;
 
                 /**
-                 * @brief Destroy an InputSystem object
-                 */
-                ~InputSystem() final = default;
-
-                /**
-                 * @brief Update sf::Event according to the sf::Window
-                 *
-                 * @param delta The deltatime since last update
+                 * @brief Update the Sprite with Position value
+                 * @param delta
                  */
                 void update(float const &delta) final;
 
@@ -60,15 +52,16 @@ namespace rtype {
                 void removeEntity(engine::entity::Entity const &entity) final;
 
                 /**
-                 * @brief The SystemType of the InputSystem
+                 * @brief The SystemType of the PositionSystem
                  */
-                static const engine::system::SystemType type = 1;
+                static const engine::system::SystemType type = 2;
 
                 private:
+
                 /**
-                 * @brief The window used to catch event
+                 * @brief The GameEngine to use
                  */
-                sf::RenderWindow &_window;
+                engine::GameEngine &_engine;
 
                 /**
                  * @brief The vector of Entity
@@ -79,4 +72,4 @@ namespace rtype {
     }
 }
 
-#endif //CPP_RTYPE_2019_INPUTSYSTEM_HPP
+#endif //CPP_RTYPE_2019_POSITIONSYSTEM_HPP

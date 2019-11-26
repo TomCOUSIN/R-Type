@@ -13,14 +13,14 @@
 
 namespace rtype {
 
-    namespace engine {
+    namespace sfml {
 
         namespace component {
 
             /**
              * @brief A Sprite Component
              */
-            struct Sprite : public Component {
+            struct Sprite : public engine::component::Component {
 
                 /**
                  * @brief Construct a new Sprite Component
@@ -45,7 +45,7 @@ namespace rtype {
                 /**
                  * @brief The type of the Component Position
                  */
-                static const ComponentType type = 2;
+                static const engine::component::ComponentType type = 2;
             };
         }
     }

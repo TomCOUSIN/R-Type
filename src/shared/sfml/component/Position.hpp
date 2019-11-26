@@ -13,14 +13,14 @@
 
 namespace rtype {
 
-    namespace engine {
+    namespace sfml {
 
         namespace component {
 
             /**
              * @brief Position Component to handle position
              */
-            struct Position : public Component {
+            struct Position : public engine::component::Component {
 
                 /**
                  * @brief Construct a new Position Component
@@ -38,7 +38,7 @@ namespace rtype {
                 /**
                  * @brief The type of the Component Position
                  */
-                static const ComponentType type = 1;
+                static const engine::component::ComponentType type = 1;
             };
         }
     }

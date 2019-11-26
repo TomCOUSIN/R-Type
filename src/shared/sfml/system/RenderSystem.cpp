@@ -8,17 +8,36 @@
 #include "RenderSystem.hpp"
 #include "Sprite.hpp"
 
-RenderSystem::RenderSystem(rtype::engine::GameEngine &engine, sf::RenderWindow &window) :
-    _engine(engine), _window(window) {}
+rtype::sfml::system::RenderSystem::RenderSystem(rtype::engine::GameEngine &engine, sf::RenderWindow &window) :
+_engine(engine), _window(window) {}
 
-void rtype::engine::system::RenderSystem::update(float const &delta)
+void rtype::sfml::system::RenderSystem::update(float const &delta)
 {
+    auto sprite_store = _engine.getComponentStorage<component::Sprite>();
+    component::Sprite *sprite = nullptr;
+
     _window.clear(sf::Color::Black);
-    for (Entity entity = 0; entity < _engine.getEntityCounter(); ++entity) {
-        if (_engine.getComponentStorage<Sprite>().entityHasComponent(entity)) {
-            Sprite *sprite = static_cast<Sprite *>(_engine.getComponentStorage<Sprite>().getComponent(entity).get());
+    for (auto &entity : _entities) {
+        if (sprite_store.entityHasComponent(entity)) {
+            sprite = static_cast<component::Sprite *>(_engine.getComponentStorage<component::Sprite>().getComponent(entity).get());
             _window.draw(sprite->sprite);
         }
     }
     _window.display();
+}
+
+void rtype::sfml::system::RenderSystem::addEntity(const engine::entity::Entity &entity)
+{
+    _entities.push_back(entity);
+}
+
+void rtype::sfml::system::RenderSystem::removeEntity(const engine::entity::Entity &entity)
+{
+    for (unsigned long index = 0; index < _entities.size(); ++index) {
+        if (_entities[index] == entity) {
+            _entities.erase(_entities.begin() + index);
+            break;
+        }
+        ++index;
+    }
 }

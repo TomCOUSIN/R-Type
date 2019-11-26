@@ -14,10 +14,6 @@
 #include "ComponentStorage.hpp"
 #include "ISystem.hpp"
 
-using namespace rtype::engine::component;
-using namespace rtype::engine::entity;
-using namespace rtype::engine::system;
-
 namespace rtype {
 
     namespace engine {
@@ -45,7 +41,7 @@ namespace rtype {
              * @param type The type of the Component stored in the ComponentStorage
              * @return The ComponentStorage
              */
-            ComponentStorage<std::shared_ptr<Component>> getComponentStorage(ComponentType type) const;
+            component::ComponentStorage<std::shared_ptr<component::Component>> getComponentStorage(component::ComponentType type) const;
 
             /**
              * @brief Get A ComponentStorage according to the Component
@@ -54,37 +50,30 @@ namespace rtype {
              * @return The ComponentStorage
              */
             template<typename C>
-            ComponentStorage<std::shared_ptr<Component>> getComponentStorage() const {
+            component::ComponentStorage<std::shared_ptr<component::Component>> getComponentStorage() const {
                 return getComponentStorage(C::type);
             }
-
-            /**
-             * @brief Get The counter of Entity
-             *
-             * @return The counter of Entity
-             */
-            unsigned long getEntityCounter() const;
 
             /**
              * @brief Create a new Entity
              *
              * @return The new Entity
              */
-            Entity createEntity();
+            entity::Entity createEntity();
 
             /**
              * @brief Destroy an Entitys
              *
              * @param entity The Entity to destroy
              */
-            void destroyEntity(Entity const &entity);
+            void destroyEntity(entity::Entity const &entity);
 
             /**
              * @brief Load a ComponentStorage to store a specific Component
              *
              * @param type The type of the Component to store
              */
-            void loadComponentStorage(ComponentType type);
+            void loadComponentStorage(component::ComponentType type);
 
             /**
              * @brief Load a ComponentStorage to store a specific Component
@@ -103,7 +92,7 @@ namespace rtype {
              * @param type The type of the Component
              * @param ptr The shared_ptr to the Component
              */
-            void linkEntityWithComponent(Entity const &entity, ComponentType type, std::shared_ptr<Component> ptr);
+            void linkEntityWithComponent(entity::Entity const &entity, component::ComponentType type, std::shared_ptr<component::Component> ptr);
 
             /**
              * @brief Link a Component to an Entity
@@ -114,7 +103,7 @@ namespace rtype {
              * @param params The parameters value needed to create the shared_ptr of Component
              */
             template<typename C, typename ...Params>
-            void linkEntityWithComponent(Entity const &entity, Params&&... params) {
+            void linkEntityWithComponent(entity::Entity const &entity, Params&&... params) {
                 linkEntityWithComponent(entity, C::type, std::make_shared<C>((params)...));
             }
 
@@ -124,14 +113,33 @@ namespace rtype {
              * @param entity The Entity to unlink
              * @param type The type of the Component to unlink
              */
-            void unlinkEntityWithComponent(Entity const &entity, ComponentType type);
+            void unlinkEntityWithComponent(entity::Entity const &entity, component::ComponentType type);
+
+            /**
+             * @brief Link an Entity with an ISystem
+             *
+             * @param entity The Entity to unlink
+             * @param type The SystemType of the stored ISystem
+             */
+            void linkEntityWithSystem(entity::Entity const &entity, system::SystemType type);
+
+            /**
+             * @brief Link an Entity with an ISystem
+             *
+             * @tparam S The type of the ISystem
+             * @param entity The Entity to unlink
+             */
+            template<typename S>
+            void linkEntityWithSystem(entity::Entity const &entity) {
+                linkEntityWithSystem(entity, S::type);
+            }
 
             /**
              * @brief Load an ISystem to update Entity's Component values
              *
              * @param system The ISystem to load
              */
-            void loadSystem(std::shared_ptr<ISystem> const &system);
+            void loadSystem(system::SystemType type, std::shared_ptr<system::ISystem> const &system);
 
             /**
              * @brief Load an ISystem to update Entity's Component values
@@ -142,7 +150,7 @@ namespace rtype {
              */
             template<typename S, typename ...Params>
             void loadSystem(Params&&... params) {
-                loadSystem(std::make_shared<S>((params)...));
+                loadSystem(S::type, std::make_shared<S>((params)...));
             }
 
             /**
@@ -156,17 +164,17 @@ namespace rtype {
             /**
              * @brief The counter of the Entity to always have a unique id
              */
-            Entity _counter;
+            entity::Entity _counter;
 
             /**
              * @brief The unordered_map of ComponentStorage to store multiple specific Component
              */
-            std::unordered_map<ComponentType, ComponentStorage<std::shared_ptr<Component>>> _component_store;
+            std::unordered_map<component::ComponentType, component::ComponentStorage<std::shared_ptr<component::Component>>> _component_store;
 
             /**
              * @brief The vector of ISystem to update all Entity's Component
              */
-            std::vector<std::shared_ptr<ISystem>> _systems;
+            std::unordered_map<system::SystemType, std::shared_ptr<system::ISystem>> _systems;
         };
     }
 }

@@ -14,20 +14,20 @@
 
 namespace rtype {
 
-    namespace engine {
+    namespace sfml {
 
         namespace system {
 
             /**
              * @brief The SFML RenderSystem to display sprites
              */
-            class RenderSystem : public ISystem {
+            class RenderSystem : public engine::system::ISystem {
 
                 public:
                 /**
                  * @brief Construct a new RenderSystem
                  */
-                RenderSystem(GameEngine &engine, sf::RenderWindow &window);
+                RenderSystem(engine::GameEngine &engine, sf::RenderWindow &window);
 
                 /**
                  * @brief Destroy a RenderSystem object
@@ -41,6 +41,25 @@ namespace rtype {
                  */
                 void update(float const &delta) final;
 
+                /**
+                 * @brief Add an Entity to the ISystem
+                 *
+                 * @param entity The Entity to add
+                 */
+                void addEntity(engine::entity::Entity const &entity) final;
+
+                /**
+                 * @brief Remove an Entity from the ISystem
+                 *
+                 * @param entity The Entity to remove
+                 */
+                void removeEntity(engine::entity::Entity const &entity) final;
+
+                /**
+                 * @brief The SystemType of the RenderSystem
+                 */
+                static const engine::system::SystemType type = 3;
+
                 private:
                 /**
                  * @brief The window used to catch event
@@ -50,7 +69,12 @@ namespace rtype {
                 /**
                  * @brief The engine to use to get Sprite Component
                  */
-                GameEngine &_engine;
+                engine::GameEngine &_engine;
+
+                /**
+                 * @brief The vector of Entity
+                 */
+                std::vector<engine::entity::Entity> _entities;
             };
         }
     }

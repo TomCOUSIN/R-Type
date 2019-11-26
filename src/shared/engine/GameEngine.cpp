@@ -12,22 +12,30 @@ using namespace rtype::engine;
 GameEngine::GameEngine() :
 _counter(0) {}
 
-Entity GameEngine::createEntity()
+entity::Entity GameEngine::createEntity()
 { return _counter++; }
 
-void GameEngine::destroyEntity(Entity const &entity)
+void GameEngine::destroyEntity(entity::Entity const &entity)
 {
     for (auto &component_storage: _component_store) {
         component_storage.second.removeEntity(entity);
     }
 }
 
-void GameEngine::loadComponentStorage(ComponentType type)
+void GameEngine::loadComponentStorage(component::ComponentType type)
 {
-    _component_store.emplace(std::make_pair(type, ComponentStorage<std::shared_ptr<Component>>()));
+    _component_store.emplace(std::make_pair(type, component::ComponentStorage<std::shared_ptr<component::Component>>()));
 }
 
-void GameEngine::unlinkEntityWithComponent(Entity const &entity, ComponentType type)
+void GameEngine::linkEntityWithComponent(entity::Entity const &entity, component::ComponentType type, std::shared_ptr<component::Component> ptr)
+{
+    auto component_storage = _component_store.find(type);
+    if (component_storage != _component_store.end()) {
+        component_storage->second.addEntity(entity, ptr);
+    }
+}
+
+void GameEngine::unlinkEntityWithComponent(entity::Entity const &entity, component::ComponentType type)
 {
     auto component_storage = _component_store.find(type);
     if (component_storage != _component_store.end()) {
@@ -35,31 +43,28 @@ void GameEngine::unlinkEntityWithComponent(Entity const &entity, ComponentType t
     }
 }
 
-void GameEngine::loadSystem(std::shared_ptr<ISystem> const &system)
+void GameEngine::loadSystem(system::SystemType type, std::shared_ptr<system::ISystem> const &system)
 {
-    _systems.push_back(system);
+    _systems.emplace(std::make_pair(type, system));
 }
 
 void GameEngine::update(float const &delta)
 {
-    for (auto &system : _systems) {
-        system->update(delta);
+    for (const auto& system : _systems) {
+        system.second->update(delta);
     }
 }
 
-ComponentStorage<std::shared_ptr<Component>> GameEngine::getComponentStorage(ComponentType type) const
+component::ComponentStorage<std::shared_ptr<component::Component>> GameEngine::getComponentStorage(component::ComponentType type) const
 {
     auto component_storage = _component_store.find(type);
     return component_storage->second;
 }
 
-unsigned long GameEngine::getEntityCounter() const
-{ return _counter; }
-
-void GameEngine::linkEntityWithComponent(Entity const &entity, ComponentType type, std::shared_ptr<Component> ptr)
+void GameEngine::linkEntityWithSystem(entity::Entity const &entity, system::SystemType type)
 {
-    auto component_storage = _component_store.find(type);
-    if (component_storage != _component_store.end()) {
-        component_storage->second.addEntity(entity, ptr);
+    auto system = _systems.find(type);
+    if (system != _systems.end()) {
+        system->second->addEntity(entity);
     }
 }

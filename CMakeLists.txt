@@ -63,6 +63,8 @@ SET(SFML
         ${SFML_SYSTEM_SRC}InputSystem.hpp
         ${SFML_SYSTEM_SRC}RenderSystem.cpp
         ${SFML_SYSTEM_SRC}RenderSystem.hpp
+        ${SFML_SYSTEM_SRC}PositionSystem.cpp
+        ${SFML_SYSTEM_SRC}PositionSystem.hpp
         ${SFML_COMPONENT_SRC}Position.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp)
 
