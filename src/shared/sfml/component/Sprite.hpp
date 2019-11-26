@@ -26,11 +26,57 @@ namespace rtype {
                  * @brief Construct a new Sprite Component
                  *
                  * @param texture_path The path to the texture
+                 * @param width The width of the Sprite
+                 * @param height The height of the Sprite
+                 * @param scale_width The width scale of the Sprite
+                 * @param scale_height The height scale of the Sprite
+                 * @param sprite_count The number of sprite in the spritesheet
                  */
-                explicit Sprite(std::string const &texture_path) {
-                    if (texture.loadFromFile(texture_path))
+                explicit Sprite(std::string const &texture_path,
+                    float const &width,
+                    float const &height,
+                    float const &scale_width = 1.0f,
+                    float const &scale_height = 1.0f,
+                    size_t const &sprite_count = 1.0f) :
+                size(width, height), scale(scale_width, scale_height), sprite_count(sprite_count), actual_sprite(0)
+                {
+                    if (texture.loadFromFile(texture_path)) {
                         sprite.setTexture(texture);
+                        sprite.setScale(scale);
+                        sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+                    }
                 }
+
+                /**
+                 * @brief Update to the next sprite if the Sprite is a spritesheet
+                 */
+                void next() {
+                    ++actual_sprite;
+                    if (sprite_count == actual_sprite) {
+                        actual_sprite = 0;
+                    }
+                    sprite.setTextureRect(sf::IntRect(size.x * actual_sprite, 0, size.x, size.y));
+                }
+
+                /**
+                 * @brief The vector containing the scale of the sprite
+                 */
+                sf::Vector2f scale;
+
+                /**
+                 * @brief The vector containing the size of the sprite
+                 */
+                sf::Vector2f size;
+
+                /**
+                 * @brief The total count of the different Sprite
+                 */
+                size_t sprite_count;
+
+                /**
+                 * @brief The actual count of the Sprite
+                 */
+                size_t actual_sprite;
 
                 /**
                  * @brief The Texture of the Component
@@ -50,4 +96,5 @@ namespace rtype {
         }
     }
 }
+
 #endif //CPP_RTYPE_2019_SPRITE_HPP

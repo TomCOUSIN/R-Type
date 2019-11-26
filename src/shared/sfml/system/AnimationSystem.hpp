@@ -5,8 +5,8 @@
 ** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_RENDERSYSTEM_HPP
-#define CPP_RTYPE_2019_RENDERSYSTEM_HPP
+#ifndef CPP_RTYPE_2019_ANIMATIONSYSTEM_HPP
+#define CPP_RTYPE_2019_ANIMATIONSYSTEM_HPP
 
 #include <SFML/Graphics.hpp>
 #include "GameEngine.hpp"
@@ -19,23 +19,25 @@ namespace rtype {
         namespace system {
 
             /**
-             * @brief The SFML RenderSystem to display sprites
+             * @brief AnimationSystem to animate SpriteSheet
              */
-            class RenderSystem : public engine::system::ISystem {
+            class AnimationSystem : public engine::system::ISystem {
 
                 public:
                 /**
-                 * @brief Construct a new RenderSystem
+                 * @brief Construct an AnimationEngine ISystem
+                 *
+                 * @param engine The GameEngine to use
                  */
-                RenderSystem(engine::GameEngine &engine, sf::RenderWindow &window);
+                AnimationSystem(engine::GameEngine &engine);
 
                 /**
-                 * @brief Destroy a RenderSystem object
+                 * @brief Destroy an AnimationSystem
                  */
-                ~RenderSystem() final = default;
+                ~AnimationSystem() final = default;
 
                 /**
-                 * @brief Update all Sprite according to Position
+                 * @brief Update sf::Event according to the sf::Window
                  *
                  * @param delta The deltatime since last update
                  */
@@ -56,16 +58,11 @@ namespace rtype {
                 void removeEntity(engine::entity::Entity const &entity) final;
 
                 /**
-                 * @brief The SystemType of the RenderSystem
+                 * @brief The SystemType of the AnimationSystem
                  */
-                static const engine::system::SystemType type = 5;
+                static const engine::system::SystemType type = 4;
 
                 private:
-                /**
-                 * @brief The window used to catch event
-                 */
-                sf::RenderWindow &_window;
-
                 /**
                  * @brief The engine to use to get Sprite Component
                  */
@@ -80,4 +77,4 @@ namespace rtype {
     }
 }
 
-#endif //CPP_RTYPE_2019_RENDERSYSTEM_HPP
+#endif //CPP_RTYPE_2019_ANIMATIONSYSTEM_HPP

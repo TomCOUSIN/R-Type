@@ -13,13 +13,13 @@ _engine(engine), _window(window) {}
 
 void rtype::sfml::system::RenderSystem::update(float const &delta)
 {
-    auto sprite_store = _engine.getComponentStorage<component::Sprite>();
+    auto sprite_storage = _engine.getComponentStorage<component::Sprite>();
     component::Sprite *sprite = nullptr;
 
     _window.clear(sf::Color::Black);
     for (auto &entity : _entities) {
-        if (sprite_store.entityHasComponent(entity)) {
-            sprite = static_cast<component::Sprite *>(_engine.getComponentStorage<component::Sprite>().getComponent(entity).get());
+        if (sprite_storage.entityHasComponent(entity)) {
+            sprite = static_cast<component::Sprite *>(sprite_storage.getComponent(entity).get());
             _window.draw(sprite->sprite);
         }
     }

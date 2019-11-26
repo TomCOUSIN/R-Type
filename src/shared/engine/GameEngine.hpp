@@ -8,9 +8,9 @@
 #ifndef CPP_RTYPE_2019_GAMEENGINE_HPP
 #define CPP_RTYPE_2019_GAMEENGINE_HPP
 
+#include <map>
 #include <vector>
 #include <iostream>
-#include <unordered_map>
 #include "ComponentStorage.hpp"
 #include "ISystem.hpp"
 
@@ -174,7 +174,7 @@ namespace rtype {
             /**
              * @brief The vector of ISystem to update all Entity's Component
              */
-            std::unordered_map<system::SystemType, std::shared_ptr<system::ISystem>> _systems;
+            std::map<system::SystemType, std::shared_ptr<system::ISystem>> _systems;
         };
     }
 }
