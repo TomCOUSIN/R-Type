@@ -11,6 +11,7 @@
 #include <vector>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "GameEngine.hpp"
 #include "ISystem.hpp"
 #include "Entity.hpp"
 
@@ -31,7 +32,7 @@ namespace rtype {
                  *
                  * @param window The sf::Window to use to catch input
                  */
-                InputSystem(sf::RenderWindow &window);
+                InputSystem(engine::GameEngine &engine, sf::RenderWindow &window);
 
                 /**
                  * @brief Destroy an InputSystem object
@@ -65,6 +66,11 @@ namespace rtype {
                 static const engine::system::SystemType type = 1;
 
                 private:
+                /**
+                 * @brief The engine to use to set EVENT
+                 */
+                engine::GameEngine &_engine;
+
                 /**
                  * @brief The window used to catch event
                  */

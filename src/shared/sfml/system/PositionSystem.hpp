@@ -54,7 +54,7 @@ namespace rtype {
                 /**
                  * @brief The SystemType of the PositionSystem
                  */
-                static const engine::system::SystemType type = 2;
+                static const engine::system::SystemType type = 3;
 
                 private:
 

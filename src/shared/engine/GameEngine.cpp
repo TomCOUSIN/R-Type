@@ -53,6 +53,7 @@ void GameEngine::update(float const &delta)
     for (const auto& system : _systems) {
         system.second->update(delta);
     }
+    _events.clear();
 }
 
 component::ComponentStorage<std::shared_ptr<component::Component>> GameEngine::getComponentStorage(component::ComponentType type) const
@@ -67,4 +68,14 @@ void GameEngine::linkEntityWithSystem(entity::Entity const &entity, system::Syst
     if (system != _systems.end()) {
         system->second->addEntity(entity);
     }
+}
+
+void GameEngine::addEvent(event::EVENT const &event)
+{
+    _events.push_back(event);
+}
+
+std::vector<event::EVENT> GameEngine::getEvent() const
+{
+    return _events;
 }

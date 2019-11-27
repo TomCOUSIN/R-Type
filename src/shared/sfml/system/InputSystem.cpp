@@ -6,9 +6,10 @@
 */
 
 #include "InputSystem.hpp"
+#include "Event.hpp"
 
-rtype::sfml::system::InputSystem::InputSystem(sf::RenderWindow &window) :
-_window(window) {}
+rtype::sfml::system::InputSystem::InputSystem(engine::GameEngine &engine, sf::RenderWindow &window) :
+_engine(engine), _window(window) {}
 
 void rtype::sfml::system::InputSystem::update(float const &delta)
 {
@@ -17,6 +18,15 @@ void rtype::sfml::system::InputSystem::update(float const &delta)
     while (_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             _window.close();
+        if (event.type == sf::Event::KeyPressed) {
+            switch(event.key.code) {
+            case sf::Keyboard::Up: _engine.addEvent(engine::event::EVENT::ARROW_UP); break;
+            case sf::Keyboard::Down: _engine.addEvent(engine::event::EVENT::ARROW_DOWN); break;
+            case sf::Keyboard::Left: _engine.addEvent(engine::event::EVENT::ARROW_LEFT); break;
+            case sf::Keyboard::Right: _engine.addEvent(engine::event::EVENT::ARROW_RIGHT); break;
+            default: break;
+            }
+        }
     }
 }
 

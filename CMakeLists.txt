@@ -30,8 +30,9 @@ SET(CLIENT_SRC ${SRC}client/)
 SET(SFML_SRC ${SHARED_SRC}sfml/)
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
+SET(COMPONENT_SRC ${ENGINE_SRC}component/)
+SET(EVENT_SRC ${ENGINE_SRC}event/)
 
-SET(COMPONENT_SRC ${ENGINE_SRC}components/)
 SET(COMPONENT_POSITION_SRC ${COMPONENT_SRC}position/)
 SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
@@ -46,6 +47,7 @@ include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
 include_directories(${SFML_COMPONENT_SRC})
 include_directories(${SFML_SYSTEM_SRC})
+include_directories(${EVENT_SRC})
 
 # Set source files variable
 SET(INTERFACE
@@ -67,13 +69,17 @@ SET(SFML
         ${SFML_SYSTEM_SRC}PositionSystem.hpp
         ${SFML_SYSTEM_SRC}AnimationSystem.cpp
         ${SFML_SYSTEM_SRC}AnimationSystem.hpp
+        ${SFML_SYSTEM_SRC}MovementSystem.cpp
+        ${SFML_SYSTEM_SRC}MovementSystem.hpp
         ${SFML_COMPONENT_SRC}Position.hpp
-        ${SFML_COMPONENT_SRC}Sprite.hpp)
+        ${SFML_COMPONENT_SRC}Sprite.hpp
+        ${SFML_COMPONENT_SRC}Speed.hpp)
 
 SET(SHARED
         ${SFML}
         ${ENTITY}
         ${COMPONENT}
+        ${EVENT_SRC}Event.hpp
         ${ENGINE_SRC}GameEngine.cpp
         ${ENGINE_SRC}GameEngine.hpp)
 

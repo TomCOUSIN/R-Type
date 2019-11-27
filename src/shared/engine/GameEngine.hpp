@@ -13,6 +13,7 @@
 #include <iostream>
 #include "ComponentStorage.hpp"
 #include "ISystem.hpp"
+#include "Event.hpp"
 
 namespace rtype {
 
@@ -154,6 +155,19 @@ namespace rtype {
             }
 
             /**
+             * @brief Add en EVENT
+             * @param event The EVENT to add
+             */
+            void addEvent(event::EVENT const &event);
+
+            /**
+             * @brief Get all the EVENT
+             *
+             * @return Tha array of EVENT
+             */
+            std::vector<event::EVENT> getEvent() const;
+
+            /**
              * @brief Update all Entity's Component values
              *
              * @param delta The deltatime since last update
@@ -165,6 +179,11 @@ namespace rtype {
              * @brief The counter of the Entity to always have a unique id
              */
             entity::Entity _counter;
+
+            /**
+             * @brief Array of Event
+             */
+             std::vector<event::EVENT> _events;
 
             /**
              * @brief The unordered_map of ComponentStorage to store multiple specific Component
