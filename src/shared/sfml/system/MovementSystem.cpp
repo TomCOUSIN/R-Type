@@ -24,8 +24,8 @@ void rtype::sfml::system::MovementSystem::update(float const &delta)
         if (position_store.entityHasComponent(entity) && speed_store.entityHasComponent(entity)) {
             position = static_cast<component::Position *>(position_store.getComponent(entity).get());
             speed = static_cast<component::Speed *>(speed_store.getComponent(entity).get());
-            for (auto event : events) {
-                switch(event) {
+            for (const auto &event : events) {
+                switch(event.getEventType()) {
                 case engine::event::ARROW_UP: moveUp(position, speed); break;
                 case engine::event::ARROW_DOWN: moveDown(position, speed); break;
                 case engine::event::ARROW_RIGHT: moveRight(position, speed); break;

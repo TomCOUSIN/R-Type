@@ -20,10 +20,10 @@ void rtype::sfml::system::InputSystem::update(float const &delta)
             _window.close();
         if (event.type == sf::Event::KeyPressed) {
             switch(event.key.code) {
-            case sf::Keyboard::Up: _engine.addEvent(engine::event::EVENT::ARROW_UP); break;
-            case sf::Keyboard::Down: _engine.addEvent(engine::event::EVENT::ARROW_DOWN); break;
-            case sf::Keyboard::Left: _engine.addEvent(engine::event::EVENT::ARROW_LEFT); break;
-            case sf::Keyboard::Right: _engine.addEvent(engine::event::EVENT::ARROW_RIGHT); break;
+            case sf::Keyboard::Up: _engine.addEvent(engine::event::Event(engine::event::KEYBOARD, engine::event::ARROW_UP)); break;
+            case sf::Keyboard::Down: _engine.addEvent(engine::event::Event(engine::event::KEYBOARD, engine::event::ARROW_DOWN)); break;
+            case sf::Keyboard::Left: _engine.addEvent(engine::event::Event(engine::event::KEYBOARD, engine::event::ARROW_LEFT)); break;
+            case sf::Keyboard::Right: _engine.addEvent(engine::event::Event(engine::event::KEYBOARD, engine::event::ARROW_RIGHT)); break;
             default: break;
             }
         }

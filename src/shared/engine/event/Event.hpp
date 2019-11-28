@@ -8,50 +8,66 @@
 #ifndef CPP_RTYPE_2019_EVENT_HPP
 #define CPP_RTYPE_2019_EVENT_HPP
 
-namespace rtype {
+#include <iostream>
+#include "IEvent.hpp"
+#include "Component.hpp"
 
-    namespace engine {
+namespace rtype::engine::event {
 
-        namespace event {
+    /**
+     * @brief Event class to handle GameEngine event
+     */
+    class Event : public IEvent {
 
-            enum EVENT {
-                NOTHING,
-                ARROW_UP,
-                ARROW_DOWN,
-                ARROW_RIGHT,
-                ARROW_LEFT,
-                KEY_A,
-                KEY_B,
-                KEY_C,
-                KEY_D,
-                KEY_E,
-                KEY_F,
-                KEY_G,
-                KEY_H,
-                KEY_I,
-                KEY_J,
-                KEY_K,
-                KEY_L,
-                KEY_M,
-                KEY_N,
-                KEY_O,
-                KEY_P,
-                KEY_Q,
-                KEY_R,
-                KEY_S,
-                KEY_T,
-                KEY_U,
-                KEY_V,
-                KEY_W,
-                KEY_X,
-                KEY_Y,
-                KEY_Z,
-                SPACE,
-                ENTER,
-                ESCAPE
-            };
-        }
-    }
+        public:
+        /**
+         * @brief Construct an Event object
+         */
+        Event(EVENT_SENDER sender, EVENT_TYPE event_type, std::shared_ptr<component::Component> data = nullptr);
+
+        /**
+         * @brief Destroy an Event object
+         */
+        ~Event() final = default;
+
+        /**
+         * @brief Get the sender of the Event
+         *
+         * @return The sender of the Event
+         */
+        EVENT_SENDER getSender() const;
+
+        /**
+         * @brief Get the type of the Event
+         *
+         * @return The Event type
+         */
+        EVENT_TYPE getEventType() const;
+
+        /**
+         * @brief Get the data of the Event
+         *
+         * @return The data of the Event
+         */
+        std::shared_ptr<component::Component> getEventData() const;
+
+        private:
+        /**
+         * @bried The sender of the Event
+         */
+        EVENT_SENDER _sender;
+
+        /**
+         * @brief The type of Event
+         */
+        EVENT_TYPE _event_type;
+
+        /**
+         * @brief The Component concerned by the event
+         */
+        std::shared_ptr<component::Component> _data;
+    };
+
 }
 
 #endif //CPP_RTYPE_2019_EVENT_HPP

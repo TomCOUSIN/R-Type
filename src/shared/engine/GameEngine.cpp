@@ -70,12 +70,8 @@ void GameEngine::linkEntityWithSystem(entity::Entity const &entity, system::Syst
     }
 }
 
-void GameEngine::addEvent(event::EVENT const &event)
-{
-    _events.push_back(event);
-}
+void GameEngine::addEvent(event::Event const &event)
+{ _events.push_back(event); }
 
-std::vector<event::EVENT> GameEngine::getEvent() const
-{
-    return _events;
-}
+std::vector<event::Event> GameEngine::getEvent() const
+{ return _events; }

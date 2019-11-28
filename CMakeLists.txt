@@ -51,6 +51,7 @@ include_directories(${EVENT_SRC})
 
 # Set source files variable
 SET(INTERFACE
+        ${INTERFACE_SRC}IEvent.hpp
         ${INTERFACE_SRC}ISystem.hpp)
 
 SET(COMPONENT
@@ -82,6 +83,7 @@ SET(SHARED
         ${SFML}
         ${ENTITY}
         ${COMPONENT}
+        ${EVENT_SRC}Event.cpp
         ${EVENT_SRC}Event.hpp
         ${ENGINE_SRC}GameEngine.cpp
         ${ENGINE_SRC}GameEngine.hpp)

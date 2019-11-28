@@ -155,17 +155,18 @@ namespace rtype {
             }
 
             /**
-             * @brief Add en EVENT
-             * @param event The EVENT to add
+             * @brief Add en Event
+             *
+             * @param event The Event to add
              */
-            void addEvent(event::EVENT const &event);
+            void addEvent(event::Event const &event);
 
             /**
-             * @brief Get all the EVENT
+             * @brief Get all the Event
              *
-             * @return Tha array of EVENT
+             * @return The array of Event
              */
-            std::vector<event::EVENT> getEvent() const;
+            std::vector<event::Event> getEvent() const;
 
             /**
              * @brief Update all Entity's Component values
@@ -183,7 +184,7 @@ namespace rtype {
             /**
              * @brief Array of Event
              */
-             std::vector<event::EVENT> _events;
+             std::vector<event::Event> _events;
 
             /**
              * @brief The unordered_map of ComponentStorage to store multiple specific Component
