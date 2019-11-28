@@ -175,6 +175,27 @@ namespace rtype {
              */
             void update(float const &delta);
 
+            /**
+             * @brief Check if the GameEngine has a specific ComponentStorage
+             *
+             * @param type the type of the Component stored
+             * @return true on success
+             * @return false on failure
+             */
+            bool hasComponentStorage(component::ComponentType type);
+
+            /**
+             * @brief Check if the GameEngine has a specific ComponentStorage
+             *
+             * @tparam C the type of the Component stored
+             * @return true on success
+             * @return false on failure
+             */
+            template<typename C>
+            bool hasComponentStorage() {
+                return hasComponentStorage(C::type);
+            }
+
             private:
             /**
              * @brief The counter of the Entity to always have a unique id

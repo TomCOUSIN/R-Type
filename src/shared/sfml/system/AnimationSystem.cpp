@@ -32,6 +32,8 @@ void rtype::sfml::system::AnimationSystem::removeEntity(const rtype::engine::ent
 
 void rtype::sfml::system::AnimationSystem::update(float const &delta)
 {
+    if (!_engine.hasComponentStorage<component::Sprite>())
+        return;
     auto sprite_store = _engine.getComponentStorage<component::Sprite>();
     component::Sprite *sprite = nullptr;
 

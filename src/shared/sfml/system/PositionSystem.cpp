@@ -16,15 +16,20 @@ _engine(engine) {}
 
 void rtype::sfml::system::PositionSystem::update(float const &delta)
 {
+    if (!_engine.hasComponentStorage<component::Position>())
+        return;
     auto position_store = _engine.getComponentStorage<component::Position>();
     component::Position *position;
 
     for (auto &entity : _entities) {
         if (position_store.entityHasComponent(entity)) {
             position = static_cast<component::Position *>(position_store.getComponent(entity).get());
-            updateSpritePosition(position, entity);
-            updateButtonPosition(position, entity);
-            updateTextPosition(position, entity);
+            if (_engine.hasComponentStorage<component::Sprite>())
+                updateSpritePosition(position, entity);
+            if (_engine.hasComponentStorage<component::Button>())
+                updateButtonPosition(position, entity);
+            if (_engine.hasComponentStorage<component::Text>())
+                updateTextPosition(position, entity);
         }
     }
 }

@@ -12,6 +12,9 @@ _engine(engine), _window(window) {}
 
 void rtype::sfml::system::ButtonSystem::update(float const &delta)
 {
+    if (!_engine.hasComponentStorage<component::Position>() ||
+        !_engine.hasComponentStorage<component::Button>())
+        return;
     auto position_store = _engine.getComponentStorage<component::Position>();
     auto button_store = _engine.getComponentStorage<component::Button>();
     component::Position *position = nullptr;

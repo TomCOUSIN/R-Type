@@ -26,21 +26,15 @@ namespace rtype {
                 /**
                  * @brief Construct a Button Component
                  *
-                 * @param text The Text of the Button
                  * @param width The width of the Button
                  * @param height The height of the Button
                  */
-                Button(std::string const &text, float const &width, float const &height, void (*fptr)(void)) :
-                text(text), size(width, height), shape(size), fptr(fptr) {
+                Button(float const &width, float const &height, void (*fptr)(void)) :
+                size(width, height), shape(size), fptr(fptr) {
                     shape.setFillColor(sf::Color::Black);
                     shape.setOutlineThickness(3);
                     shape.setOutlineColor(sf::Color::White);
                 }
-
-                /**
-                 * @brief The text of the Button
-                 */
-                std::string text;
 
                 /**
                  * @brief The size of the Button

@@ -14,6 +14,9 @@ _engine(engine) {}
 
 void rtype::sfml::system::MovementSystem::update(float const &delta)
 {
+    if (!_engine.hasComponentStorage<component::Position>() ||
+        !_engine.hasComponentStorage<component::Speed>())
+        return;
     auto position_store = _engine.getComponentStorage<component::Position>();
     auto speed_store = _engine.getComponentStorage<component::Speed>();
     component::Position *position = nullptr;

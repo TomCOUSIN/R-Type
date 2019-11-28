@@ -17,9 +17,12 @@ void rtype::sfml::system::RenderSystem::update(float const &delta)
 {
     _window.clear(sf::Color::Black);
     for (auto &entity : _entities) {
-        renderSprite(entity);
-        renderButton(entity);
-        renderText(entity);
+        if (_engine.hasComponentStorage<component::Sprite>())
+            renderSprite(entity);
+        if (_engine.hasComponentStorage<component::Button>())
+            renderButton(entity);
+        if (_engine.hasComponentStorage<component::Text>())
+            renderText(entity);
     }
     _window.display();
 }

@@ -75,3 +75,9 @@ void GameEngine::addEvent(event::Event const &event)
 
 std::vector<event::Event> GameEngine::getEvent() const
 { return _events; }
+
+bool GameEngine::hasComponentStorage(component::ComponentType type)
+{
+    auto store = _component_store.find(type);
+    return store != _component_store.end();
+}
