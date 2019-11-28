@@ -30,8 +30,8 @@ namespace rtype {
                  * @param width The width of the Button
                  * @param height The height of the Button
                  */
-                Button(std::string const &text, float const &width, float const &height) :
-                text(text), size(width, height), shape(size) {
+                Button(std::string const &text, float const &width, float const &height, void (*fptr)(void)) :
+                text(text), size(width, height), shape(size), fptr(fptr) {
                     shape.setFillColor(sf::Color::Black);
                     shape.setOutlineThickness(3);
                     shape.setOutlineColor(sf::Color::White);
@@ -53,6 +53,11 @@ namespace rtype {
                 sf::RectangleShape shape;
 
                 /**
+                 * @brief function pointer to call when button is pressed
+                 */
+                void (*fptr)(void);
+
+                /**
                  * @brief When the mouse isn't on the Button
                  */
                 void onDisplay() {
@@ -70,7 +75,7 @@ namespace rtype {
                  * @brief When the mouse click on the Button
                  */
                 void onClick() {
-                    shape.setFillColor(sf::Color::Red);
+                    fptr();
                 }
 
             };

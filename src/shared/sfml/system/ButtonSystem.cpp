@@ -20,8 +20,9 @@ void rtype::sfml::system::ButtonSystem::update(float const &delta)
     for (auto &entity : _entities) {
         if (button_store.entityHasComponent(entity) && position_store.entityHasComponent(entity)) {
             button = static_cast<component::Button *>(button_store.getComponent(entity).get());
-            position =static_cast<component::Position *>(position_store.getComponent(entity).get());
+            position = static_cast<component::Position *>(position_store.getComponent(entity).get());
             checkButtonDisplay(button, position);
+            checkButtonPressed(button, position);
         }
     }
 }
@@ -59,6 +60,30 @@ void rtype::sfml::system::ButtonSystem::checkButtonDisplay(component::Button *bu
     }
     else {
         button->onDisplay();
+    }
+}
+
+void rtype::sfml::system::ButtonSystem::checkButtonPressed(rtype::sfml::component::Button *button, rtype::sfml::component::Position *button_position)
+{
+    component::Position *position = nullptr;
+    bool x = false;
+    bool y = false;
+
+    for (auto &event : _engine.getEvent()) {
+        if (event.getEventType() == engine::event::MOUSE_CLICK) {
+            position = static_cast<component::Position *>(event.getEventData().get());
+            if (position->value.x >= button_position->value.x && position->value.x <= button_position->value.x + button->size.x) {
+                x = true;
+            }
+            if (position->value.y >= button_position->value.y && position->value.y <= button_position->value.y + button->size.y) {
+                y = true;
+            }
+            if (x && y) {
+                button->onClick();
+            }
+        }
+        x = false;
+        y = false;
     }
 }
 

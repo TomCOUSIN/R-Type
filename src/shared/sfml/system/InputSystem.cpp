@@ -6,6 +6,7 @@
 */
 
 #include "InputSystem.hpp"
+#include "Position.hpp"
 #include "Event.hpp"
 
 rtype::sfml::system::InputSystem::InputSystem(engine::GameEngine &engine, sf::RenderWindow &window) :
@@ -26,6 +27,10 @@ void rtype::sfml::system::InputSystem::update(float const &delta)
             case sf::Keyboard::Right: _engine.addEvent(engine::event::Event(engine::event::KEYBOARD, engine::event::ARROW_RIGHT)); break;
             default: break;
             }
+        }
+        if (event.type == sf::Event::MouseButtonPressed) {
+            _engine.addEvent(engine::event::Event(engine::event::MOUSE, engine::event::MOUSE_CLICK,
+                std::make_shared<sfml::component::Position>(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y)));
         }
     }
 }

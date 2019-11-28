@@ -69,6 +69,14 @@ namespace rtype {
                 void checkButtonDisplay(component::Button *button, component::Position *button_position);
 
                 /**
+                 * @brief Check if the mouse click on the button or not
+                 *
+                 * @param position The mouse position
+                 * @param button The Button to check
+                 */
+                void checkButtonPressed(component::Button *button, component::Position *button_position);
+
+                /**
                  * @brief The SystemType of the InputSystem
                  */
                 static const engine::system::SystemType type = 2;
