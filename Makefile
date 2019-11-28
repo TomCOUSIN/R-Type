@@ -34,17 +34,18 @@ tests_run:		$(TESTS_NAME)
 $(CLIENT_NAME):	conan cmake
 				@echo Make $(CLIENT_NAME)
 				@make -C $(BUILD_FOLDER) $(CLIENT_NAME) $(RM_OUTPUT)
-				@ln -s $(addprefix $(BIN_FOLDER), $(CLIENT_NAME)) .
+				@ln -fs $(addprefix $(BIN_FOLDER), $(CLIENT_NAME)) .
 
 $(SERVER_NAME):	conan cmake
 				@echo Make $(SERVER_NAME)
 				@make -C $(BUILD_FOLDER) $(SERVER_NAME) $(RM_OUTPUT)
-				@ln -s $(addprefix $(BIN_FOLDER), $(SERVER_NAME)) .
+				@ln -fs $(addprefix $(BIN_FOLDER), $(SERVER_NAME)) .
 
 $(TESTS_NAME):	conan cmake
 				@echo Make $(TESTS_NAME)
 				@make -C $(BUILD_FOLDER) $(TESTS_NAME) $(RM_OUTPUT)
-				@ln -s $(addprefix $(BIN_FOLDER), $(TESTS_NAME)) .
+				@find . -name "*.gcda" -delete
+				@ln -fs $(addprefix $(BIN_FOLDER), $(TESTS_NAME)) .
 				./$(TESTS_NAME)
 
 conan:
