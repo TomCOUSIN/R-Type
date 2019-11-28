@@ -66,6 +66,11 @@ namespace rtype {
                 void renderButton(engine::entity::Entity const &entity);
 
                 /**
+                 * @brief Render Text
+                 */
+                void renderText(engine::entity::Entity const &entity);
+
+                /**
                  * @brief The SystemType of the RenderSystem
                  *
                  * @param entity The entity to draw

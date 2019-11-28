@@ -9,6 +9,7 @@
 #include "Position.hpp"
 #include "Sprite.hpp"
 #include "Button.hpp"
+#include "Text.hpp"
 
 rtype::sfml::system::PositionSystem::PositionSystem(rtype::engine::GameEngine &engine) :
 _engine(engine) {}
@@ -23,6 +24,7 @@ void rtype::sfml::system::PositionSystem::update(float const &delta)
             position = static_cast<component::Position *>(position_store.getComponent(entity).get());
             updateSpritePosition(position, entity);
             updateButtonPosition(position, entity);
+            updateTextPosition(position, entity);
         }
     }
 }
@@ -62,5 +64,16 @@ void rtype::sfml::system::PositionSystem::updateButtonPosition(component::Positi
     if (button_store.entityHasComponent(entity)) {
         button = static_cast<component::Button *>(button_store.getComponent(entity).get());
         button->shape.setPosition(position->value);
+    }
+}
+
+void rtype::sfml::system::PositionSystem::updateTextPosition(rtype::sfml::component::Position *position, const rtype::engine::entity::Entity &entity)
+{
+    auto text_store = _engine.getComponentStorage<component::Text>();
+    component::Text *text = nullptr;
+
+    if (text_store.entityHasComponent(entity)) {
+        text = static_cast<component::Text *>(text_store.getComponent(entity).get());
+        text->text.setPosition(position->value);
     }
 }

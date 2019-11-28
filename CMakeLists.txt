@@ -77,7 +77,8 @@ SET(SFML
         ${SFML_COMPONENT_SRC}Position.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
         ${SFML_COMPONENT_SRC}Speed.hpp
-        ${SFML_COMPONENT_SRC}Button.hpp)
+        ${SFML_COMPONENT_SRC}Button.hpp
+        ${SFML_COMPONENT_SRC}Text.hpp)
 
 SET(SHARED
         ${SFML}

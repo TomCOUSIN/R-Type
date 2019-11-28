@@ -67,6 +67,13 @@ namespace rtype {
                 void updateButtonPosition(component::Position *position, engine::entity::Entity const &entity);
 
                 /**
+                 * @brief Update the Text Position
+                 *
+                 * @param entity The entity to update
+                 */
+                void updateTextPosition(component::Position *position, engine::entity::Entity const &entity);
+
+                /**
                  * @brief The SystemType of the PositionSystem
                  */
                 static const engine::system::SystemType type = 4;

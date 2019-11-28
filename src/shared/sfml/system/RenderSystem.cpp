@@ -8,6 +8,7 @@
 #include "RenderSystem.hpp"
 #include "Sprite.hpp"
 #include "Button.hpp"
+#include "Text.hpp"
 
 rtype::sfml::system::RenderSystem::RenderSystem(rtype::engine::GameEngine &engine, sf::RenderWindow &window) :
 _engine(engine), _window(window) {}
@@ -18,6 +19,7 @@ void rtype::sfml::system::RenderSystem::update(float const &delta)
     for (auto &entity : _entities) {
         renderSprite(entity);
         renderButton(entity);
+        renderText(entity);
     }
     _window.display();
 }
@@ -57,5 +59,16 @@ void rtype::sfml::system::RenderSystem::renderButton(const engine::entity::Entit
     if (button_store.entityHasComponent(entity)) {
         button = static_cast<component::Button *>(button_store.getComponent(entity).get());
         _window.draw(button->shape);
+    }
+}
+
+void rtype::sfml::system::RenderSystem::renderText(const engine::entity::Entity &entity)
+{
+    auto text_store = _engine.getComponentStorage<component::Text>();
+    component::Text *text = nullptr;
+
+    if (text_store.entityHasComponent(entity)) {
+        text = static_cast<component::Text *>(text_store.getComponent(entity).get());
+        _window.draw(text->text);
     }
 }

@@ -78,6 +78,10 @@ namespace rtype {
                     fptr();
                 }
 
+                /**
+                 * @brief The type of the Component Button
+                 */
+                static const engine::component::ComponentType type = 4;
             };
         }
     }
