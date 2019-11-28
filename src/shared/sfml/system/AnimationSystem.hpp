@@ -60,7 +60,7 @@ namespace rtype {
                 /**
                  * @brief The SystemType of the AnimationSystem
                  */
-                static const engine::system::SystemType type = 4;
+                static const engine::system::SystemType type = 5;
 
                 private:
                 /**

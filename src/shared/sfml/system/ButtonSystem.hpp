@@ -5,12 +5,14 @@
 ** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_RENDERSYSTEM_HPP
-#define CPP_RTYPE_2019_RENDERSYSTEM_HPP
+#ifndef CPP_RTYPE_2019_BUTTONSYSTEM_HPP
+#define CPP_RTYPE_2019_BUTTONSYSTEM_HPP
 
 #include <SFML/Graphics.hpp>
 #include "GameEngine.hpp"
+#include "Position.hpp"
 #include "ISystem.hpp"
+#include "Button.hpp"
 
 namespace rtype {
 
@@ -19,23 +21,26 @@ namespace rtype {
         namespace system {
 
             /**
-             * @brief The SFML RenderSystem to display sprites
+             * @brief Handle Button onHover, onDisplay
              */
-            class RenderSystem : public engine::system::ISystem {
+            class ButtonSystem : public engine::system::ISystem {
 
                 public:
                 /**
-                 * @brief Construct a new RenderSystem
+                 * @brief Construct a ButtonSystem object
+                 *
+                 * @param engine The engine to use
+                 * @param window The window to use to catch mouse position
                  */
-                RenderSystem(engine::GameEngine &engine, sf::RenderWindow &window);
+                ButtonSystem(engine::GameEngine &engine, sf::RenderWindow &window);
 
                 /**
-                 * @brief Destroy a RenderSystem object
+                 * @brief Destroy a ButtonSystem object
                  */
-                ~RenderSystem() final = default;
+                ~ButtonSystem() final = default;
 
                 /**
-                 * @brief Update all Sprite according to Position
+                 * @brief Update sf::Event according to the sf::Window
                  *
                  * @param delta The deltatime since last update
                  */
@@ -56,32 +61,28 @@ namespace rtype {
                 void removeEntity(engine::entity::Entity const &entity) final;
 
                 /**
-                 * @brief Render Sprite
-                 */
-                void renderSprite(engine::entity::Entity const &entity);
-
-                /**
-                 * @brief Render Button
-                 */
-                void renderButton(engine::entity::Entity const &entity);
-
-                /**
-                 * @brief The SystemType of the RenderSystem
+                 * @brief Check if the mouse is on the button or not
                  *
-                 * @param entity The entity to draw
+                 * @param position The mouse position
+                 * @param button The Button to check
                  */
-                static const engine::system::SystemType type = 6;
+                void checkButtonDisplay(component::Button *button, component::Position *button_position);
+
+                /**
+                 * @brief The SystemType of the InputSystem
+                 */
+                static const engine::system::SystemType type = 2;
 
                 private:
+                /**
+                 * @brief The engine to use to set EVENT
+                 */
+                engine::GameEngine &_engine;
+
                 /**
                  * @brief The window used to catch event
                  */
                 sf::RenderWindow &_window;
-
-                /**
-                 * @brief The engine to use to get Sprite Component
-                 */
-                engine::GameEngine &_engine;
 
                 /**
                  * @brief The vector of Entity
@@ -92,4 +93,4 @@ namespace rtype {
     }
 }
 
-#endif //CPP_RTYPE_2019_RENDERSYSTEM_HPP
+#endif //CPP_RTYPE_2019_BUTTONSYSTEM_HPP

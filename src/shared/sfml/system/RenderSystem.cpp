@@ -7,21 +7,17 @@
 
 #include "RenderSystem.hpp"
 #include "Sprite.hpp"
+#include "Button.hpp"
 
 rtype::sfml::system::RenderSystem::RenderSystem(rtype::engine::GameEngine &engine, sf::RenderWindow &window) :
 _engine(engine), _window(window) {}
 
 void rtype::sfml::system::RenderSystem::update(float const &delta)
 {
-    auto sprite_storage = _engine.getComponentStorage<component::Sprite>();
-    component::Sprite *sprite = nullptr;
-
     _window.clear(sf::Color::Black);
     for (auto &entity : _entities) {
-        if (sprite_storage.entityHasComponent(entity)) {
-            sprite = static_cast<component::Sprite *>(sprite_storage.getComponent(entity).get());
-            _window.draw(sprite->sprite);
-        }
+        renderSprite(entity);
+        renderButton(entity);
     }
     _window.display();
 }
@@ -39,5 +35,27 @@ void rtype::sfml::system::RenderSystem::removeEntity(const engine::entity::Entit
             break;
         }
         ++index;
+    }
+}
+
+void rtype::sfml::system::RenderSystem::renderSprite(const engine::entity::Entity &entity)
+{
+    auto sprite_store = _engine.getComponentStorage<component::Sprite>();
+    component::Sprite *sprite = nullptr;
+
+    if (sprite_store.entityHasComponent(entity)) {
+        sprite = static_cast<component::Sprite *>(sprite_store.getComponent(entity).get());
+        _window.draw(sprite->sprite);
+    }
+}
+
+void rtype::sfml::system::RenderSystem::renderButton(const engine::entity::Entity &entity)
+{
+    auto button_store = _engine.getComponentStorage<component::Button>();
+    component::Button *button = nullptr;
+
+    if (button_store.entityHasComponent(entity)) {
+        button = static_cast<component::Button *>(button_store.getComponent(entity).get());
+        _window.draw(button->shape);
     }
 }

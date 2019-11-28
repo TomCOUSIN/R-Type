@@ -9,6 +9,7 @@
 #define CPP_RTYPE_2019_POSITIONSYSTEM_HPP
 
 #include <GameEngine.hpp>
+#include "Position.hpp"
 #include "ISystem.hpp"
 
 namespace rtype {
@@ -52,9 +53,23 @@ namespace rtype {
                 void removeEntity(engine::entity::Entity const &entity) final;
 
                 /**
+                 * @brief Update the Sprite Position
+                 *
+                 * @param entity The entity to update
+                 */
+                void updateSpritePosition(component::Position *position, engine::entity::Entity const &entity);
+
+                /**
+                 * @brief Update the Button Position
+                 *
+                 * @param entity The entity to update
+                 */
+                void updateButtonPosition(component::Position *position, engine::entity::Entity const &entity);
+
+                /**
                  * @brief The SystemType of the PositionSystem
                  */
-                static const engine::system::SystemType type = 3;
+                static const engine::system::SystemType type = 4;
 
                 private:
 

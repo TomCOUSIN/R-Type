@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(CPP_rtype_2019)
 
 # Define c++ version to use
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # Add more cmake module to cmake
 list(APPEND CMAKE_MODULE_PATH cmake_module)
@@ -71,9 +71,12 @@ SET(SFML
         ${SFML_SYSTEM_SRC}AnimationSystem.hpp
         ${SFML_SYSTEM_SRC}MovementSystem.cpp
         ${SFML_SYSTEM_SRC}MovementSystem.hpp
+        ${SFML_SYSTEM_SRC}ButtonSystem.cpp
+        ${SFML_SYSTEM_SRC}ButtonSystem.Hpp
         ${SFML_COMPONENT_SRC}Position.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
-        ${SFML_COMPONENT_SRC}Speed.hpp)
+        ${SFML_COMPONENT_SRC}Speed.hpp
+        ${SFML_COMPONENT_SRC}Button.hpp)
 
 SET(SHARED
         ${SFML}
