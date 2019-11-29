@@ -40,7 +40,6 @@ SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
 SET(SFML_COMPONENT_SRC ${SFML_SRC}component/)
 SET(SFML_SYSTEM_SRC ${SFML_SRC}system/)
-
 # Include directories
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
@@ -55,11 +54,15 @@ include_directories(${SFML_SYSTEM_SRC})
 include_directories(${EVENT_SRC})
 
 # Set source files variable
-SET(INTERFACE)
+SET(INTERFACE
+        ${INTERFACE_SRC}IEvent.hpp
+        ${INTERFACE_SRC}ISystem.hpp)
 
-SET(COMPONENT)
-
-SET(ENTITY)
+SET(COMPONENT
+        ${COMPONENT_SRC}Speed.hpp
+        ${COMPONENT_SRC}Position.hpp
+        ${COMPONENT_SRC}ComponentStorage.hpp
+        ${COMPONENT_SRC}Component.hpp)
 
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)
@@ -70,12 +73,20 @@ SET(NETWORK
 
 SET(SFML
         ${SFML_SYSTEM_SRC}InputSystem.cpp
+        ${SFML_SYSTEM_SRC}InputSystem.hpp
         ${SFML_SYSTEM_SRC}RenderSystem.cpp
+        ${SFML_SYSTEM_SRC}RenderSystem.hpp
         ${SFML_SYSTEM_SRC}PositionSystem.cpp
+        ${SFML_SYSTEM_SRC}PositionSystem.hpp
         ${SFML_SYSTEM_SRC}AnimationSystem.cpp
+        ${SFML_SYSTEM_SRC}AnimationSystem.hpp
         ${SFML_SYSTEM_SRC}MovementSystem.cpp
+        ${SFML_SYSTEM_SRC}MovementSystem.hpp
         ${SFML_SYSTEM_SRC}ButtonSystem.cpp
-        ${SFML_SYSTEM_SRC}ButtonSystem.Hpp)
+        ${SFML_SYSTEM_SRC}ButtonSystem.Hpp
+        ${SFML_COMPONENT_SRC}Sprite.hpp
+        ${SFML_COMPONENT_SRC}Button.hpp
+        ${SFML_COMPONENT_SRC}Text.hpp)
 
 SET(SHARED
         ${SFML}
@@ -84,7 +95,9 @@ SET(SHARED
         ${EXCEPTION}
         ${NETWORK}
         ${EVENT_SRC}Event.cpp
-        ${ENGINE_SRC}GameEngine.cpp)
+        ${EVENT_SRC}Event.hpp
+        ${ENGINE_SRC}GameEngine.cpp
+        ${ENGINE_SRC}GameEngine.hpp)
 
 SET(COMMON
         ${INTERFACE}

@@ -30,7 +30,7 @@ void rtype::sfml::system::InputSystem::update(float const &delta)
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             _engine.addEvent(engine::event::Event(engine::event::MOUSE, engine::event::MOUSE_CLICK,
-                std::make_shared<sfml::component::Position>(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y)));
+                std::make_shared<engine::component::Position>(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y)));
         }
     }
 }
