@@ -70,28 +70,28 @@ namespace rtype {
                  *
                  * @param position The Position to change
                  */
-                void moveUp(component::Position *position, component::Speed *speed);
+                void moveUp(engine::component::Position *position, engine::component::Speed *speed);
 
                 /**
                  * @brief Change Position value to go down
                  *
                  * @param position The Position to change
                  */
-                void moveDown(component::Position *position, component::Speed *speed);
+                void moveDown(engine::component::Position *position, engine::component::Speed *speed);
 
                 /**
                  * @brief Change Position value to go right
                  *
                  * @param position The Position to change
                  */
-                void moveRight(component::Position *position, component::Speed *speed);
+                void moveRight(engine::component::Position *position, engine::component::Speed *speed);
 
                 /**
                  * @brief Change Position value to go left
                  *
                  * @param position The Position to change
                  */
-                void moveLeft(component::Position *position, component::Speed *speed);
+                void moveLeft(engine::component::Position *position, engine::component::Speed *speed);
 
                 /**
                  * @brief The GameEngine to use to get EVENT and Component

@@ -55,6 +55,8 @@ SET(INTERFACE
         ${INTERFACE_SRC}ISystem.hpp)
 
 SET(COMPONENT
+        ${COMPONENT_SRC}Speed.hpp
+        ${COMPONENT_SRC}Position.hpp
         ${COMPONENT_SRC}ComponentStorage.hpp
         ${COMPONENT_SRC}Component.hpp)
 
@@ -74,9 +76,7 @@ SET(SFML
         ${SFML_SYSTEM_SRC}MovementSystem.hpp
         ${SFML_SYSTEM_SRC}ButtonSystem.cpp
         ${SFML_SYSTEM_SRC}ButtonSystem.Hpp
-        ${SFML_COMPONENT_SRC}Position.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
-        ${SFML_COMPONENT_SRC}Speed.hpp
         ${SFML_COMPONENT_SRC}Button.hpp
         ${SFML_COMPONENT_SRC}Text.hpp)
 

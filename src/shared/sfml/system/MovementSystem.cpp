@@ -9,6 +9,8 @@
 #include "Position.hpp"
 #include "Event.hpp"
 
+using namespace rtype::engine;
+
 rtype::sfml::system::MovementSystem::MovementSystem(rtype::engine::GameEngine &engine) :
 _engine(engine) {}
 
@@ -58,20 +60,20 @@ void rtype::sfml::system::MovementSystem::removeEntity(const rtype::engine::enti
 
 void rtype::sfml::system::MovementSystem::moveUp(component::Position *position, component::Speed *speed)
 {
-    position->value.y -= speed->speed;
+    position->y -= speed->y;
 }
 
 void rtype::sfml::system::MovementSystem::moveDown(component::Position *position,  component::Speed *speed)
 {
-    position->value.y += speed->speed;
+    position->y += speed->y;
 }
 
 void rtype::sfml::system::MovementSystem::moveRight(component::Position *position, component::Speed *speed)
 {
-    position->value.x += speed->speed;
+    position->x += speed->x;
 }
 
 void rtype::sfml::system::MovementSystem::moveLeft(component::Position *position, component::Speed *speed)
 {
-    position->value.x -= speed->speed;
+    position->x -= speed->x;
 }

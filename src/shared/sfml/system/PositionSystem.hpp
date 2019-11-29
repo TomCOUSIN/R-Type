@@ -12,86 +12,80 @@
 #include "Position.hpp"
 #include "ISystem.hpp"
 
-namespace rtype {
+namespace rtype::sfml::system {
 
-    namespace sfml {
+    /**
+     * @brief PositionSystem to update Sprite with Position
+     */
+    class PositionSystem : public engine::system::ISystem {
 
-        namespace system {
+        public:
+        /**
+         * @brief Construct a PositionSystem object
+         *
+         * @param engine The GameEngine to use
+         */
+        explicit PositionSystem(engine::GameEngine &engine);
+        ~PositionSystem() final = default;
 
-            /**
-             * @brief PositionSystem to update Sprite with Position
-             */
-            class PositionSystem : public engine::system::ISystem {
+        /**
+         * @brief Update the Sprite with Position value
+         * @param delta
+         */
+        void update(float const &delta) final;
 
-                public:
-                /**
-                 * @brief Construct a PositionSystem object
-                 *
-                 * @param engine The GameEngine to use
-                 */
-                explicit PositionSystem(engine::GameEngine &engine);
-                ~PositionSystem() final = default;
+        /**
+         * @brief Add an Entity to the ISystem
+         *
+         * @param entity The Entity to add
+         */
+        void addEntity(engine::entity::Entity const &entity) final;
 
-                /**
-                 * @brief Update the Sprite with Position value
-                 * @param delta
-                 */
-                void update(float const &delta) final;
+        /**
+         * @brief Remove an Entity from the ISystem
+         *
+         * @param entity The Entity to remove
+         */
+        void removeEntity(engine::entity::Entity const &entity) final;
 
-                /**
-                 * @brief Add an Entity to the ISystem
-                 *
-                 * @param entity The Entity to add
-                 */
-                void addEntity(engine::entity::Entity const &entity) final;
+        /**
+         * @brief Update the Sprite Position
+         *
+         * @param entity The entity to update
+         */
+        void updateSpritePosition(engine::component::Position *position, engine::entity::Entity const &entity);
 
-                /**
-                 * @brief Remove an Entity from the ISystem
-                 *
-                 * @param entity The Entity to remove
-                 */
-                void removeEntity(engine::entity::Entity const &entity) final;
+        /**
+         * @brief Update the Button Position
+         *
+         * @param entity The entity to update
+         */
+        void updateButtonPosition(engine::component::Position *position, engine::entity::Entity const &entity);
 
-                /**
-                 * @brief Update the Sprite Position
-                 *
-                 * @param entity The entity to update
-                 */
-                void updateSpritePosition(component::Position *position, engine::entity::Entity const &entity);
+        /**
+         * @brief Update the Text Position
+         *
+         * @param entity The entity to update
+         */
+        void updateTextPosition(engine::component::Position *position, engine::entity::Entity const &entity);
 
-                /**
-                 * @brief Update the Button Position
-                 *
-                 * @param entity The entity to update
-                 */
-                void updateButtonPosition(component::Position *position, engine::entity::Entity const &entity);
+        /**
+         * @brief The SystemType of the PositionSystem
+         */
+        static const engine::system::SystemType type = 4;
 
-                /**
-                 * @brief Update the Text Position
-                 *
-                 * @param entity The entity to update
-                 */
-                void updateTextPosition(component::Position *position, engine::entity::Entity const &entity);
+        private:
 
-                /**
-                 * @brief The SystemType of the PositionSystem
-                 */
-                static const engine::system::SystemType type = 4;
+        /**
+         * @brief The GameEngine to use
+         */
+        engine::GameEngine &_engine;
 
-                private:
-
-                /**
-                 * @brief The GameEngine to use
-                 */
-                engine::GameEngine &_engine;
-
-                /**
-                 * @brief The vector of Entity
-                 */
-                std::vector<engine::entity::Entity> _entities;
-            };
-        }
-    }
+        /**
+         * @brief The vector of Entity
+         */
+        std::vector<engine::entity::Entity> _entities;
+    };
 }
 
 #endif //CPP_RTYPE_2019_POSITIONSYSTEM_HPP

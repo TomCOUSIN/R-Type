@@ -11,19 +11,21 @@
 #include "Button.hpp"
 #include "Text.hpp"
 
-rtype::sfml::system::PositionSystem::PositionSystem(rtype::engine::GameEngine &engine) :
+using namespace rtype::sfml::component;
+
+rtype::sfml::system::PositionSystem::PositionSystem(engine::GameEngine &engine) :
 _engine(engine) {}
 
 void rtype::sfml::system::PositionSystem::update(float const &delta)
 {
-    if (!_engine.hasComponentStorage<component::Position>())
+    if (!_engine.hasComponentStorage<engine::component::Position>())
         return;
-    auto position_store = _engine.getComponentStorage<component::Position>();
-    component::Position *position;
+    auto position_store = _engine.getComponentStorage<engine::component::Position>();
+    engine::component::Position *position;
 
     for (auto &entity : _entities) {
         if (position_store.entityHasComponent(entity)) {
-            position = static_cast<component::Position *>(position_store.getComponent(entity).get());
+            position = static_cast<engine::component::Position *>(position_store.getComponent(entity).get());
             if (_engine.hasComponentStorage<component::Sprite>())
                 updateSpritePosition(position, entity);
             if (_engine.hasComponentStorage<component::Button>())
@@ -50,35 +52,35 @@ void rtype::sfml::system::PositionSystem::removeEntity(const engine::entity::Ent
     }
 }
 
-void rtype::sfml::system::PositionSystem::updateSpritePosition(component::Position *position, const rtype::engine::entity::Entity &entity)
+void rtype::sfml::system::PositionSystem::updateSpritePosition(engine::component::Position *position, const rtype::engine::entity::Entity &entity)
 {
     auto sprite_store = _engine.getComponentStorage<component::Sprite>();
     component::Sprite *sprite = nullptr;
 
     if (sprite_store.entityHasComponent(entity)) {
         sprite = static_cast<component::Sprite *>(sprite_store.getComponent(entity).get());
-        sprite->sprite.setPosition(position->value);
+        sprite->sprite.setPosition(sf::Vector2f(position->x, position->y));
     }
 }
 
-void rtype::sfml::system::PositionSystem::updateButtonPosition(component::Position *position, const rtype::engine::entity::Entity &entity)
+void rtype::sfml::system::PositionSystem::updateButtonPosition(engine::component::Position *position, const rtype::engine::entity::Entity &entity)
 {
     auto button_store = _engine.getComponentStorage<component::Button>();
     component::Button *button = nullptr;
 
     if (button_store.entityHasComponent(entity)) {
         button = static_cast<component::Button *>(button_store.getComponent(entity).get());
-        button->shape.setPosition(position->value);
+        button->shape.setPosition(sf::Vector2f(position->x, position->y));
     }
 }
 
-void rtype::sfml::system::PositionSystem::updateTextPosition(rtype::sfml::component::Position *position, const rtype::engine::entity::Entity &entity)
+void rtype::sfml::system::PositionSystem::updateTextPosition(engine::component::Position *position, const rtype::engine::entity::Entity &entity)
 {
     auto text_store = _engine.getComponentStorage<component::Text>();
     component::Text *text = nullptr;
 
     if (text_store.entityHasComponent(entity)) {
         text = static_cast<component::Text *>(text_store.getComponent(entity).get());
-        text->text.setPosition(position->value);
+        text->text.setPosition(sf::Vector2f(position->x, position->y));
     }
 }
