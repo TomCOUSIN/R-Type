@@ -55,8 +55,11 @@ include_directories(${EVENT_SRC})
 
 # Set source files variable
 SET(INTERFACE
+        ${INTERFACE_SRC}ITimer.hpp
+        ${INTERFACE_SRC}IScene.hpp
         ${INTERFACE_SRC}IEvent.hpp
-        ${INTERFACE_SRC}ISystem.hpp)
+        ${INTERFACE_SRC}ISystem.hpp
+        ${INTERFACE_SRC}IGraphic.hpp)
 
 SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
