@@ -52,6 +52,7 @@ namespace rtype {
              */
             template<typename C>
             component::ComponentStorage<std::shared_ptr<component::Component>> getComponentStorage() const {
+                static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
                 return getComponentStorage(C::type);
             }
 
@@ -83,6 +84,7 @@ namespace rtype {
              */
             template<typename C>
             void loadComponentStorage() {
+                static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
                 loadComponentStorage(C::type);
             }
 
@@ -105,6 +107,7 @@ namespace rtype {
              */
             template<typename C, typename ...Params>
             void linkEntityWithComponent(entity::Entity const &entity, Params&&... params) {
+                static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
                 linkEntityWithComponent(entity, C::type, std::make_shared<C>((params)...));
             }
 
@@ -132,6 +135,7 @@ namespace rtype {
              */
             template<typename S>
             void linkEntityWithSystem(entity::Entity const &entity) {
+                static_assert(std::is_base_of<system::ISystem, S>::value, "You need to pass a System");
                 linkEntityWithSystem(entity, S::type);
             }
 
@@ -151,6 +155,7 @@ namespace rtype {
              */
             template<typename S, typename ...Params>
             void loadSystem(Params&&... params) {
+                static_assert(std::is_base_of<system::ISystem, S>::value, "You need to pass a System");
                 loadSystem(S::type, std::make_shared<S>((params)...));
             }
 
@@ -193,6 +198,7 @@ namespace rtype {
              */
             template<typename C>
             bool hasComponentStorage() {
+                static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
                 return hasComponentStorage(C::type);
             }
 
