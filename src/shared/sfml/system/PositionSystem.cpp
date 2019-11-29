@@ -58,6 +58,7 @@ void rtype::sfml::system::PositionSystem::updateSpritePosition(engine::component
     component::Sprite *sprite = nullptr;
 
     if (sprite_store.entityHasComponent(entity)) {
+        std::cout << "ok" << std::endl;
         sprite = static_cast<component::Sprite *>(sprite_store.getComponent(entity).get());
         sprite->sprite.setPosition(sf::Vector2f(position->x, position->y));
     }

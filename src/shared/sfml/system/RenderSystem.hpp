@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include "GameEngine.hpp"
 #include "ISystem.hpp"
+#include "Position.hpp"
 
 namespace rtype {
 

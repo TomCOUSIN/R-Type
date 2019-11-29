@@ -7,47 +7,47 @@
 
 #include "MovementSystem.hpp"
 #include "Position.hpp"
-#include "Event.hpp"
+#include "InputEvent.hpp"
 
-using namespace rtype::engine;
+namespace rtype::sfml::system {
 
-rtype::sfml::system::MovementSystem::MovementSystem(rtype::engine::GameEngine &engine) :
+MovementSystem::MovementSystem(rtype::engine::GameEngine &engine) :
 _engine(engine) {}
 
-void rtype::sfml::system::MovementSystem::update(float const &delta)
+void MovementSystem::update(float const &delta)
 {
-    if (!_engine.hasComponentStorage<component::Position>() ||
-        !_engine.hasComponentStorage<component::Speed>())
+    if (!_engine.hasComponentStorage<engine::component::Position>() ||
+        !_engine.hasComponentStorage<engine::component::Speed>())
         return;
-    auto position_store = _engine.getComponentStorage<component::Position>();
-    auto speed_store = _engine.getComponentStorage<component::Speed>();
-    component::Position *position = nullptr;
-    component::Speed *speed = nullptr;
-    auto events = _engine.getEvent();
+    auto position_store = _engine.getComponentStorage<engine::component::Position>();
+    auto speed_store = _engine.getComponentStorage<engine::component::Speed>();
+    engine::component::Position *position = nullptr;
+    engine::component::Speed *speed = nullptr;
+    // auto events = _engine.getEvent();
 
-    for (auto &entity : _entities) {
-        if (position_store.entityHasComponent(entity) && speed_store.entityHasComponent(entity)) {
-            position = static_cast<component::Position *>(position_store.getComponent(entity).get());
-            speed = static_cast<component::Speed *>(speed_store.getComponent(entity).get());
-            for (const auto &event : events) {
-                switch(event.getEventType()) {
-                case engine::event::ARROW_UP: moveUp(position, speed); break;
-                case engine::event::ARROW_DOWN: moveDown(position, speed); break;
-                case engine::event::ARROW_RIGHT: moveRight(position, speed); break;
-                case engine::event::ARROW_LEFT: moveLeft(position, speed); break;
-                    default: break;
-                }
-            }
-        }
-    }
+    // for (auto &entity : _entities) {
+    //     if (position_store.entityHasComponent(entity) && speed_store.entityHasComponent(entity)) {
+    //         position = static_cast<component::Position *>(position_store.getComponent(entity).get());
+    //         speed = static_cast<component::Speed *>(speed_store.getComponent(entity).get());
+    //         for (const auto &event : events) {
+    //             switch(event.getEventType()) {
+    //             case event::InputEvent::ARROW_UP: moveUp(position, speed); break;
+    //             case event::InputEvent::ARROW_DOWN: moveDown(position, speed); break;
+    //             case event::InputEvent::ARROW_RIGHT: moveRight(position, speed); break;
+    //             case event::InputEvent::ARROW_LEFT: moveLeft(position, speed); break;
+    //                 default: break;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
-void rtype::sfml::system::MovementSystem::addEntity(const rtype::engine::entity::Entity &entity)
+void MovementSystem::addEntity(const rtype::engine::entity::Entity &entity)
 {
     _entities.push_back(entity);
 }
 
-void rtype::sfml::system::MovementSystem::removeEntity(const rtype::engine::entity::Entity &entity)
+void MovementSystem::removeEntity(const rtype::engine::entity::Entity &entity)
 {
     for (unsigned long index = 0; index < _entities.size(); ++index) {
         if (_entities[index] == entity) {
@@ -58,22 +58,24 @@ void rtype::sfml::system::MovementSystem::removeEntity(const rtype::engine::enti
     }
 }
 
-void rtype::sfml::system::MovementSystem::moveUp(component::Position *position, component::Speed *speed)
+void MovementSystem::moveUp(engine::component::Position *position, engine::component::Speed *speed)
 {
     position->y -= speed->y;
 }
 
-void rtype::sfml::system::MovementSystem::moveDown(component::Position *position,  component::Speed *speed)
+void MovementSystem::moveDown(engine::component::Position *position,  engine::component::Speed *speed)
 {
     position->y += speed->y;
 }
 
-void rtype::sfml::system::MovementSystem::moveRight(component::Position *position, component::Speed *speed)
+void MovementSystem::moveRight(engine::component::Position *position, engine::component::Speed *speed)
 {
     position->x += speed->x;
 }
 
-void rtype::sfml::system::MovementSystem::moveLeft(component::Position *position, component::Speed *speed)
+void MovementSystem::moveLeft(engine::component::Position *position, engine::component::Speed *speed)
 {
     position->x -= speed->x;
+}
+
 }

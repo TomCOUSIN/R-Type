@@ -6,11 +6,14 @@
 */
 
 #include "ButtonSystem.hpp"
+#include "InputEvent.hpp"
 
-rtype::sfml::system::ButtonSystem::ButtonSystem(rtype::engine::GameEngine &engine, sf::RenderWindow &window) :
+namespace rtype::sfml::system {
+
+ButtonSystem::ButtonSystem(rtype::engine::GameEngine &engine, sf::RenderWindow &window) :
 _engine(engine), _window(window) {}
 
-void rtype::sfml::system::ButtonSystem::update(float const &delta)
+void ButtonSystem::update(float const &delta)
 {
     if (!_engine.hasComponentStorage<rtype::engine::component::Position>() ||
         !_engine.hasComponentStorage<component::Button>())
@@ -30,12 +33,12 @@ void rtype::sfml::system::ButtonSystem::update(float const &delta)
     }
 }
 
-void rtype::sfml::system::ButtonSystem::addEntity(const rtype::engine::entity::Entity &entity)
+void ButtonSystem::addEntity(const rtype::engine::entity::Entity &entity)
 {
     _entities.push_back(entity);
 }
 
-void rtype::sfml::system::ButtonSystem::removeEntity(const rtype::engine::entity::Entity &entity)
+void ButtonSystem::removeEntity(const rtype::engine::entity::Entity &entity)
 {
     for (unsigned long index = 0; index < _entities.size(); ++index) {
         if (_entities[index] == entity) {
@@ -46,7 +49,7 @@ void rtype::sfml::system::ButtonSystem::removeEntity(const rtype::engine::entity
     }
 }
 
-void rtype::sfml::system::ButtonSystem::checkButtonDisplay(component::Button *button, rtype::engine::component::Position *button_position)
+void ButtonSystem::checkButtonDisplay(component::Button *button, component::Position *button_position)
 {
     sf::Vector2i mouse_position = sf::Mouse::getPosition(_window);
     bool x = false;
@@ -66,27 +69,28 @@ void rtype::sfml::system::ButtonSystem::checkButtonDisplay(component::Button *bu
     }
 }
 
-void rtype::sfml::system::ButtonSystem::checkButtonPressed(rtype::sfml::component::Button *button, rtype::engine::component::Position *button_position)
+void ButtonSystem::checkButtonPressed(component::Button *button, rtype::engine::component::Position *button_position)
 {
     rtype::engine::component::Position *position = nullptr;
     bool x = false;
     bool y = false;
 
-    for (auto &event : _engine.getEvent()) {
-        if (event.getEventType() == engine::event::MOUSE_CLICK) {
-            position = static_cast<rtype::engine::component::Position *>(event.getEventData().get());
-            if (position->x >= button_position->x && position->x <= button_position->x + button->size.x) {
-                x = true;
-            }
-            if (position->y >= button_position->y && position->y <= button_position->y + button->size.y) {
-                y = true;
-            }
-            if (x && y) {
-                button->onClick();
-            }
-        }
-        x = false;
-        y = false;
-    }
+    // for (auto &event : _engine.getEvent()) {
+    //     if (event.getEventType() == event::InputEvent::MOUSE_CLICK) {
+    //         position = static_cast<component::Position *>(event.getEventData().get());
+    //         if (position->value.x >= button_position->value.x && position->value.x <= button_position->value.x + button->size.x) {
+    //             x = true;
+    //         }
+    //         if (position->value.y >= button_position->value.y && position->value.y <= button_position->value.y + button->size.y) {
+    //             y = true;
+    //         }
+    //         if (x && y) {
+    //             button->onClick();
+    //         }
+    //     }
+    //     x = false;
+    //     y = false;
+    // }
 }
 
+}

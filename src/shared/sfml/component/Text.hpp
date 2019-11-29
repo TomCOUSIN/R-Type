@@ -27,6 +27,10 @@ namespace rtype::sfml::component {
             text.setFillColor(sf::Color::White);
         }
 
+        void update(std::string const &message) {
+            text.setString(message);
+        }
+
         /**
          * @brief The text to use
          */

@@ -94,6 +94,13 @@ namespace rtype {
                 void moveLeft(engine::component::Position *position, engine::component::Speed *speed);
 
                 /**
+                 * @brief Change Position value to go left
+                 *
+                 * @param position The Position to change
+                 */
+                void moveSprite(component::Position *position, component::Speed *speed);
+
+                /**
                  * @brief The GameEngine to use to get EVENT and Component
                  */
                 engine::GameEngine &_engine;

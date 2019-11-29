@@ -7,7 +7,7 @@
 
 #include "GameEngine.hpp"
 
-using namespace rtype::engine;
+namespace rtype::engine {
 
 GameEngine::GameEngine() :
 _counter(0) {}
@@ -53,7 +53,6 @@ void GameEngine::update(float const &delta)
     for (const auto& system : _systems) {
         system.second->update(delta);
     }
-    _events.clear();
 }
 
 component::ComponentStorage<std::shared_ptr<component::Component>> GameEngine::getComponentStorage(component::ComponentType type) const
@@ -70,14 +69,36 @@ void GameEngine::linkEntityWithSystem(entity::Entity const &entity, system::Syst
     }
 }
 
-void GameEngine::addEvent(event::Event const &event)
-{ _events.push_back(event); }
+void GameEngine::dispatchEvent(event::Event const &event)
+{
+    auto key = std::make_pair(event.getSender(), event.getEventType());
+    auto value = _listeners.find(key);
 
-std::vector<event::Event> GameEngine::getEvent() const
-{ return _events; }
+    if (value == _listeners.end()) {
+        return;
+    }
+    auto listeners_for_key = value->second;
+    for (auto &listener : listeners_for_key) {
+        listener(event);
+    }
+}
+
+void GameEngine::subscribeTo(event::Event const &event, event::EventCallback callback)
+{
+    auto key = std::make_pair(event.getSender(), event.getEventType());
+    auto value = _listeners.find(key);
+
+    if (value == _listeners.end()) {
+        _listeners.emplace(key, std::vector({callback}));
+    } else {
+        value->second.push_back(callback);
+    }
+}
 
 bool GameEngine::hasComponentStorage(component::ComponentType type)
 {
     auto store = _component_store.find(type);
     return store != _component_store.end();
+}
+
 }

@@ -40,6 +40,8 @@ SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
 SET(SFML_COMPONENT_SRC ${SFML_SRC}component/)
 SET(SFML_SYSTEM_SRC ${SFML_SRC}system/)
+SET(SFML_EVENT_SRC ${SFML_SRC}event/)
+
 # Include directories
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
@@ -51,6 +53,7 @@ include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
 include_directories(${SFML_COMPONENT_SRC})
 include_directories(${SFML_SYSTEM_SRC})
+include_directories(${SFML_EVENT_SRC})
 include_directories(${EVENT_SRC})
 
 # Set source files variable
@@ -72,6 +75,7 @@ SET(NETWORK
         ${NETWORK_SRC}Packet.cpp)
 
 SET(SFML
+        ${SFML_EVENT_SRC}InputEvent.cpp
         ${SFML_SYSTEM_SRC}InputSystem.cpp
         ${SFML_SYSTEM_SRC}InputSystem.hpp
         ${SFML_SYSTEM_SRC}RenderSystem.cpp

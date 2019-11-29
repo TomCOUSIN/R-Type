@@ -11,6 +11,8 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <functional>
+
 #include "ComponentStorage.hpp"
 #include "ISystem.hpp"
 #include "Event.hpp"
@@ -164,14 +166,15 @@ namespace rtype {
              *
              * @param event The Event to add
              */
-            void addEvent(event::Event const &event);
+            void dispatchEvent(event::Event const &event);
 
             /**
-             * @brief Get all the Event
+             * @brief Subscribe to event
              *
-             * @return The array of Event
+             * @param event event to listen
+             * @param callback callback
              */
-            std::vector<event::Event> getEvent() const;
+            void subscribeTo(event::Event const &event, event::EventCallback callback);
 
             /**
              * @brief Update all Entity's Component values
@@ -209,9 +212,9 @@ namespace rtype {
             entity::Entity _counter;
 
             /**
-             * @brief Array of Event
+             * @brief Array of listeners
              */
-             std::vector<event::Event> _events;
+            std::map<std::pair<event::EVENT_SENDER, event::EventType>, std::vector<event::EventCallback>> _listeners;
 
             /**
              * @brief The unordered_map of ComponentStorage to store multiple specific Component

@@ -48,7 +48,7 @@ $(TESTS_NAME):	conan cmake
 				@ln -fs $(addprefix $(BIN_FOLDER), $(TESTS_NAME)) .
 				./$(TESTS_NAME)
 
-conan:
+conan:	clean_test
 				@mkdir -p $(BUILD_FOLDER)
 				@echo "Start Conan Install"
 				@conan install . -if $(BUILD_FOLDER) --build=missing $(RM_OUTPUT)
@@ -62,6 +62,10 @@ cmake:
 doc:
 				@echo "Create Documentation"
 				@doxygen doc/configuration $(RM_OUTPUT)
+
+clean_test:
+				@find . -name "*.gcda" -delete
+
 clean:
 				@echo Remove $(BUILD_FOLDER) folder
 				@$(RM) $(BUILD_FOLDER)

@@ -9,6 +9,7 @@
 #define CPP_RTYPE_2019_EVENT_HPP
 
 #include <iostream>
+
 #include "IEvent.hpp"
 #include "Component.hpp"
 
@@ -19,16 +20,23 @@ namespace rtype::engine::event {
      */
     class Event : public IEvent {
 
+    // @MARK Constructors/Destructors
         public:
         /**
          * @brief Construct an Event object
          */
-        Event(EVENT_SENDER sender, EVENT_TYPE event_type, std::shared_ptr<component::Component> data = nullptr);
+        Event(EVENT_SENDER sender, EventType event_type, std::shared_ptr<component::Component> data = nullptr);
+
+        /**
+         * @brief Construct an Event object
+         */
+        Event(EVENT_SENDER sender, std::shared_ptr<component::Component> data = nullptr);
+
 
         /**
          * @brief Destroy an Event object
          */
-        ~Event() final = default;
+        ~Event() override = default;
 
         /**
          * @brief Get the sender of the Event
@@ -42,7 +50,7 @@ namespace rtype::engine::event {
          *
          * @return The Event type
          */
-        EVENT_TYPE getEventType() const;
+        EventType getEventType() const;
 
         /**
          * @brief Get the data of the Event
@@ -51,7 +59,11 @@ namespace rtype::engine::event {
          */
         std::shared_ptr<component::Component> getEventData() const;
 
-        private:
+    // @MARK Properties
+        public:
+        static EventType event_type_counter;
+
+        protected:
         /**
          * @bried The sender of the Event
          */
@@ -60,13 +72,16 @@ namespace rtype::engine::event {
         /**
          * @brief The type of Event
          */
-        EVENT_TYPE _event_type;
+        EventType _event_type;
 
         /**
          * @brief The Component concerned by the event
          */
         std::shared_ptr<component::Component> _data;
     };
+
+    // @MARK Types
+        using EventCallback = std::function<void(Event const &)>;
 
 }
 
