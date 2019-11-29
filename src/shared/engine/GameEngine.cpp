@@ -69,6 +69,13 @@ void GameEngine::linkEntityWithSystem(entity::Entity const &entity, system::Syst
         system->second->addEntity(entity);
     }
 }
+void GameEngine::unlinkEntityWithSystem(entity::Entity const &entity, system::SystemType type)
+{
+    auto system = _systems.find(type);
+    if (system != _systems.end()) {
+        system->second->removeEntity(entity);
+    }
+}
 
 void GameEngine::addEvent(event::Event const &event)
 { _events.push_back(event); }

@@ -27,6 +27,7 @@ SET(SHARED_SRC ${SRC}shared/)
 SET(SERVER_SRC ${SRC}server/)
 SET(CLIENT_SRC ${SRC}client/)
 
+SET(GAME_SRC ${CLIENT_SRC}game/)
 SET(SFML_SRC ${SHARED_SRC}sfml/)
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(EXCEPTION_SRC ${SHARED_SRC}exception/)
@@ -40,6 +41,10 @@ SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
 
 SET(SFML_COMPONENT_SRC ${SFML_SRC}component/)
 SET(SFML_SYSTEM_SRC ${SFML_SRC}system/)
+SET(SFML_GRAPHIC_SRC ${SFML_SRC}graphic/)
+SET(SFML_TIMER_SRC ${SFML_SRC}timer/)
+
+SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 # Include directories
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
@@ -51,6 +56,9 @@ include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
 include_directories(${SFML_COMPONENT_SRC})
 include_directories(${SFML_SYSTEM_SRC})
+include_directories(${SFML_GRAPHIC_SRC})
+include_directories(${SFML_TIMER_SRC})
+include_directories(${GAME_SCENE_SRC})
 include_directories(${EVENT_SRC})
 
 # Set source files variable
@@ -89,7 +97,11 @@ SET(SFML
         ${SFML_SYSTEM_SRC}ButtonSystem.Hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
         ${SFML_COMPONENT_SRC}Button.hpp
-        ${SFML_COMPONENT_SRC}Text.hpp)
+        ${SFML_COMPONENT_SRC}Text.hpp
+        ${SFML_GRAPHIC_SRC}SfmlGraphic.cpp
+        ${SFML_GRAPHIC_SRC}SfmlGraphic.hpp
+        ${SFML_TIMER_SRC}SfmlTimer.cpp
+        ${SFML_TIMER_SRC}SfmlTimer.hpp)
 
 SET(SHARED
         ${SFML}
@@ -106,6 +118,10 @@ SET(COMMON
         ${INTERFACE}
         ${SHARED})
 
+SET(GAME
+        ${GAME_SCENE_SRC}MenuScene.cpp
+        ${GAME_SCENE_SRC}MenuScene.hpp)
+
 SET(SERVER
         ${SERVER_SRC}main.cpp)
 
@@ -120,7 +136,7 @@ SET(UNIT_TESTS
 
 # Create executable
 add_executable(r-type_server ${SERVER} ${COMMON})
-add_executable(r-type_client ${CLIENT} ${COMMON})
+add_executable(r-type_client ${CLIENT} ${COMMON} ${GAME})
 
 message(${CONAN_LIBS})
 # Link library to executable
