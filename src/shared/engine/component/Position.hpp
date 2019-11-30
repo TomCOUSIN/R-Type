@@ -8,7 +8,6 @@
 #ifndef CPP_RTYPE_2019_POSITION_HPP
 #define CPP_RTYPE_2019_POSITION_HPP
 
-#include <SFML/Graphics.hpp>
 #include "Component.hpp"
 
 namespace rtype::engine::component {

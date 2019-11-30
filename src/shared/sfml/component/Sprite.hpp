@@ -91,7 +91,7 @@ namespace rtype {
                 /**
                  * @brief The type of the Component Position
                  */
-                static const engine::component::ComponentType type = 2;
+                static const engine::component::ComponentType type = 6;
             };
         }
     }

@@ -83,7 +83,8 @@ SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
         ${COMPONENT_SRC}Position.hpp
         ${COMPONENT_SRC}ComponentStorage.hpp
-        ${COMPONENT_SRC}Component.hpp)
+        ${COMPONENT_SRC}Component.hpp
+        ${COMPONENT_SRC}Health.hpp)
 
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)
