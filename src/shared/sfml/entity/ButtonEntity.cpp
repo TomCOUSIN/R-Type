@@ -29,7 +29,7 @@ ButtonEntity::ButtonEntity(engine::GameEngine &game_engine
                           , float const &height
                           , std::function<void(void)> callback):
     engine::entity::EntityCreator(game_engine),
-    _is_hover(false),
+    _callback(callback),
     _position(std::make_shared<engine::component::Position>(x, y, true)),
     _button(std::make_shared<sfml::component::Button>(width, height)),
     _text(std::make_shared<sfml::component::Text>(title))
@@ -75,6 +75,7 @@ ButtonEntity::ButtonEntity(engine::GameEngine &game_engine
         event::InputEvent(event::InputEvent::MOUSE_PRESSED),
         [this] (engine::event::Event const &event) {
             _button->clicked = _button->hover;
+            _callback();
         }
     );
 

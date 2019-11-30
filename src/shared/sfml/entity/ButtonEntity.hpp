@@ -41,7 +41,7 @@ namespace rtype::sfml::entity {
 
 	// @MARK Properties
 		private:
-		bool _is_hover;
+		std::function<void(void)> _callback;
 		std::shared_ptr<engine::component::Position> _position;
 		std::shared_ptr<sfml::component::Button> _button;
 		std::shared_ptr<sfml::component::Text> _text;
