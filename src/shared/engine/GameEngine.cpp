@@ -24,7 +24,7 @@ void GameEngine::destroyEntity(entity::Entity const &entity)
 
 void GameEngine::loadComponentStorage(component::ComponentType type)
 {
-    _component_store.emplace(std::make_pair(type, component::ComponentStorage<std::shared_ptr<component::Component>>()));
+    _component_store.emplace(std::make_pair(type, component::ComponentStorage<component::Component>()));
 }
 
 void GameEngine::linkEntityWithComponent(entity::Entity const &entity, component::ComponentType type, std::shared_ptr<component::Component> ptr)
@@ -55,7 +55,7 @@ void GameEngine::update(float const &delta)
     }
 }
 
-component::ComponentStorage<std::shared_ptr<component::Component>> GameEngine::getComponentStorage(component::ComponentType type) const
+component::ComponentStorage<component::Component> GameEngine::getComponentStorage(component::ComponentType type) const
 {
     auto component_storage = _component_store.find(type);
     return component_storage->second;

@@ -25,6 +25,11 @@ namespace rtype {
             struct Component {
 
                 /**
+                 * @brief Destroy the Component
+                 */
+                virtual ~Component() = default;
+
+                /**
                  * @brief Component's type.
                  *
                  * By default it is set to INVALID

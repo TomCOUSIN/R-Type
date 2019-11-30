@@ -62,7 +62,7 @@ namespace rtype::sfml::system {
          * @param position The mouse position
          * @param button The Button to check
          */
-        void checkButtonDisplay(component::Button *button, rtype::engine::component::Position *button_position);
+        void checkButtonDisplay(std::shared_ptr<component::Button> button, std::shared_ptr<engine::component::Position> button_position);
 
         /**
          * @brief Check if the mouse click on the button or not
@@ -70,7 +70,7 @@ namespace rtype::sfml::system {
          * @param position The mouse position
          * @param button The Button to check
          */
-        void checkButtonPressed(component::Button *button, rtype::engine::component::Position *button_position);
+        void checkButtonPressed(std::shared_ptr<component::Button> button, std::shared_ptr<engine::component::Position> button_position);
 
         /**
          * @brief The SystemType of the InputSystem

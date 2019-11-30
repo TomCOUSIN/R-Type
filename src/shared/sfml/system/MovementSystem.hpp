@@ -70,35 +70,35 @@ namespace rtype {
                  *
                  * @param position The Position to change
                  */
-                void moveUp(engine::component::Position *position, engine::component::Speed *speed);
+                void moveUp(std::shared_ptr<engine::component::Position> position, std::shared_ptr<engine::component::Speed> speed);
 
                 /**
                  * @brief Change Position value to go down
                  *
                  * @param position The Position to change
                  */
-                void moveDown(engine::component::Position *position, engine::component::Speed *speed);
+                void moveDown(std::shared_ptr<engine::component::Position> position, std::shared_ptr<engine::component::Speed> speed);
 
                 /**
                  * @brief Change Position value to go right
                  *
                  * @param position The Position to change
                  */
-                void moveRight(engine::component::Position *position, engine::component::Speed *speed);
+                void moveRight(std::shared_ptr<engine::component::Position> position, std::shared_ptr<engine::component::Speed> speed);
 
                 /**
                  * @brief Change Position value to go left
                  *
                  * @param position The Position to change
                  */
-                void moveLeft(engine::component::Position *position, engine::component::Speed *speed);
+                void moveLeft(std::shared_ptr<engine::component::Position> position, std::shared_ptr<engine::component::Speed> speed);
 
                 /**
                  * @brief Change Position value to go left
                  *
                  * @param position The Position to change
                  */
-                void moveSprite(component::Position *position, component::Speed *speed);
+                void moveSprite(engine::component::Position *position, engine::component::Speed *speed);
 
                 /**
                  * @brief The GameEngine to use to get EVENT and Component

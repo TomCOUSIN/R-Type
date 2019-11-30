@@ -53,21 +53,21 @@ namespace rtype::sfml::system {
          *
          * @param entity The entity to update
          */
-        void updateSpritePosition(engine::component::Position *position, engine::entity::Entity const &entity);
+        void updateSpritePosition(std::shared_ptr<engine::component::Position> position, engine::entity::Entity const &entity);
 
         /**
          * @brief Update the Button Position
          *
          * @param entity The entity to update
          */
-        void updateButtonPosition(engine::component::Position *position, engine::entity::Entity const &entity);
+        void updateButtonPosition(std::shared_ptr<engine::component::Position> position, engine::entity::Entity const &entity);
 
         /**
          * @brief Update the Text Position
          *
          * @param entity The entity to update
          */
-        void updateTextPosition(engine::component::Position *position, engine::entity::Entity const &entity);
+        void updateTextPosition(std::shared_ptr<engine::component::Position> position, engine::entity::Entity const &entity);
 
         /**
          * @brief The SystemType of the PositionSystem

@@ -58,22 +58,22 @@ void MovementSystem::removeEntity(const rtype::engine::entity::Entity &entity)
     }
 }
 
-void MovementSystem::moveUp(engine::component::Position *position, engine::component::Speed *speed)
+void MovementSystem::moveUp(std::shared_ptr<engine::component::Position> position, std::shared_ptr<engine::component::Speed> speed)
 {
     position->y -= speed->y;
 }
 
-void MovementSystem::moveDown(engine::component::Position *position,  engine::component::Speed *speed)
+void MovementSystem::moveDown(std::shared_ptr<engine::component::Position> position,  std::shared_ptr<engine::component::Speed> speed)
 {
     position->y += speed->y;
 }
 
-void MovementSystem::moveRight(engine::component::Position *position, engine::component::Speed *speed)
+void MovementSystem::moveRight(std::shared_ptr<engine::component::Position> position, std::shared_ptr<engine::component::Speed> speed)
 {
     position->x += speed->x;
 }
 
-void MovementSystem::moveLeft(engine::component::Position *position, engine::component::Speed *speed)
+void MovementSystem::moveLeft(std::shared_ptr<engine::component::Position> position, std::shared_ptr<engine::component::Speed> speed)
 {
     position->x -= speed->x;
 }

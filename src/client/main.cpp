@@ -34,26 +34,26 @@ int main(void)
     engine.loadSystem<sfml::system::InputSystem>(engine, window);
     engine.loadSystem<sfml::system::RenderSystem>(engine, window);
     engine.loadSystem<sfml::system::PositionSystem>(engine);
-    engine.loadComponentStorage<sfml::component::Position>();
+    engine.loadComponentStorage<engine::component::Position>();
     engine.loadComponentStorage<sfml::component::Sprite>();
 
     auto element = engine.createEntity();
-    engine.linkEntityWithComponent<sfml::component::Position>(element, 0, 0);
+    engine.linkEntityWithComponent<engine::component::Position>(element, 0, 0);
     engine.linkEntityWithComponent<sfml::component::Sprite>(element, "assets/flappy.png", 321, 224);
-    auto storage = engine.getComponentStorage<sfml::component::Position>();
-    auto component = static_cast<sfml::component::Position*>(storage.getComponent(element).get());
+    auto storage = engine.getComponentStorage<engine::component::Position>();
+    auto component = storage.getComponent<engine::component::Position>(element);
 
     engine.subscribeTo(
         sfml::event::InputEvent(engine::event::EVENT_SENDER::MOUSE, sfml::event::InputEvent::MOUSE_MOVE),
         [&](engine::event::Event const &event) {
-            auto data = static_cast<sfml::component::Position*>(event.getEventData().get());
-            component->value.y = data->value.y;
-            component->value.x = data->value.x;
+            auto data = event.getEventData<engine::component::Position>();
+            component->y = data->y;
+            component->x = data->x;
         }
     );
 
-    engine.linkEntityWithSystem(element, sfml::system::PositionSystem::type);
-    engine.linkEntityWithSystem(element, sfml::system::RenderSystem::type);
+    engine.linkEntityWithSystem<sfml::system::PositionSystem>(element);
+    engine.linkEntityWithSystem<sfml::system::RenderSystem>(element);
 
     while (window.isOpen()) {
         if (clock.getElapsedTime().asMicroseconds() > 10000) {

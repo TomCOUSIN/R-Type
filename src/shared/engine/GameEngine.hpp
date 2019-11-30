@@ -44,7 +44,7 @@ namespace rtype {
              * @param type The type of the Component stored in the ComponentStorage
              * @return The ComponentStorage
              */
-            component::ComponentStorage<std::shared_ptr<component::Component>> getComponentStorage(component::ComponentType type) const;
+            component::ComponentStorage<component::Component> getComponentStorage(component::ComponentType type) const;
 
             /**
              * @brief Get A ComponentStorage according to the Component
@@ -53,7 +53,7 @@ namespace rtype {
              * @return The ComponentStorage
              */
             template<typename C>
-            component::ComponentStorage<std::shared_ptr<component::Component>> getComponentStorage() const {
+            component::ComponentStorage<component::Component> getComponentStorage() const {
                 static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
                 return getComponentStorage(C::type);
             }
@@ -106,11 +106,14 @@ namespace rtype {
              * @tparam Params The parameters type needed to create the shared_ptr of Component
              * @param entity The Entity to link
              * @param params The parameters value needed to create the shared_ptr of Component
+             * @return the created component
              */
             template<typename C, typename ...Params>
-            void linkEntityWithComponent(entity::Entity const &entity, Params&&... params) {
+            std::shared_ptr<C> linkEntityWithComponent(entity::Entity const &entity, Params&&... params) {
                 static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
-                linkEntityWithComponent(entity, C::type, std::make_shared<C>((params)...));
+                auto component = std::make_shared<C>((params)...);
+                linkEntityWithComponent(entity, C::type, component);
+                return component;
             }
 
             /**
@@ -219,7 +222,7 @@ namespace rtype {
             /**
              * @brief The unordered_map of ComponentStorage to store multiple specific Component
              */
-            std::unordered_map<component::ComponentType, component::ComponentStorage<std::shared_ptr<component::Component>>> _component_store;
+            std::unordered_map<component::ComponentType, component::ComponentStorage<component::Component>> _component_store;
 
             /**
              * @brief The vector of ISystem to update all Entity's Component

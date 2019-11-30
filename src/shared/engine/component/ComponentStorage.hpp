@@ -36,7 +36,7 @@ namespace rtype {
                 /**
                  * @brief Destroy a ComponentStorage
                  */
-                ~ComponentStorage() = default;
+                virtual ~ComponentStorage() = default;
 
                 /**
                  * @brief Add a new Entity to link the the Component
@@ -46,7 +46,7 @@ namespace rtype {
                  * @return true on success
                  * @return false on failure
                  */
-                bool addEntity(entity::Entity const &entity, C const &component) {
+                bool addEntity(entity::Entity const &entity, std::shared_ptr<C> const &component) {
                     if (_store.find(entity) == _store.end()) {
                         _store.emplace(std::make_pair(entity, component));
                         return true;
@@ -91,16 +91,29 @@ namespace rtype {
                  * @return A pointer to the Component on success
                  * @return Null on failure
                  */
-                C getComponent(entity::Entity const &entity) {
+                template <typename T>
+                std::shared_ptr<T> getComponent(entity::Entity const &entity) {
                     auto iterator = _store.find(entity);
-                    return iterator->second;
+                    return std::static_pointer_cast<T>(iterator->second);
                 }
+
+                // template <typename T>
+                // ComponentStorage<T> to() const
+                // {
+                //     ComponentStorage<T> result;
+                //     // this is the only one solution that I've found to cast unordered_map's template to other one.
+                //     for (auto el : _store) {
+                //         auto converted_value = std::static_pointer_cast<T>(el.second);
+                //         result._store.emplace(std::make_pair(el.first, converted_value));
+                //     }
+                //     return result;
+                // }
 
                 private:
                 /**
                  * @brief The storage of the ComponentStorage
                  */
-                std::unordered_map<entity::Entity, C> _store;
+                std::unordered_map<entity::Entity, std::shared_ptr<C>> _store;
             };
         }
     }

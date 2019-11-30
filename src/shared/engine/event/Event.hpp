@@ -59,6 +59,13 @@ namespace rtype::engine::event {
          */
         std::shared_ptr<component::Component> getEventData() const;
 
+        template <typename C>
+        std::shared_ptr<C> getEventData() const
+        {
+            static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
+            return std::dynamic_pointer_cast<C>(_data);
+        }
+
     // @MARK Properties
         public:
         static EventType event_type_counter;

@@ -35,11 +35,10 @@ void rtype::sfml::system::AnimationSystem::update(float const &delta)
     if (!_engine.hasComponentStorage<component::Sprite>())
         return;
     auto sprite_store = _engine.getComponentStorage<component::Sprite>();
-    component::Sprite *sprite = nullptr;
 
     for (auto &entity : _entities) {
         if (sprite_store.entityHasComponent(entity)) {
-            sprite = static_cast<component::Sprite *>(sprite_store.getComponent(entity).get());
+            auto sprite = sprite_store.getComponent<component::Sprite>(entity);
             sprite->next();
         }
     }
