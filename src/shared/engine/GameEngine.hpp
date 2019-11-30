@@ -8,14 +8,21 @@
 #ifndef CPP_RTYPE_2019_GAMEENGINE_HPP
 #define CPP_RTYPE_2019_GAMEENGINE_HPP
 
+#pragma once
 #include <map>
 #include <vector>
 #include <iostream>
 #include <functional>
 
 #include "ComponentStorage.hpp"
+#include "IEntityLoader.hpp"
+#include "DLLoader.hpp"
 #include "ISystem.hpp"
 #include "Event.hpp"
+
+namespace rtype::engine::loader {
+    class IEntityLoader;
+}
 
 namespace rtype {
 
@@ -228,7 +235,26 @@ namespace rtype {
                 return hasComponentStorage(C::type);
             }
 
+            /**
+             * @brief Load an Entity from a shared library
+             *
+             * @param path The path to the shared library
+             */
+            void loadEntityFromSharedLibrary(std::string const &path);
+
+            /**
+             * @brief Load an Entity from a folder
+             *
+             * @param path The path to the folder
+             */
+            void loadEntityFromFolder(std::string const &path);
+
             private:
+            /**
+             * @brief The dlloader to load entity from shared library
+             */
+            loader::DLLoader<loader::IEntityLoader> _dlloader;
+
             /**
              * @brief The counter of the Entity to always have a unique id
              */

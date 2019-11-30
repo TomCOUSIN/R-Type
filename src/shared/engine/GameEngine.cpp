@@ -5,6 +5,7 @@
 ** Created by tomcousin,
 */
 
+#include <filesystem>
 #include "GameEngine.hpp"
 
 namespace rtype::engine {
@@ -117,6 +118,34 @@ bool GameEngine::hasComponentStorage(component::ComponentType type)
 {
     auto store = _component_store.find(type);
     return store != _component_store.end();
+}
+
+void GameEngine::loadEntityFromSharedLibrary(std::string const &path)
+{
+    std::shared_ptr<loader::IEntityLoader> ptr = nullptr;
+
+    if (_dlloader.loadLibrary(path)) {
+        ptr = _dlloader.getInstance();
+        if (ptr) {
+            ptr->loadEntity(*this);
+        }
+    }
+    _dlloader.closeLibrary();
+}
+
+void GameEngine::loadEntityFromFolder(std::string const &path)
+{
+    std::shared_ptr<loader::IEntityLoader> ptr = nullptr;
+
+    for (auto &file : std::filesystem::directory_iterator(path)) {
+        if (_dlloader.loadLibrary(file.path())) {
+            ptr = _dlloader.getInstance();
+            if (ptr) {
+                ptr->loadEntity(*this);
+            }
+        }
+        _dlloader.closeLibrary();
+    }
 }
 
 }

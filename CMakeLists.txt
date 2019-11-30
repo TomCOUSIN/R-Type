@@ -33,6 +33,7 @@ SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(EXCEPTION_SRC ${SHARED_SRC}exception/)
 SET(NETWORK_SRC ${ENGINE_SRC}network/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
+SET(LOADER_SRC ${ENGINE_SRC}loader/)
 SET(COMPONENT_SRC ${ENGINE_SRC}component/)
 SET(EVENT_SRC ${ENGINE_SRC}event/)
 
@@ -72,6 +73,7 @@ include_directories(${ENTITY_SRC})
 include_directories(${NETWORK_SRC})
 include_directories(${EVENT_SRC})
 include_directories(${GAME_SRC})
+include_directories(${LOADER_SRC})
 
 # Set source files variable
 SET(INTERFACE
@@ -79,7 +81,8 @@ SET(INTERFACE
         ${INTERFACE_SRC}IScene.hpp
         ${INTERFACE_SRC}IEvent.hpp
         ${INTERFACE_SRC}ISystem.hpp
-        ${INTERFACE_SRC}IGraphic.hpp)
+        ${INTERFACE_SRC}IGraphic.hpp
+        ${INTERFACE_SRC}IEntityLoader.hpp)
 
 SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
@@ -137,6 +140,7 @@ SET(SHARED
         ${NETWORK}
         ${EVENT_SRC}Event.cpp
         ${EVENT_SRC}Event.hpp
+        ${LOADER_SRC}DLLoader.hpp
         ${ENGINE_SRC}GameEngine.cpp
         ${ENGINE_SRC}GameEngine.hpp)
 
