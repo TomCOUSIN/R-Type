@@ -25,6 +25,8 @@ namespace rtype::sfml::component {
             text.setString(message);
             text.setCharacterSize(24);
             text.setFillColor(sf::Color::White);
+            auto textRect = text.getLocalBounds();
+            text.setOrigin(textRect.width/2, textRect.height/2);
         }
 
         void update(std::string const &message) {

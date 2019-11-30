@@ -27,7 +27,11 @@ void GameEngine::destroyEntity(entity::Entity const &entity)
 
 void GameEngine::loadComponentStorage(component::ComponentType type)
 {
-    _component_store.emplace(std::make_pair(type, component::ComponentStorage<component::Component>()));
+    auto component_storage = _component_store.find(type);
+
+    if (component_storage == _component_store.end()) {
+        _component_store.emplace(std::make_pair(type, component::ComponentStorage<component::Component>()));
+    }
 }
 
 void GameEngine::linkEntityWithComponent(entity::Entity const &entity, component::ComponentType type, std::shared_ptr<component::Component> ptr)
@@ -48,7 +52,11 @@ void GameEngine::unlinkEntityWithComponent(entity::Entity const &entity, compone
 
 void GameEngine::loadSystem(system::SystemType type, std::shared_ptr<system::ISystem> const &system)
 {
-    _systems.emplace(std::make_pair(type, system));
+    auto founded_system = _systems.find(type);
+
+    if (founded_system == _systems.end()) {
+        _systems.emplace(std::make_pair(type, system));
+    }
 }
 
 void GameEngine::update(float const &delta)

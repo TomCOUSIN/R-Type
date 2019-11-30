@@ -31,6 +31,7 @@ namespace rtype {
                  */
                 Button(float const &width, float const &height) :
                 size(width, height), shape(size), hasBeenClicked(false) {
+                    shape.setOrigin(width/2, height/2);
                     shape.setFillColor(sf::Color::Black);
                     shape.setOutlineThickness(3);
                     shape.setOutlineColor(sf::Color::White);

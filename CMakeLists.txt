@@ -46,6 +46,7 @@ SET(SFML_TIMER_SRC ${SFML_SRC}timer/)
 
 SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 SET(SFML_EVENT_SRC ${SFML_SRC}event/)
+SET(SFML_ENTITY_SRC ${SFML_SRC}entity/)
 
 # Include directories
 include_directories(${INTERFACE_SRC})
@@ -61,6 +62,7 @@ include_directories(${SFML_GRAPHIC_SRC})
 include_directories(${SFML_SYSTEM_SRC})
 include_directories(${SFML_EVENT_SRC})
 include_directories(${SFML_TIMER_SRC})
+include_directories(${SFML_ENTITY_SRC})
 include_directories(${GAME_SCENE_SRC})
 include_directories(${INTERFACE_SRC})
 include_directories(${EXCEPTION_SRC})
@@ -86,6 +88,11 @@ SET(COMPONENT
         ${COMPONENT_SRC}Component.hpp
         ${COMPONENT_SRC}Health.hpp)
 
+SET(ENTITY
+        ${ENTITY_SRC}EntityCreator.cpp
+        ${ENTITY_SRC}EntityCreator.hpp
+        ${ENTITY_SRC}Entity.hpp)
+
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)
 
@@ -94,7 +101,10 @@ SET(NETWORK
         ${NETWORK_SRC}Packet.cpp)
 
 SET(SFML
+        ${SFML_ENTITY_SRC}ButtonEntity.cpp
+        ${SFML_ENTITY_SRC}ButtonEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp
+        ${SFML_EVENT_SRC}InputEvent.hpp
         ${SFML_SYSTEM_SRC}InputSystem.cpp
         ${SFML_SYSTEM_SRC}InputSystem.hpp
         ${SFML_SYSTEM_SRC}RenderSystem.cpp

@@ -247,7 +247,7 @@ namespace rtype {
             /**
              * @brief The vector of ISystem to update all Entity's Component
              */
-            std::map<system::SystemType, std::shared_ptr<system::ISystem>> _systems;
+            std::unordered_map<system::SystemType, std::shared_ptr<system::ISystem>> _systems;
         };
     }
 }
