@@ -49,7 +49,7 @@ namespace rtype::sfml::graphic {
         /**
          * @brief Create a Button
          */
-        engine::entity::Entity createButton(float const &width, float const &height, void (*fptr)(void)) final;
+        engine::entity::Entity createButton(float const &width, float const &height, std::function<void(void)> const &fctptr) final;
 
         /**
          * @brief Create a Text

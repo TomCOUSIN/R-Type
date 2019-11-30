@@ -29,7 +29,7 @@ namespace rtype {
                  * @param width The width of the Button
                  * @param height The height of the Button
                  */
-                Button(float const &width, float const &height, void (*fptr)(void)) :
+                Button(float const &width, float const &height, std::function<void(void)> const &fptr) :
                 size(width, height), shape(size), fptr(fptr) {
                     shape.setFillColor(sf::Color::Black);
                     shape.setOutlineThickness(3);
@@ -49,7 +49,7 @@ namespace rtype {
                 /**
                  * @brief function pointer to call when button is pressed
                  */
-                void (*fptr)(void);
+                std::function<void(void)> fptr;
 
                 /**
                  * @brief When the mouse isn't on the Button

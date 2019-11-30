@@ -47,11 +47,11 @@ void rtype::sfml::graphic::SfmlGraphic::update(float const &delta)
 }
 
 rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createButton(
-    float const &width, float const &height, void (*fptr)(void))
+    float const &width, float const &height, std::function<void(void)> const &fctptr)
 {
     engine::entity::Entity entity = _engine.createEntity();
 
-    _engine.linkEntityWithComponent<sfml::component::Button>(entity, width, height, fptr);
+    _engine.linkEntityWithComponent<sfml::component::Button>(entity, width, height, fctptr);
     _engine.linkEntityWithSystem<sfml::system::ButtonSystem>(entity);
     return entity;
 }
@@ -83,7 +83,7 @@ void rtype::sfml::graphic::SfmlGraphic::setPosition(
     const rtype::engine::entity::Entity &entity, float const &x_position,
     float const &y_position)
 {
-    _engine.linkEntityWithComponent<engine::component::Position>(x_position, y_position);
+    _engine.linkEntityWithComponent<engine::component::Position>(entity, x_position, y_position);
     _engine.linkEntityWithSystem<sfml::system::PositionSystem>(entity);
 }
 

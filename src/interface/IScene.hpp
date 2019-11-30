@@ -11,6 +11,17 @@
 namespace rtype::engine::scene {
 
     /**
+     * @brief Enum to handle which scene to load
+     */
+    enum SCENE {
+        MENU,
+        SETTINGS,
+        GAME,
+        WIN,
+        LOSE
+    };
+
+    /**
      * @brief Interface IScene to handle scene managed by the GameEngine
      */
     class IScene {
@@ -29,7 +40,7 @@ namespace rtype::engine::scene {
         /**
          *  @brief Display the scene by using the engine
          */
-        virtual void displayScene(float const &delta) = 0;
+        virtual SCENE displayScene() = 0;
 
         /**
          *  @brief Unload the scene by removing entity, Component and ISystem in the GameEngine

@@ -5,10 +5,11 @@
 ** Created by tomcousin,
 */
 
+#include <iostream>
 #include "MenuScene.hpp"
 
-rtype::game::scene::MenuScene::MenuScene(std::shared_ptr<graphic::IGraphic> graphic) :
-_graphic(graphic) {}
+rtype::game::scene::MenuScene::MenuScene(std::shared_ptr<graphic::IGraphic> graphic, std::shared_ptr<timer::ITimer> timer) :
+_timer(timer), _graphic(graphic) {}
 
 void rtype::game::scene::MenuScene::loadScene()
 {
@@ -17,12 +18,17 @@ void rtype::game::scene::MenuScene::loadScene()
     _graphic->setVisible(_entities["title"], true);
 }
 
-void rtype::game::scene::MenuScene::displayScene(float const &delta)
+rtype::engine::scene::SCENE rtype::game::scene::MenuScene::displayScene()
 {
-    _graphic->update(delta);
+    _timer->start();
+    while (_timer->getElapsedTime() <= 5.0f) {
+        _graphic->update(0.1f);
+    }
+    return rtype::engine::scene::GAME;
 }
 
 void rtype::game::scene::MenuScene::unloadScene()
 {
     _graphic->removeElement(_entities["title"]);
+    _graphic->removeElement(_entities["button"]);
 }

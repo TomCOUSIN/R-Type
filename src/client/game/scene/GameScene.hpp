@@ -5,8 +5,8 @@
 ** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_MENUSCENE_HPP
-#define CPP_RTYPE_2019_MENUSCENE_HPP
+#ifndef CPP_RTYPE_2019_GAMESCENE_HPP
+#define CPP_RTYPE_2019_GAMESCENE_HPP
 
 #include <iostream>
 #include <unordered_map>
@@ -17,21 +17,24 @@
 
 namespace rtype::game::scene {
 
-    class MenuScene : public engine::scene::IScene {
+    /**
+     * @brief The GameScene of the game
+     */
+    class GameScene : public engine::scene::IScene {
 
         public:
         /**
-         * @brief Construct a MenuScene object
+         * @brief Construct a GameScene object
          *
          * @param graphic The IGraphic to use
          * @param timer The ITimer to use
          */
-        explicit MenuScene(std::shared_ptr<graphic::IGraphic> graphic, std::shared_ptr<timer::ITimer> timer);
+        explicit GameScene(std::shared_ptr<graphic::IGraphic> graphic, std::shared_ptr<timer::ITimer> timer);
 
         /**
-         * @brief Destroy an MenuScene object
+         * @brief Destroy an GameScene object
          */
-        ~MenuScene() final = default;
+        ~GameScene() final = default;
 
         /**
          *  @brief The Scene loads everything needed for it to run properly
@@ -67,4 +70,4 @@ namespace rtype::game::scene {
     };
 }
 
-#endif //CPP_RTYPE_2019_MENUSCENE_HPP
+#endif //CPP_RTYPE_2019_GAMESCENE_HPP

@@ -42,7 +42,7 @@ namespace rtype::graphic {
         /**
          * @brief Create a Button
          */
-        virtual engine::entity::Entity createButton(float const &width, float const &height, void (*fptr)(void)) = 0;
+        virtual engine::entity::Entity createButton(float const &width, float const &height, std::function<void(void)> const &fctptr) = 0;
 
         /**
          * @brief Create a Text
