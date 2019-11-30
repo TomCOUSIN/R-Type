@@ -118,6 +118,8 @@ SET(SFML
         ${SFML_ENTITY_SRC}MouseEntity.cpp
         ${SFML_ENTITY_SRC}ButtonEntity.hpp
         ${SFML_ENTITY_SRC}ButtonEntity.cpp
+        ${SFML_ENTITY_SRC}ParallaxEntity.cpp
+        ${SFML_ENTITY_SRC}ParallaxEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp
         ${SFML_EVENT_SRC}InputEvent.hpp
         ${SFML_SYSTEM_SRC}InputSystem.cpp
@@ -131,7 +133,9 @@ SET(SFML
         ${SFML_SYSTEM_SRC}MovementSystem.cpp
         ${SFML_SYSTEM_SRC}MovementSystem.hpp
         ${SFML_SYSTEM_SRC}ButtonSystem.cpp
-        ${SFML_SYSTEM_SRC}ButtonSystem.Hpp
+        ${SFML_SYSTEM_SRC}ButtonSystem.hpp
+        ${SFML_SYSTEM_SRC}ParallaxSystem.cpp
+        ${SFML_SYSTEM_SRC}ParallaxSystem.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
         ${SFML_COMPONENT_SRC}Button.hpp
         ${SFML_COMPONENT_SRC}Text.hpp
