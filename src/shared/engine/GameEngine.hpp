@@ -127,7 +127,7 @@ namespace rtype {
             /**
              * @brief Link an Entity with an ISystem
              *
-             * @param entity The Entity to unlink
+             * @param entity The Entity to link
              * @param type The SystemType of the stored ISystem
              */
             void linkEntityWithSystem(entity::Entity const &entity, system::SystemType type);
@@ -136,12 +136,32 @@ namespace rtype {
              * @brief Link an Entity with an ISystem
              *
              * @tparam S The type of the ISystem
-             * @param entity The Entity to unlink
+             * @param entity The Entity to link
              */
             template<typename S>
             void linkEntityWithSystem(entity::Entity const &entity) {
                 static_assert(std::is_base_of<system::ISystem, S>::value, "You need to pass a System");
                 linkEntityWithSystem(entity, S::type);
+            }
+
+            /**
+             * @brief Unlink an Entity with an ISystem
+             *
+             * @param entity The Entity to unlink
+             * @param type The SystemType of the stored ISystem
+             */
+            void unlinkEntityWithSystem(entity::Entity const &entity, system::SystemType type);
+
+            /**
+             * @brief Unlink an Entity with an ISystem
+             *
+             * @tparam S The type of the ISystem
+             * @param entity The Entity to unlink
+             */
+            template<typename S>
+            void unlinkEntityWithSystem(entity::Entity const &entity) {
+                static_assert(std::is_base_of<system::ISystem, S>::value, "You need to pass a System");
+                unlinkEntityWithSystem(entity, S::type);
             }
 
             /**

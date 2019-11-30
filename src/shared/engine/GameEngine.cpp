@@ -20,6 +20,9 @@ void GameEngine::destroyEntity(entity::Entity const &entity)
     for (auto &component_storage: _component_store) {
         component_storage.second.removeEntity(entity);
     }
+    for (auto &system: _systems) {
+        system.second->removeEntity(entity);
+    }
 }
 
 void GameEngine::loadComponentStorage(component::ComponentType type)
@@ -66,6 +69,13 @@ void GameEngine::linkEntityWithSystem(entity::Entity const &entity, system::Syst
     auto system = _systems.find(type);
     if (system != _systems.end()) {
         system->second->addEntity(entity);
+    }
+}
+void GameEngine::unlinkEntityWithSystem(entity::Entity const &entity, system::SystemType type)
+{
+    auto system = _systems.find(type);
+    if (system != _systems.end()) {
+        system->second->removeEntity(entity);
     }
 }
 
