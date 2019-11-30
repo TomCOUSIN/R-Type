@@ -47,11 +47,11 @@ void rtype::sfml::graphic::SfmlGraphic::update(float const &delta)
 }
 
 rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createButton(
-    float const &width, float const &height, std::function<void(void)> const &fctptr)
+    float const &width, float const &height)
 {
     engine::entity::Entity entity = _engine.createEntity();
 
-    _engine.linkEntityWithComponent<sfml::component::Button>(entity, width, height, fctptr);
+    _engine.linkEntityWithComponent<sfml::component::Button>(entity, width, height);
     _engine.linkEntityWithSystem<sfml::system::ButtonSystem>(entity);
     return entity;
 }
@@ -108,5 +108,17 @@ void rtype::sfml::graphic::SfmlGraphic::setMovable(
 void rtype::sfml::graphic::SfmlGraphic::removeElement(const rtype::engine::entity::Entity &entity)
 {
     _engine.destroyEntity(entity);
+}
+
+bool rtype::sfml::graphic::SfmlGraphic::isButtonClicked(const rtype::engine::entity::Entity &entity)
+{
+    auto store = _engine.getComponentStorage<component::Button>();
+    component::Button *button = nullptr;
+
+    if (store.entityHasComponent(entity)) {
+        button = static_cast<component::Button *>(store.getComponent(entity).get());
+        return button->hasBeenClicked;
+    }
+    return false;
 }
 

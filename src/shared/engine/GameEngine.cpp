@@ -20,6 +20,9 @@ void GameEngine::destroyEntity(entity::Entity const &entity)
     for (auto &component_storage: _component_store) {
         component_storage.second.removeEntity(entity);
     }
+    for (auto &system: _systems) {
+        system.second->removeEntity(entity);
+    }
 }
 
 void GameEngine::loadComponentStorage(component::ComponentType type)

@@ -41,8 +41,8 @@ void rtype::game::Game::loop()
 {
     while (_graphic->isWindowOpen()) {
         switch (_actual_scene->displayScene()) {
-        case engine::scene::MENU: changeScene(0);
-        case engine::scene::GAME: changeScene(1);
+        case engine::scene::MENU: changeScene(0); break;
+        case engine::scene::GAME: changeScene(1); break;
         default: break;
         }
     }

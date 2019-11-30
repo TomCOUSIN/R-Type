@@ -42,7 +42,7 @@ namespace rtype::graphic {
         /**
          * @brief Create a Button
          */
-        virtual engine::entity::Entity createButton(float const &width, float const &height, std::function<void(void)> const &fctptr) = 0;
+        virtual engine::entity::Entity createButton(float const &width, float const &height) = 0;
 
         /**
          * @brief Create a Text
@@ -87,6 +87,13 @@ namespace rtype::graphic {
          * @param entity the Entity of the element to remove
          */
         virtual void removeElement(engine::entity::Entity const &entity) = 0;
+
+        /**
+         * @brief Check if a Button as been clicked
+         *
+         * @param entity the Entity linked with the Button
+         */
+        virtual bool isButtonClicked(engine::entity::Entity const &entity) = 0;
     };
 }
 

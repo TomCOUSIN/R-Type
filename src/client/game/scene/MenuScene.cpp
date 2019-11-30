@@ -16,13 +16,19 @@ void rtype::game::scene::MenuScene::loadScene()
     _entities.emplace(std::pair("title", _graphic->createText("Title")));
     _graphic->setPosition(_entities["title"], 50.0f, 50.0f);
     _graphic->setVisible(_entities["title"], true);
+    _entities.emplace(std::pair("button", _graphic->createButton(100, 100)));
+    _graphic->setPosition(_entities["button"], 200.0f, 200.0f);
+    _graphic->setVisible(_entities["button"], true);
 }
 
 rtype::engine::scene::SCENE rtype::game::scene::MenuScene::displayScene()
 {
     _timer->start();
-    while (_timer->getElapsedTime() <= 5.0f) {
-        _graphic->update(0.1f);
+    while (_graphic->isWindowOpen() && !_graphic->isButtonClicked(_entities["button"])) {
+        if (_timer->getElapsedTime() >= 0.1f) {
+            _graphic->update(_timer->getElapsedTime());
+            _timer->restart();
+        }
     }
     return rtype::engine::scene::GAME;
 }
@@ -31,4 +37,5 @@ void rtype::game::scene::MenuScene::unloadScene()
 {
     _graphic->removeElement(_entities["title"]);
     _graphic->removeElement(_entities["button"]);
+    _entities.clear();
 }

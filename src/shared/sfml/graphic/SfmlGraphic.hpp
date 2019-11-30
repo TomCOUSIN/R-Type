@@ -49,7 +49,7 @@ namespace rtype::sfml::graphic {
         /**
          * @brief Create a Button
          */
-        engine::entity::Entity createButton(float const &width, float const &height, std::function<void(void)> const &fctptr) final;
+        engine::entity::Entity createButton(float const &width, float const &height) final;
 
         /**
          * @brief Create a Text
@@ -94,6 +94,15 @@ namespace rtype::sfml::graphic {
          * @param entity the Entity of the element to remove
          */
         void removeElement(engine::entity::Entity const &entity) final;
+
+        /**
+         * @brief Check if a Button as been clicked
+         *
+         * @param entity the Entity linked with the Button
+         * @return true on success
+         * @return false on failure
+         */
+        bool isButtonClicked(engine::entity::Entity const &entity) final;
 
         private:
         /**
