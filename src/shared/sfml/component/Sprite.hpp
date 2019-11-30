@@ -91,7 +91,7 @@ namespace rtype {
                 /**
                  * @brief The type of the Component Position
                  */
-                static const engine::component::ComponentType type = 6;
+                static const engine::component::ComponentType type = 1 << engine::component::COMPONENT_TYPE::SPRITE;
             };
         }
     }

@@ -7,10 +7,12 @@
 
 #include "GameEngine.hpp"
 #include "ButtonEntity.hpp"
+#include "MouseEntity.hpp"
 #include "InputSystem.hpp"
 #include "ButtonSystem.hpp"
 #include "RenderSystem.hpp"
 #include "PositionSystem.hpp"
+#include "CollisionSystem.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -32,8 +34,11 @@ int main(void)
     engine.loadSystem<sfml::system::RenderSystem>(engine, window);
     engine.loadSystem<sfml::system::ButtonSystem>(engine, window);
     engine.loadSystem<sfml::system::PositionSystem>(engine);
+    engine.loadSystem<engine::system::CollisionSystem>(engine);
 
-    auto button = sfml::entity::ButtonEntity(engine, "bonjour", 10, 10, 100, 50, []{});
+    auto button = sfml::entity::ButtonEntity(engine, "bonjour", 400, 300, 100, 50, []{});
+    auto button_2 = sfml::entity::ButtonEntity(engine, "test", 200, 300, 100, 50, []{});
+    auto mouse = sfml::entity::MouseEntity(engine);
 
     while (window.isOpen()) {
         if (clock.getElapsedTime().asMicroseconds() > 10000) {

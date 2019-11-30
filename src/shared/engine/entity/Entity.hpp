@@ -13,7 +13,6 @@ namespace rtype {
     namespace engine {
 
         namespace entity {
-
             /**
              * @brief The Entity which represent a game object
              */

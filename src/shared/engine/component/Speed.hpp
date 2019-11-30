@@ -38,7 +38,7 @@ namespace rtype::engine::component {
         /**
          * @brief The type of the Component Position
          */
-        static const engine::component::ComponentType type = 3;
+        static const engine::component::ComponentType type = 1 << COMPONENT_TYPE::SPEED;
     };
 }
 

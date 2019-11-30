@@ -20,6 +20,19 @@ namespace rtype {
             typedef unsigned long ComponentType;
 
             /**
+             * @brief enum COMPONENT_TYPE
+             */
+            enum COMPONENT_TYPE {
+                COLLISION,
+                HEALTH,
+                POSITION,
+                SPEED,
+                BUTTON,
+                SPRITE,
+                TEXT,
+            };
+
+            /**
              * @brief A basic Component
              */
             struct Component {

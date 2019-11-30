@@ -19,7 +19,8 @@ namespace rtype::sfml::event {
     // @MARK Types
         public:
         enum InputEventType : engine::event::EventType {
-            MOUSE_CLICK,
+            MOUSE_PRESSED,
+            MOUSE_RELEASED,
             MOUSE_MOVE,
             ARROW_UP,
             ARROW_DOWN,
@@ -61,20 +62,12 @@ namespace rtype::sfml::event {
         /**
          * @brief Construct a new Input Event
          */
-        InputEvent(engine::event::EVENT_SENDER sender, InputEventType event_type, std::shared_ptr<engine::component::Component> data = nullptr);
+        InputEvent(InputEventType event_type, std::shared_ptr<engine::component::Component> data = nullptr);
 
         /**
          * @brief Destroy the Input Event
          */
         ~InputEvent();
-
-    // @MARK Methods
-        private:
-        engine::event::EventType getGlobalTypeFromLocal(InputEventType local_type);
-
-    // @MARK Properties
-        public:
-        static std::unordered_map<InputEventType, engine::event::EventType> map_local_to_global_type;
 
     };
 

@@ -76,7 +76,7 @@ namespace rtype {
                  *
                  * @param entity The entity to draw
                  */
-                static const engine::system::SystemType type = 6;
+                static const engine::system::SystemType type = 1 << engine::system::SYSTEM_TYPE::RENDER;
 
                 private:
                 /**
