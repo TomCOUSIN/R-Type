@@ -80,6 +80,13 @@ namespace rtype::graphic {
          *  @param y_speed The y value of the Speed
          */
         virtual void setMovable(engine::entity::Entity const &entity, float const &x_speed, float const &y_value) = 0;
+
+        /**
+         * @brief Remove an element
+         *
+         * @param entity the Entity of the element to remove
+         */
+        virtual void removeElement(engine::entity::Entity const &entity) = 0;
     };
 }
 

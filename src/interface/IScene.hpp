@@ -29,7 +29,7 @@ namespace rtype::engine::scene {
         /**
          *  @brief Display the scene by using the engine
          */
-        virtual void displayScene() = 0;
+        virtual void displayScene(float const &delta) = 0;
 
         /**
          *  @brief Unload the scene by removing entity, Component and ISystem in the GameEngine

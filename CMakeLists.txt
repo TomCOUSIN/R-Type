@@ -46,20 +46,21 @@ SET(SFML_TIMER_SRC ${SFML_SRC}timer/)
 
 SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 # Include directories
-include_directories(${INTERFACE_SRC})
-include_directories(${ENGINE_SRC})
-include_directories(${ENTITY_SRC})
-include_directories(${EXCEPTION_SRC})
-include_directories(${NETWORK_SRC})
-include_directories(${COMPONENT_SRC})
 include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
 include_directories(${SFML_COMPONENT_SRC})
-include_directories(${SFML_SYSTEM_SRC})
 include_directories(${SFML_GRAPHIC_SRC})
+include_directories(${SFML_SYSTEM_SRC})
 include_directories(${SFML_TIMER_SRC})
 include_directories(${GAME_SCENE_SRC})
+include_directories(${INTERFACE_SRC})
+include_directories(${EXCEPTION_SRC})
+include_directories(${COMPONENT_SRC})
+include_directories(${ENGINE_SRC})
+include_directories(${ENTITY_SRC})
+include_directories(${NETWORK_SRC})
 include_directories(${EVENT_SRC})
+include_directories(${GAME_SRC})
 
 # Set source files variable
 SET(INTERFACE
@@ -120,7 +121,11 @@ SET(COMMON
 
 SET(GAME
         ${GAME_SCENE_SRC}MenuScene.cpp
-        ${GAME_SCENE_SRC}MenuScene.hpp)
+        ${GAME_SCENE_SRC}MenuScene.hpp
+        ${GAME_SCENE_SRC}GameScene.cpp
+        ${GAME_SCENE_SRC}GameScene.hpp
+        ${GAME_SRC}Game.cpp
+        ${GAME_SRC}Game.hpp)
 
 SET(SERVER
         ${SERVER_SRC}main.cpp)

@@ -10,13 +10,12 @@
 
 #include <iostream>
 #include <unordered_map>
-#include "GameEngine.hpp"
 #include "IGraphic.hpp"
 #include "IScene.hpp"
 #include "ITimer.hpp"
 #include "Entity.hpp"
 
-namespace rtype::game {
+namespace rtype::game::scene {
 
     class MenuScene : public engine::scene::IScene {
 
@@ -24,11 +23,10 @@ namespace rtype::game {
         /**
          * @brief Construct a MenuScene object
          *
-         * @param engine The GameEngine to use
          * @param graphic The IGraphic to use
          * @param timer The ITimer to use
          */
-        MenuScene(engine::GameEngine &engine, std::shared_ptr<graphic::IGraphic> graphic, std::shared_ptr<timer::ITimer> timer);
+        explicit MenuScene(std::shared_ptr<graphic::IGraphic> graphic);
 
         /**
          * @brief Destroy an MenuScene object
@@ -43,7 +41,7 @@ namespace rtype::game {
         /**
          *  @brief Display the scene by using the engine
          */
-        void displayScene() final;
+        void displayScene(float const &delta) final;
 
         /**
          *  @brief Unload the scene by removing entity, Component and ISystem in the GameEngine
@@ -53,19 +51,9 @@ namespace rtype::game {
 
         private:
         /**
-         * @brief The engine to use
-         */
-        engine::GameEngine &_engine;
-
-        /**
          * @brief the IGraphic to use
          */
         std::shared_ptr<graphic::IGraphic> _graphic;
-
-        /**
-         * @brief the ITimer to use
-         */
-        std::shared_ptr<timer::ITimer> _timer;
 
         /**
          * @brief The list of Entity

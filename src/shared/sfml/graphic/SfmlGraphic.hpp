@@ -88,6 +88,13 @@ namespace rtype::sfml::graphic {
          */
         void setMovable(engine::entity::Entity const &entity, float const &x_speed, float const &y_value) final;
 
+        /**
+         * @brief Remove an element
+         *
+         * @param entity the Entity of the element to remove
+         */
+        void removeElement(engine::entity::Entity const &entity) final;
+
         private:
         /**
          * @brief the GameEngine used to load Component, System and entity

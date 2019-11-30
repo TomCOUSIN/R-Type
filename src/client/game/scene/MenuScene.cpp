@@ -7,28 +7,22 @@
 
 #include "MenuScene.hpp"
 
-rtype::game::MenuScene::MenuScene(rtype::engine::GameEngine &engine,
-    std::shared_ptr<graphic::IGraphic> graphic,
-    std::shared_ptr<timer::ITimer> timer) :
-_engine(engine), _graphic(graphic), _timer(timer) {}
+rtype::game::scene::MenuScene::MenuScene(std::shared_ptr<graphic::IGraphic> graphic) :
+_graphic(graphic) {}
 
-void rtype::game::MenuScene::loadScene()
+void rtype::game::scene::MenuScene::loadScene()
 {
     _entities.emplace(std::pair("title", _graphic->createText("Title")));
     _graphic->setPosition(_entities["title"], 50.0f, 50.0f);
     _graphic->setVisible(_entities["title"], true);
 }
 
-void rtype::game::MenuScene::displayScene()
+void rtype::game::scene::MenuScene::displayScene(float const &delta)
 {
-    _timer->start();
-    while (_graphic->isWindowOpen()) {
-        if (_timer->getElapsedTime() >= 0.1f) {
-            _graphic->update(_timer->getElapsedTime());
-            _timer->restart();
-        }
-    }
+    _graphic->update(delta);
 }
 
-void rtype::game::MenuScene::unloadScene()
-{}
+void rtype::game::scene::MenuScene::unloadScene()
+{
+    _graphic->removeElement(_entities["title"]);
+}

@@ -105,3 +105,8 @@ void rtype::sfml::graphic::SfmlGraphic::setMovable(
     _engine.unlinkEntityWithSystem<sfml::system::MovementSystem>(entity);
 }
 
+void rtype::sfml::graphic::SfmlGraphic::removeElement(const rtype::engine::entity::Entity &entity)
+{
+    _engine.destroyEntity(entity);
+}
+
