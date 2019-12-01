@@ -70,17 +70,14 @@ rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createText(
 }
 
 rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createSprite(
-    std::string const &texture_path, float const &width, float const &height,
-    const float &scale_width, const float &scale_height,
-    const size_t &sprite_count)
+    std::string const &texture_path, float const &x, float const &y,
+    float const &width, float const &height, float const &scale_width,
+    float const &scale_height, size_t const &sprite_count, bool const &movable,
+    float const &speed_x, float const &speed_y)
 {
-    engine::entity::Entity entity = _engine.createEntity();
-
-    _engine.linkEntityWithComponent<sfml::component::Sprite>(entity, texture_path,
-        width, height, scale_width, scale_height, sprite_count);
-    if (sprite_count >= 2)
-        _engine.linkEntityWithSystem<sfml::system::AnimationSystem>(entity);
-    return entity;
+    _sprites.emplace_back(std::make_shared<sfml::entity::SpriteEntity>(_engine,
+        texture_path, x, y, width, height, scale_width, scale_height, sprite_count, movable, speed_x, speed_y));
+    return _sprites.back()->getSpriteEntity();
 }
 
 void rtype::sfml::graphic::SfmlGraphic::setPosition(

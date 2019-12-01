@@ -118,6 +118,8 @@ SET(NETWORK
         ${NETWORK_SRC}Packet.cpp)
 
 SET(SFML
+        ${SFML_ENTITY_SRC}SpriteEntity.cpp
+        ${SFML_ENTITY_SRC}SpriteEntity.hpp
         ${SFML_ENTITY_SRC}MouseEntity.hpp
         ${SFML_ENTITY_SRC}MouseEntity.cpp
         ${SFML_ENTITY_SRC}ButtonEntity.hpp
