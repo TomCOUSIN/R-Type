@@ -44,6 +44,9 @@ void InputSystem::update(float const &delta)
             case sf::Keyboard::Enter:
                 _engine.dispatchEvent(event::InputEvent(event::InputEvent::ENTER));
                 break;
+            case sf::Keyboard::Space:
+                _engine.dispatchEvent(event::InputEvent(event::InputEvent::SPACE));
+                break;
             default:
                 break;
             }

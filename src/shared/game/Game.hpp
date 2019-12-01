@@ -14,6 +14,7 @@
 #include "IGraphic.hpp"
 #include "IScene.hpp"
 #include "ITimer.hpp"
+#include "IAudio.hpp"
 
 namespace rtype::game {
 
@@ -71,6 +72,11 @@ namespace rtype::game {
          * @brief The IGraphic to use
          */
         std::shared_ptr<rtype::graphic::IGraphic> _graphic;
+
+        /**
+         * @brief The IAudio to use
+         */
+        std::shared_ptr<rtype::audio::IAudio> _audio;
 
         /**
          * @brief The actual IScene

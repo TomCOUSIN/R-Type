@@ -31,6 +31,8 @@ namespace rtype {
                 SPRITE,
                 TEXT,
                 KEY,
+                SOUND,
+                MUSIC,
             };
 
             enum CENTERED {

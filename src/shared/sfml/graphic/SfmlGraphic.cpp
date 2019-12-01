@@ -7,7 +7,6 @@
 
 #include "AnimationSystem.hpp"
 #include "ParallaxSystem.hpp"
-#include "MovementSystem.hpp"
 #include "PositionSystem.hpp"
 #include "ButtonSystem.hpp"
 #include "RenderSystem.hpp"
@@ -29,7 +28,6 @@ void rtype::sfml::graphic::SfmlGraphic::init()
     _engine.loadSystem<sfml::system::PositionSystem>(_engine);
     _engine.loadSystem<sfml::system::ButtonSystem>(_engine, _window);
     _engine.loadSystem<sfml::system::AnimationSystem>(_engine);
-    _engine.loadSystem<sfml::system::MovementSystem>(_engine);
     _engine.loadSystem<sfml::system::ParallaxSystem>(_engine);
     _engine.loadComponentStorage<engine::component::Position>();
     _engine.loadComponentStorage<engine::component::Speed>();
@@ -109,14 +107,6 @@ void rtype::sfml::graphic::SfmlGraphic::setVisible(
     } else {
         _engine.unlinkEntityWithSystem<sfml::system::RenderSystem>(entity);
     }
-}
-
-void rtype::sfml::graphic::SfmlGraphic::setMovable(
-    const rtype::engine::entity::Entity &entity, float const &x_speed,
-    float const &y_value)
-{
-    _engine.linkEntityWithComponent<engine::component::Speed>(entity, x_speed, y_value);
-    _engine.unlinkEntityWithSystem<sfml::system::MovementSystem>(entity);
 }
 
 void rtype::sfml::graphic::SfmlGraphic::removeElement(const rtype::engine::entity::Entity &entity)
