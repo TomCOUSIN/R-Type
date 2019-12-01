@@ -101,7 +101,7 @@ SET(COMPONENT
 SET(ENTITY
         ${ENTITY_SRC}EntityCreator.cpp
         ${ENTITY_SRC}EntityCreator.hpp
-        ${ENTITY_SRC}Entity.hpp src/shared/sfml/entity/BulletEntity.cpp src/shared/sfml/entity/BulletEntity.hpp src/shared/sfml/entity/EnemyEntity.cpp src/shared/sfml/entity/EnemyEntity.hpp)
+        ${ENTITY_SRC}Entity.hpp)
 
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)
@@ -129,6 +129,10 @@ SET(SFML
         ${SFML_ENTITY_SRC}MouseEntity.cpp
         ${SFML_ENTITY_SRC}ButtonEntity.hpp
         ${SFML_ENTITY_SRC}ButtonEntity.cpp
+        ${SFML_ENTITY_SRC}BulletEntity.cpp
+        ${SFML_ENTITY_SRC}BulletEntity.hpp
+        ${SFML_ENTITY_SRC}EnemyEntity.cpp
+        ${SFML_ENTITY_SRC}EnemyEntity.hpp
         ${SFML_ENTITY_SRC}ParallaxEntity.cpp
         ${SFML_ENTITY_SRC}ParallaxEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp
