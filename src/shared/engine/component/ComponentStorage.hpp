@@ -100,6 +100,8 @@ namespace rtype {
                 template <typename T>
                 std::shared_ptr<T> getComponent(entity::Entity const &entity) {
                     auto iterator = _store.find(entity);
+                    if (iterator == _store.end())
+                        return nullptr;
                     return std::static_pointer_cast<T>(iterator->second);
                 }
 

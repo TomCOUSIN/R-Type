@@ -12,6 +12,7 @@
 #include <vector>
 #include <iostream>
 #include "SpriteEntity.hpp"
+#include "BulletEntity.hpp"
 #include "GameEngine.hpp"
 #include "InputEvent.hpp"
 #include "ISystem.hpp"
@@ -26,7 +27,7 @@ namespace rtype::sfml::system {
          *
          * @param engine The engine to use
          */
-        BulletSystem(engine::GameEngine &engine);
+        explicit BulletSystem(engine::GameEngine &engine);
 
         /**
          * @brief Destroy a BulletSystem object
@@ -73,7 +74,7 @@ namespace rtype::sfml::system {
         /**
          * @brief The vector of bullets
          */
-        std::vector<std::shared_ptr<sfml::entity::SpriteEntity>> _bullets;
+        std::vector<std::shared_ptr<sfml::entity::BulletEntity>> _bullets;
     };
 }
 

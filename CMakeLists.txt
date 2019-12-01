@@ -101,7 +101,7 @@ SET(COMPONENT
 SET(ENTITY
         ${ENTITY_SRC}EntityCreator.cpp
         ${ENTITY_SRC}EntityCreator.hpp
-        ${ENTITY_SRC}Entity.hpp)
+        ${ENTITY_SRC}Entity.hpp src/shared/sfml/entity/BulletEntity.cpp src/shared/sfml/entity/BulletEntity.hpp src/shared/sfml/entity/EnemyEntity.cpp src/shared/sfml/entity/EnemyEntity.hpp)
 
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)

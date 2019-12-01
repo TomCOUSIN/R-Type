@@ -31,7 +31,7 @@ void rtype::sfml::system::EnemySystem::update(float const &delta)
     }
     position_store = _engine.getComponentStorage<engine::component::Position>();
     for (auto &enemy : _enemys) {
-        position = position_store.getComponent<engine::component::Position>(enemy->getSpriteEntity());
+        position = position_store.getComponent<engine::component::Position>(enemy->getEnemyEntity());
         if (position) {
             switch (std::rand() % 3) {
             case 0: position->y - 10 > 0 ? position->y -= 10 : position->y = position->y; break;
@@ -58,5 +58,5 @@ void rtype::sfml::system::EnemySystem::spawnEnemy()
 {
     float x = 1885 - std::rand() % 100;
     float y = std::rand() % 1060;
-    _enemys.emplace_back(std::make_shared<sfml::entity::SpriteEntity>(_engine, "./assets/enemy.gif", x, y, 33, 17, -3, 3, 1, false, 0, 0));
+    _enemys.emplace_back(std::make_shared<sfml::entity::EnemyEntity>(_engine, "./assets/enemy.gif", x, y, 33, 17, -3, 3));
 }
