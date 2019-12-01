@@ -242,13 +242,6 @@ namespace rtype {
              */
             void loadEntityFromSharedLibrary(std::string const &path);
 
-            /**
-             * @brief Load an Entity from a folder
-             *
-             * @param path The path to the folder
-             */
-            void loadEntityFromFolder(std::string const &path);
-
             private:
             /**
              * @brief The dlloader to load entity from shared library

@@ -8,8 +8,8 @@
 #ifndef CPP_RTYPE_2019_EVENT_HPP
 #define CPP_RTYPE_2019_EVENT_HPP
 
+#include <memory>
 #include <iostream>
-
 #include "IEvent.hpp"
 #include "Component.hpp"
 

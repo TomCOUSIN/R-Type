@@ -5,6 +5,7 @@
 ** Created by tomcousin,
 */
 
+#include <memory>
 #include <criterion/criterion.h>
 #include "ComponentStorage.hpp"
 #include "Entity.hpp"
@@ -19,7 +20,7 @@ Test(component_storage_tests, test_component_insertion)
     component::ComponentStorage<component::Component> storage;
     entity::Entity entity = 0;
 
-    cr_assert(storage.addEntity(entity, component::Component()));
+    cr_assert(storage.addEntity(entity, std::make_shared<component::Component>()));
 }
 
 /**
@@ -30,6 +31,6 @@ Test(component_storage_tests, test_invalid_component_insertion)
     component::ComponentStorage<component::Component> storage;
     entity::Entity entity = 0;
 
-    storage.addEntity(entity, component::Component());
-    cr_assert_not(storage.addEntity(entity, component::Component()));
+    storage.addEntity(entity, std::make_shared<component::Component>());
+    cr_assert_not(storage.addEntity(entity, std::make_shared<component::Component>()));
 }

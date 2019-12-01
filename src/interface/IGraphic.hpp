@@ -8,7 +8,9 @@
 #ifndef CPP_RTYPE_2019_IGRAPHIC_HPP
 #define CPP_RTYPE_2019_IGRAPHIC_HPP
 
+#include <memory>
 #include <iostream>
+#include <functional>
 #include "Entity.hpp"
 
 namespace rtype::graphic {

@@ -8,6 +8,7 @@
 #ifndef CPP_RTYPE_2019_COMPONENTSTORAGE_HPP
 #define CPP_RTYPE_2019_COMPONENTSTORAGE_HPP
 
+#include <memory>
 #include <iostream>
 #include <unordered_map>
 #include "Component.hpp"
