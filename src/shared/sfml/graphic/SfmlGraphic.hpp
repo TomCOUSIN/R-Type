@@ -11,6 +11,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "ParallaxEntity.hpp"
+#include "SpriteEntity.hpp"
 #include "ButtonEntity.hpp"
 #include "MouseEntity.hpp"
 #include "GameEngine.hpp"
@@ -75,12 +76,17 @@ namespace rtype::sfml::graphic {
         /**
          * @brief Create a Sprite
          */
-        engine::entity::Entity createSprite(std::string const &texture_path,
-            float const &width,
-            float const &height,
-            float const &scale_width,
-            float const &scale_height,
-            size_t const &sprite_count) final;
+        engine::entity::Entity createSprite(std::string const &texture_path
+            , float const &x
+            , float const &y
+            , float const &width
+            , float const &height
+            , float const &scale_width
+            , float const &scale_height
+            , size_t const &sprite_count
+            , bool const &movable
+            , float const &speed_x
+            , float const &speed_y) final;
 
         /**
          * @brief The the position of a Component
@@ -135,6 +141,11 @@ namespace rtype::sfml::graphic {
          * @bried The Parallax to use
          */
         std::vector<std::shared_ptr<rtype::sfml::entity::ParallaxEntity>> _parallax;
+
+        /**
+         * @brief The Sprite to use
+         */
+        std::vector<std::shared_ptr<rtype::sfml::entity::SpriteEntity>> _sprites;
 
         /**
          * @brief the GameEngine used to load Component, System and entity

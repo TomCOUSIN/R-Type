@@ -24,6 +24,7 @@ namespace rtype::engine::entity {
         BUTTON,
         MOUSE,
         PARALLAX,
+        SPRITE
     };
 
     class EntityCreator {

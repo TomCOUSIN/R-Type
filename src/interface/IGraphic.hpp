@@ -66,12 +66,17 @@ namespace rtype::graphic {
         /**
          * @brief Create a Sprite
          */
-        virtual engine::entity::Entity createSprite(std::string const &texture_path,
-            float const &width,
-            float const &height,
-            float const &scale_width,
-            float const &scale_height,
-            size_t const &sprite_count) = 0;
+        virtual engine::entity::Entity createSprite(std::string const &texture_path
+            , float const &x
+            , float const &y
+            , float const &width
+            , float const &height
+            , float const &scale_width
+            , float const &scale_height
+            , size_t const &sprite_count
+            , bool const &movable
+            , float const &speed_x
+            , float const &speed_y) = 0;
 
         /**
          * @brief The the position of a Component
