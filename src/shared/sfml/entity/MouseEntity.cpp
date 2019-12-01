@@ -30,34 +30,23 @@ MouseEntity::MouseEntity(engine::GameEngine &game_engine):
 
     auto mouse_entity = _game_engine.createEntity();
     _game_engine.linkEntityWithComponent(mouse_entity, engine::component::Position::type, _position);
-    _game_engine.linkEntityWithComponent<engine::component::Collision>(mouse_entity, 0, 0, type);
+    _game_engine.linkEntityWithComponent<engine::component::Collision>(mouse_entity, 1, 1, type);
 
     _game_engine.linkEntityWithSystem<system::PositionSystem>(mouse_entity);
     _game_engine.linkEntityWithSystem<engine::system::CollisionSystem>(mouse_entity);
 
     _game_engine.subscribeTo(
-        event::InputEvent(event::InputEvent::MOUSE_MOVE),
-        [this] (engine::event::Event const &event) {
-            auto data = event.getEventData<engine::component::Position>();
-            // std::cout << "move: " << data->x << ":" << data->y << std::endl;
-            _position->x = data->x;
-            _position->y = data->y;
-        }
+        event::InputEvent(event::InputEvent::MOUSE_MOVED),
+        std::bind(&MouseEntity::onMouseMove, this, std::placeholders::_1)
     );
+}
 
-    _game_engine.subscribeTo(
-        event::InputEvent(event::InputEvent::MOUSE_PRESSED),
-        [this] (engine::event::Event const &event) {
-            _clicked = true;
-        }
-    );
-
-    _game_engine.subscribeTo(
-        event::InputEvent(event::InputEvent::MOUSE_RELEASED),
-        [this] (engine::event::Event const &event) {
-            _clicked = false;
-        }
-    );
+void
+MouseEntity::onMouseMove(engine::event::Event const &event)
+{
+    auto data = event.getEventData<engine::component::Position>();
+    _position->x = data->x;
+    _position->y = data->y;
 }
 
 }

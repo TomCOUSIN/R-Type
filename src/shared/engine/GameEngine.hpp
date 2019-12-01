@@ -51,7 +51,7 @@ namespace rtype {
              * @param type The type of the Component stored in the ComponentStorage
              * @return The ComponentStorage
              */
-            component::ComponentStorage<component::Component> getComponentStorage(component::ComponentType type) const;
+            component::ComponentStorage<component::Component> &getComponentStorage(component::ComponentType type);
 
             /**
              * @brief Get A ComponentStorage according to the Component
@@ -60,7 +60,7 @@ namespace rtype {
              * @return The ComponentStorage
              */
             template<typename C>
-            component::ComponentStorage<component::Component> getComponentStorage() const {
+            component::ComponentStorage<component::Component> &getComponentStorage() {
                 static_assert(std::is_base_of<component::Component, C>::value, "You need to pass a Component");
                 return getComponentStorage(C::type);
             }

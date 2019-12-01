@@ -29,7 +29,7 @@ void InputSystem::update(float const &delta)
         default: break;
         }
         if (event.type == sf::Event::MouseMoved) {
-            _engine.dispatchEvent(event::InputEvent(event::InputEvent::MOUSE_MOVE,
+            _engine.dispatchEvent(event::InputEvent(event::InputEvent::MOUSE_MOVED,
                 std::make_shared<engine::component::Position>(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y)));
         }
         if (event.type == sf::Event::MouseButtonPressed) {

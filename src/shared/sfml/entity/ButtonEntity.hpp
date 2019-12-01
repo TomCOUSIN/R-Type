@@ -43,6 +43,36 @@ namespace rtype::sfml::entity {
 		 */
 		void destroyEntityButton();
 
+	// @MARK Listeners
+		public:
+		/**
+		 * @brief listener on mouse pressed
+		 *
+		 * @param event mouse event
+		 */
+		void onMousePressed(engine::event::Event const &event);
+
+		/**
+		 * @brief listener on mouse released
+		 *
+		 * @param event mouse event
+		 */
+		void onMouseReleased(engine::event::Event const &event);
+
+		/**
+		 * @brief listener on mouse begin collide with the button
+		 *
+		 * @param event mouse event
+		 */
+		void onMouseCollide(engine::event::Event const &event);
+
+		/**
+		 * @brief listener on mouse end collide with the button
+		 *
+		 * @param event mouse event
+		 */
+		void onMouseEndCollide(engine::event::Event const &event);
+
     // @MARK Static
 		public:
 		/**

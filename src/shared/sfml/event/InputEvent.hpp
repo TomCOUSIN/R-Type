@@ -21,7 +21,7 @@ namespace rtype::sfml::event {
         enum InputEventType : engine::event::EventType {
             MOUSE_PRESSED,
             MOUSE_RELEASED,
-            MOUSE_MOVE,
+            MOUSE_MOVED,
             ARROW_UP,
             ARROW_DOWN,
             ARROW_RIGHT,

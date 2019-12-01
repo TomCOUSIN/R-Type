@@ -67,7 +67,7 @@ void GameEngine::update(float const &delta)
     }
 }
 
-component::ComponentStorage<component::Component> GameEngine::getComponentStorage(component::ComponentType type) const
+component::ComponentStorage<component::Component> &GameEngine::getComponentStorage(component::ComponentType type)
 {
     auto component_storage = _component_store.find(type);
     return component_storage->second;

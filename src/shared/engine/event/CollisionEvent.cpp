@@ -19,6 +19,7 @@ CollisionEvent::CollisionEvent(CollisionEventType event_type, component::Collisi
 {
 }
 
+// @from https://en.wikipedia.org/wiki/Pairing_function#Cantor_pairing_function
 engine::event::EventType
 CollisionEvent::getId(engine::entity::Entity entity, component::Collision::IdType component_type)
 {

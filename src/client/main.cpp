@@ -4,7 +4,7 @@
 ** File description:
 ** Created by tomcousin,
 */
-g
+
 #include <Game.hpp>
 
 using namespace rtype;

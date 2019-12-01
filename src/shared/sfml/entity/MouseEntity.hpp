@@ -24,6 +24,14 @@ namespace rtype::sfml::entity {
 		 */
 		MouseEntity(engine::GameEngine &game_engine);
 
+	// @MARK Listeners
+		public:
+		/**
+		 * @brief Listener on mouse moved
+		 * @param event the dispatched event
+		 */
+		void onMouseMove(engine::event::Event const &event);
+
     // @MARK Static
 		public:
 		/**

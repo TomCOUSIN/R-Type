@@ -102,18 +102,6 @@ namespace rtype {
                     return std::static_pointer_cast<T>(iterator->second);
                 }
 
-                // template <typename T>
-                // ComponentStorage<T> to() const
-                // {
-                //     ComponentStorage<T> result;
-                //     // this is the only one solution that I've found to cast unordered_map's template to other one.
-                //     for (auto el : _store) {
-                //         auto converted_value = std::static_pointer_cast<T>(el.second);
-                //         result._store.emplace(std::make_pair(el.first, converted_value));
-                //     }
-                //     return result;
-                // }
-
                 private:
                 /**
                  * @brief The storage of the ComponentStorage
