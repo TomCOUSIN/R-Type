@@ -16,7 +16,7 @@ _timer(timer), _graphic(graphic), _audio(audio) {}
 void rtype::game::scene::GameScene::loadScene()
 {
     _entities.emplace("parallax", _graphic->createParallax("./assets/parallax/Background.jpg", "./assets/parallax/Foreground.png", 2));
-    _entities.emplace("sprite", _graphic->createSprite("./assets/spaceship.gif", 300, 300, 33, 17, 3, 3, 1, true, 10, 10));
+    _entities.emplace("sprite", _graphic->createSprite("./assets/spaceship.gif", 300, 300, 33, 17, 3, 3, 1, true, 10, 10, true));
     _entities.emplace("shot_sound", _audio->createSound("./assets/sounds/shot.wav", rtype::sfml::event::InputEvent::InputEventType::SPACE));
 }
 

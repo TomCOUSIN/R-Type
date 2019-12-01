@@ -28,11 +28,11 @@ namespace rtype {
                 ANIMATION,
                 BUTTON,
                 INPUT,
+                BULLET,
                 PARALLAX,
-                MOVEMENT,
                 POSITION,
-                RENDER,
                 COLLISION,
+                RENDER,
             };
 
             /**

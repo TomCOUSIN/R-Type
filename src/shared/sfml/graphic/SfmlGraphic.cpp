@@ -8,6 +8,7 @@
 #include "AnimationSystem.hpp"
 #include "ParallaxSystem.hpp"
 #include "PositionSystem.hpp"
+#include "BulletSystem.hpp"
 #include "ButtonSystem.hpp"
 #include "RenderSystem.hpp"
 #include "InputSystem.hpp"
@@ -29,6 +30,7 @@ void rtype::sfml::graphic::SfmlGraphic::init()
     _engine.loadSystem<sfml::system::ButtonSystem>(_engine, _window);
     _engine.loadSystem<sfml::system::AnimationSystem>(_engine);
     _engine.loadSystem<sfml::system::ParallaxSystem>(_engine);
+    _engine.loadSystem<sfml::system::BulletSystem>(_engine);
     _engine.loadComponentStorage<engine::component::Position>();
     _engine.loadComponentStorage<engine::component::Speed>();
     _engine.loadComponentStorage<sfml::component::Button>();
@@ -71,10 +73,10 @@ rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createSprite(
     std::string const &texture_path, float const &x, float const &y,
     float const &width, float const &height, float const &scale_width,
     float const &scale_height, size_t const &sprite_count, bool const &movable,
-    float const &speed_x, float const &speed_y)
+    float const &speed_x, float const &speed_y, bool const &can_fire)
 {
     _sprites.emplace_back(std::make_shared<sfml::entity::SpriteEntity>(_engine,
-        texture_path, x, y, width, height, scale_width, scale_height, sprite_count, movable, speed_x, speed_y));
+        texture_path, x, y, width, height, scale_width, scale_height, sprite_count, movable, speed_x, speed_y, can_fire));
     return _sprites.back()->getSpriteEntity();
 }
 
