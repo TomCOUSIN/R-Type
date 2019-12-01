@@ -14,6 +14,7 @@
 #include "SpriteEntity.hpp"
 #include "ButtonEntity.hpp"
 #include "MouseEntity.hpp"
+#include "InputEntity.hpp"
 #include "GameEngine.hpp"
 #include "IGraphic.hpp"
 
@@ -60,6 +61,17 @@ namespace rtype::sfml::graphic {
             , float const &width
             , float const &height
             , std::function<void(void)> callback) final;
+
+        /**
+         * @brief Create a Input
+         */
+        engine::entity::Entity createInput(std::string const &title
+            , float const &x
+            , float const &y
+            , float const &width
+            , float const &height
+            , std::function<void(std::string)> on_submit
+            , std::size_t max_chars = 15) final;
 
         /**
          * @brief Create a Parallax
@@ -133,12 +145,17 @@ namespace rtype::sfml::graphic {
         rtype::sfml::entity::MouseEntity _mouse;
 
         /**
-         * @bried The Button to use
+         * @brief The Button to use
          */
         std::vector<std::shared_ptr<rtype::sfml::entity::ButtonEntity>> _buttons;
 
         /**
-         * @bried The Parallax to use
+         * @brief The Button to use
+         */
+        std::vector<std::shared_ptr<rtype::sfml::entity::InputEntity>> _inputs;
+
+        /**
+         * @brief The Parallax to use
          */
         std::vector<std::shared_ptr<rtype::sfml::entity::ParallaxEntity>> _parallax;
 

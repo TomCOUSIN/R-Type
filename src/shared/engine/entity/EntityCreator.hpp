@@ -21,6 +21,7 @@ namespace rtype::engine::entity {
      * @brief ENTITY_TYPE
      */
     enum ENTITY_TYPE {
+        INPUT,
         BUTTON,
         MOUSE,
         PARALLAX,

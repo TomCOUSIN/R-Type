@@ -26,6 +26,8 @@ namespace rtype::sfml::event {
             ARROW_DOWN,
             ARROW_RIGHT,
             ARROW_LEFT,
+            BACKSPACE,
+            TEXT_ENTERED,
             KEY_A,
             KEY_B,
             KEY_C,
@@ -56,6 +58,8 @@ namespace rtype::sfml::event {
             ENTER,
             ESCAPE
         };
+
+        static const size_t VISIBLE_UTF_CODE = 32;
 
     // @MARK Constructors/Destructors
         public:

@@ -30,6 +30,14 @@ namespace rtype {
                 BUTTON,
                 SPRITE,
                 TEXT,
+                KEY,
+            };
+
+            enum CENTERED {
+                X = 1 << 0,
+                Y = 1 << 1,
+                NONE = 1 << 2,
+                ALL = X | Y,
             };
 
             /**

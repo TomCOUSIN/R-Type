@@ -30,7 +30,7 @@ namespace rtype::sfml::entity {
                             , std::function<void(void)> callback):
         engine::entity::EntityCreator(game_engine),
         _callback(callback),
-        _position(std::make_shared<engine::component::Position>(x, y, true)),
+        _position(std::make_shared<engine::component::Position>(x, y)),
         _button(std::make_shared<sfml::component::Button>(width, height)),
         _text(std::make_shared<sfml::component::Text>(title, 24))
     {

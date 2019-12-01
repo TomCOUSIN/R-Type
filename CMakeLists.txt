@@ -90,6 +90,7 @@ SET(INTERFACE
 
 SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
+        ${COMPONENT_SRC}Key.hpp
         ${COMPONENT_SRC}Collision.hpp
         ${COMPONENT_SRC}Position.hpp
         ${COMPONENT_SRC}ComponentStorage.hpp
@@ -124,6 +125,8 @@ SET(SFML
         ${SFML_ENTITY_SRC}MouseEntity.cpp
         ${SFML_ENTITY_SRC}ButtonEntity.hpp
         ${SFML_ENTITY_SRC}ButtonEntity.cpp
+        ${SFML_ENTITY_SRC}InputEntity.hpp
+        ${SFML_ENTITY_SRC}InputEntity.cpp
         ${SFML_ENTITY_SRC}ParallaxEntity.cpp
         ${SFML_ENTITY_SRC}ParallaxEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp

@@ -23,7 +23,8 @@ namespace rtype::engine::component {
          * @param x The x value of the Position
          * @param y The y value of the Position
          */
-        explicit Position(float const &x = 0.0f, float const &y = 0.0f, bool is_centered = false) : x(x), y(y), is_centered(is_centered) {}
+        explicit Position(float const &x = 0.0f, float const &y = 0.0f, engine::component::CENTERED centered = engine::component::ALL)
+            : x(x), y(y), centered(centered) {}
 
         /**
          * @brief The x value of the Position
@@ -38,7 +39,7 @@ namespace rtype::engine::component {
         /**
          * @brief If the position is centered
          */
-        float is_centered;
+        engine::component::CENTERED centered;
 
         /**
          * @brief The type of the Component Position

@@ -97,10 +97,10 @@ CollisionSystem::Rect CollisionSystem::getRect(std::shared_ptr<component::Collis
 {
     Rect rect;
 
-    rect.left = position->is_centered ? position->x - collision->width/2 : position->x;
-    rect.right = position->is_centered ? position->x + collision->width/2 : position->x + collision->width;
-    rect.top = position->is_centered ? position->y - collision->height/2 : position->y;
-    rect.bottom = position->is_centered ? position->y + collision->height/2 : position->y + collision->height;
+    rect.left = position->centered & component::CENTERED::X ? position->x - collision->width/2 : position->x;
+    rect.right = position->centered & component::CENTERED::X ? position->x + collision->width/2 : position->x + collision->width;
+    rect.top = position->centered & component::CENTERED::Y ? position->y - collision->height/2 : position->y;
+    rect.bottom = position->centered & component::CENTERED::Y ? position->y + collision->height/2 : position->y + collision->height;
     return rect;
 }
 

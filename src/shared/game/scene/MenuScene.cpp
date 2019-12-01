@@ -20,6 +20,7 @@ void rtype::game::scene::MenuScene::loadScene()
     _graphic->setVisible(_entities["title"], true);
     _entities.emplace(std::pair("play", _graphic->createButton("Play", 960, 400, 200, 100, [this]{_play = true;})));
     _entities.emplace(std::pair("quit", _graphic->createButton("Quit", 960, 600, 200, 100, [this]{_quit = true;})));
+    _entities.emplace(std::pair("input", _graphic->createInput("Input", 200, 200, 200, 100, [](std::string value) { std::cout << value << std::endl; })));
 }
 
 rtype::engine::scene::SCENE rtype::game::scene::MenuScene::displayScene()

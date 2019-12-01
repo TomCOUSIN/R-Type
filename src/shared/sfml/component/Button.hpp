@@ -29,9 +29,10 @@ namespace rtype {
                  * @param width The width of the Button
                  * @param height The height of the Button
                  */
-                Button(float const &width, float const &height) :
+                Button(float const &width, float const &height, engine::component::CENTERED centered = engine::component::ALL) :
                 size(width, height), shape(size), clicked(false), hover(false) {
-                    shape.setOrigin(width/2, height/2);
+                    shape.setOrigin(centered & engine::component::CENTERED::X ? width/2 : 0
+                                   , centered & engine::component::CENTERED::Y ? height/2 : 0);
                     shape.setFillColor(sf::Color::Black);
                     shape.setOutlineThickness(3);
                     shape.setOutlineColor(sf::Color::White);

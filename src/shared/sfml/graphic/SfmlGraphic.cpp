@@ -60,6 +60,19 @@ rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createButton(
     return _buttons.back()->getButtonEntity();
 }
 
+rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createInput(
+    std::string const &title
+    , float const &x
+    , float const &y
+    , float const &width
+    , float const &height
+    , std::function<void(std::string)> on_submit
+    , std::size_t max_chars)
+{
+    _inputs.emplace_back(std::make_shared<rtype::sfml::entity::InputEntity>(_engine, title, x, y, width, height, on_submit, max_chars));
+    return _inputs.back()->getInputEntity();
+}
+
 rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createText(
     std::string const &message, size_t const &size)
 {
@@ -84,7 +97,7 @@ void rtype::sfml::graphic::SfmlGraphic::setPosition(
     const rtype::engine::entity::Entity &entity, float const &x_position,
     float const &y_position)
 {
-    _engine.linkEntityWithComponent<engine::component::Position>(entity, x_position, y_position, true);
+    _engine.linkEntityWithComponent<engine::component::Position>(entity, x_position, y_position);
     _engine.linkEntityWithSystem<sfml::system::PositionSystem>(entity);
 }
 

@@ -19,18 +19,24 @@ namespace rtype::sfml::component {
      */
     struct Text : public engine::component::Component {
 
-        explicit Text(std::string const &message, size_t const &size) {
+        explicit Text(std::string const &message, size_t const &size, engine::component::CENTERED centered = engine::component::ALL)
+            : centered(centered)
+        {
             font.loadFromFile("./assets/fonts/Roboto-Condensed.ttf");
             text.setFont(font);
             text.setString(message);
             text.setCharacterSize(size);
             text.setFillColor(sf::Color::White);
             auto textRect = text.getLocalBounds();
-            text.setOrigin(textRect.width/2, textRect.height/2);
+            text.setOrigin(centered & engine::component::CENTERED::X ? textRect.width/2 : 0
+                          , centered & engine::component::CENTERED::Y ? textRect.height/2 : 0);
         }
 
         void update(std::string const &message) {
             text.setString(message);
+            auto textRect = text.getLocalBounds();
+            text.setOrigin(centered & engine::component::CENTERED::X ? textRect.width/2 : 0
+                          , centered & engine::component::CENTERED::Y ? textRect.height/2 : 0);
         }
 
         /**
@@ -42,6 +48,11 @@ namespace rtype::sfml::component {
          * @brief The font of the text
          */
         sf::Font font;
+
+        /**
+         * @brief The font centered state
+         */
+        engine::component::CENTERED centered;
 
         /**
          * @brief The type of the Component Text
