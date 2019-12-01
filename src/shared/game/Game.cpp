@@ -43,6 +43,7 @@ void rtype::game::Game::loop()
         switch (_actual_scene->displayScene()) {
         case engine::scene::MENU: changeScene(0); break;
         case engine::scene::GAME: changeScene(1); break;
+        case engine::scene::QUIT: return;
         default: break;
         }
     }

@@ -50,7 +50,16 @@ namespace rtype::game::scene {
 
 
         private:
-        bool _end;
+        /**
+         * @brief Boolean to play
+         */
+        bool _play;
+
+        /**
+         * @brief Boolean to quit the game
+         */
+        bool _quit;
+
         /**
          * @brief the ITimer to use
          */

@@ -9,32 +9,35 @@
 #include "MenuScene.hpp"
 
 rtype::game::scene::MenuScene::MenuScene(std::shared_ptr<graphic::IGraphic> graphic, std::shared_ptr<timer::ITimer> timer) :
-_end(false), _timer(timer), _graphic(graphic) {}
+_timer(timer), _graphic(graphic) {}
 
 void rtype::game::scene::MenuScene::loadScene()
 {
-    _entities.emplace(std::pair("title", _graphic->createText("Title", 50)));
-    _graphic->setPosition(_entities["title"], 50.0f, 50.0f);
+    _quit = false;
+    _play = false;
+    _entities.emplace(std::pair("title", _graphic->createText("R-Type", 50)));
+    _graphic->setPosition(_entities["title"], 960.0f, 100.0f);
     _graphic->setVisible(_entities["title"], true);
-    _entities.emplace(std::pair("button", _graphic->createButton("Game", 300, 300, 200, 100, [this]{_end = true;})));
+    _entities.emplace(std::pair("play", _graphic->createButton("Play", 960, 400, 200, 100, [this]{_play = true;})));
+    _entities.emplace(std::pair("quit", _graphic->createButton("Quit", 960, 600, 200, 100, [this]{_quit = true;})));
 }
 
 rtype::engine::scene::SCENE rtype::game::scene::MenuScene::displayScene()
 {
     _timer->start();
-    while (_graphic->isWindowOpen() && !_end) {
+    while (_graphic->isWindowOpen() && !_play && !_quit) {
         if (_timer->getElapsedTime() >= 0.005f) {
             _graphic->update(_timer->getElapsedTime());
             _timer->restart();
         }
     }
-    _end = false;
-    return rtype::engine::scene::GAME;
+    return _play ? rtype::engine::scene::GAME : rtype::engine::scene::QUIT;
 }
 
 void rtype::game::scene::MenuScene::unloadScene()
 {
     _graphic->removeElement(_entities["title"]);
-    _graphic->removeElement(_entities["button"]);
+    _graphic->removeElement(_entities["play"]);
+    _graphic->removeElement(_entities["quit"]);
     _entities.clear();
 }
