@@ -10,6 +10,7 @@
 #include "SpriteEntity.hpp"
 #include "RenderSystem.hpp"
 #include "InputEvent.hpp"
+#include "FireEvent.hpp"
 #include "Position.hpp"
 #include "Sprite.hpp"
 
@@ -19,7 +20,7 @@ rtype::sfml::entity::SpriteEntity::SpriteEntity(engine::GameEngine &engine,
     std::string const &texture_path, float const &x, float const &y,
     float const &width, float const &height, float const &scale_width,
     float const &scale_height, size_t const &sprite_count, bool const &movable,
-    float const &speed_x, float const &speed_y) :
+    float const &speed_x, float const &speed_y, bool const &can_fire) :
 engine::entity::EntityCreator(engine),
 _position(std::make_shared<engine::component::Position>(x, y)),
 _speed(std::make_shared<engine::component::Speed>(speed_x, speed_y))
@@ -57,6 +58,13 @@ _speed(std::make_shared<engine::component::Speed>(speed_x, speed_y))
             std::bind(&SpriteEntity::onArrowLeftPressed, this, std::placeholders::_1)
         );
     }
+
+    if (can_fire) {
+        engine.subscribeTo(
+            event::InputEvent(event::InputEvent::SPACE),
+            std::bind(&SpriteEntity::onFire, this, std::placeholders::_1)
+        );
+    }
 }
 
 void rtype::sfml::entity::SpriteEntity::onArrowUpPressed(engine::event::Event const &event)
@@ -77,6 +85,11 @@ void rtype::sfml::entity::SpriteEntity::onArrowRightPressed(const rtype::engine:
 void rtype::sfml::entity::SpriteEntity::onArrowLeftPressed(const rtype::engine::event::Event &event)
 {
     _position->x -= _speed->x;
+}
+
+void rtype::sfml::entity::SpriteEntity::onFire(const rtype::engine::event::Event &event)
+{
+    _game_engine.dispatchEvent(event::FireEvent(event::FireEvent::ALLY, _position));
 }
 
 rtype::engine::entity::Entity rtype::sfml::entity::SpriteEntity::getSpriteEntity() const

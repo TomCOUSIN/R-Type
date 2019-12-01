@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.11)
 project(CPP_rtype_2019)
 
 # Define c++ version to use
@@ -110,11 +110,11 @@ SET(EVENT
         ${EVENT_SRC}CollisionEvent.cpp
         ${EVENT_SRC}CollisionEvent.hpp
         ${EVENT_SRC}Event.cpp
-        ${EVENT_SRC}Event.hpp)
+        ${EVENT_SRC}Event.hpp src/shared/sfml/event/FireEvent.cpp src/shared/sfml/event/FireEvent.hpp)
 
 SET(SYSTEM
         ${SYSTEM_SRC}CollisionSystem.cpp
-        ${SYSTEM_SRC}CollisionSystem.hpp)
+        ${SYSTEM_SRC}CollisionSystem.hpp src/shared/sfml/system/BulletSystem.cpp src/shared/sfml/system/BulletSystem.hpp)
 
 SET(NETWORK
         ${NETWORK_SRC}BoostNetwork.cpp

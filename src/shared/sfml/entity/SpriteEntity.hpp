@@ -33,7 +33,8 @@ namespace rtype::sfml::entity {
             , size_t const &sprite_count
             , bool const &movable = false
             , float const &speed_x = 1.0f
-            , float const &speed_y = 1.0f);
+            , float const &speed_y = 1.0f
+            , bool const &can_fire = false);
 
         /**
          * @brief Get the Entity of the Sprite
@@ -60,6 +61,11 @@ namespace rtype::sfml::entity {
          * @brief When the arrow up key is pressed
          */
         void onArrowRightPressed(engine::event::Event const &event);
+
+        /**
+         * @brief When the sprite fire
+         */
+        void onFire(engine::event::Event const &event);
 
         /**
          * @brief The type of the Created Entity

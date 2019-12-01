@@ -57,7 +57,7 @@ void rtype::sfml::system::PositionSystem::removeEntity(const engine::entity::Ent
 
 void rtype::sfml::system::PositionSystem::updateSpritePosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    static engine::component::ComponentStorage sprite_store;
+    engine::component::ComponentStorage sprite_store;
     if (sprite_store.size() == 0) {
         sprite_store = _engine.getComponentStorage<component::Sprite>();
     }
@@ -70,7 +70,7 @@ void rtype::sfml::system::PositionSystem::updateSpritePosition(std::shared_ptr<e
 
 void rtype::sfml::system::PositionSystem::updateButtonPosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    static engine::component::ComponentStorage button_store;
+    engine::component::ComponentStorage button_store;
     if (button_store.size() == 0) {
         button_store = _engine.getComponentStorage<component::Button>();
     }
@@ -83,7 +83,7 @@ void rtype::sfml::system::PositionSystem::updateButtonPosition(std::shared_ptr<e
 
 void rtype::sfml::system::PositionSystem::updateTextPosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    static engine::component::ComponentStorage text_store;
+    engine::component::ComponentStorage text_store;
     if (text_store.size() == 0) {
         text_store = _engine.getComponentStorage<component::Text>();
     }
