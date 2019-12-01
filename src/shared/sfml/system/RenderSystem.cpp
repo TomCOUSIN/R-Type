@@ -45,7 +45,7 @@ void rtype::sfml::system::RenderSystem::removeEntity(const engine::entity::Entit
 
 void rtype::sfml::system::RenderSystem::renderSprite(const engine::entity::Entity &entity)
 {
-    static engine::component::ComponentStorage sprite_store;
+    engine::component::ComponentStorage sprite_store;
     if (sprite_store.size() == 0) {
         sprite_store = _engine.getComponentStorage<component::Sprite>();
     }
@@ -58,7 +58,7 @@ void rtype::sfml::system::RenderSystem::renderSprite(const engine::entity::Entit
 
 void rtype::sfml::system::RenderSystem::renderButton(const engine::entity::Entity &entity)
 {
-    static engine::component::ComponentStorage button_store;
+    engine::component::ComponentStorage button_store;
     if (button_store.size() == 0) {
         button_store = _engine.getComponentStorage<component::Button>();
     }
@@ -71,7 +71,7 @@ void rtype::sfml::system::RenderSystem::renderButton(const engine::entity::Entit
 
 void rtype::sfml::system::RenderSystem::renderText(const engine::entity::Entity &entity)
 {
-    static engine::component::ComponentStorage text_store;
+    engine::component::ComponentStorage text_store;
     if (text_store.size() == 0) {
         text_store = _engine.getComponentStorage<component::Text>();
     }

@@ -20,7 +20,8 @@ namespace rtype::engine::event {
     enum EVENT_SENDER {
         INPUT,
         COLLISION,
-        NETWORK
+        NETWORK,
+        ENTITY
     };
 
     /**

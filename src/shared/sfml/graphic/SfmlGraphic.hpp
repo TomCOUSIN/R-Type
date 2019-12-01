@@ -86,7 +86,8 @@ namespace rtype::sfml::graphic {
             , size_t const &sprite_count
             , bool const &movable
             , float const &speed_x
-            , float const &speed_y) final;
+            , float const &speed_y
+            , bool const &can_fire) final;
 
         /**
          * @brief The the position of a Component
