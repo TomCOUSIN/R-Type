@@ -21,7 +21,7 @@ _engine(engine) {
 
 void rtype::sfml::system::PositionSystem::update(float const &delta)
 {
-    static engine::component::ComponentStorage position_store;
+    engine::component::ComponentStorage position_store;
     if (position_store.size() == 0) {
         position_store = _engine.getComponentStorage<engine::component::Position>();
     }

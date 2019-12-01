@@ -27,7 +27,7 @@ SET(SHARED_SRC ${SRC}shared/)
 SET(SERVER_SRC ${SRC}server/)
 SET(CLIENT_SRC ${SRC}client/)
 
-SET(GAME_SRC ${CLIENT_SRC}game/)
+SET(GAME_SRC ${SHARED_SRC}game/)
 SET(SFML_SRC ${SHARED_SRC}sfml/)
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(EXCEPTION_SRC ${SHARED_SRC}exception/)
@@ -49,6 +49,7 @@ SET(SFML_EVENT_SRC ${SFML_SRC}event/)
 SET(SFML_ENTITY_SRC ${SFML_SRC}entity/)
 
 SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
+SET(GAME_COMPONENT_SRC ${GAME_SRC}component/)
 
 # Include directories
 include_directories(${INTERFACE_SRC})
@@ -92,8 +93,7 @@ SET(COMPONENT
         ${COMPONENT_SRC}Collision.hpp
         ${COMPONENT_SRC}Position.hpp
         ${COMPONENT_SRC}ComponentStorage.hpp
-        ${COMPONENT_SRC}Component.hpp
-        ${COMPONENT_SRC}Health.hpp)
+        ${COMPONENT_SRC}Component.hpp)
 
 SET(ENTITY
         ${ENTITY_SRC}EntityCreator.cpp
@@ -170,6 +170,7 @@ SET(GAME
         ${GAME_SCENE_SRC}MenuScene.hpp
         ${GAME_SCENE_SRC}GameScene.cpp
         ${GAME_SCENE_SRC}GameScene.hpp
+        ${GAME_COMPONENT_SRC}Health.hpp
         ${GAME_SRC}Game.cpp
         ${GAME_SRC}Game.hpp)
 

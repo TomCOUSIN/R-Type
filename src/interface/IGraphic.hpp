@@ -52,6 +52,13 @@ namespace rtype::graphic {
             , std::function<void(void)> callback) = 0;
 
         /**
+         * @brief Create a Parallax
+         */
+        virtual engine::entity::Entity createParallax(std::string const &background_path
+            , std::string const &foreground_path
+            , float const &background_speed_x) = 0;
+
+        /**
          * @brief Create a Text
          */
         virtual engine::entity::Entity createText(std::string const &message, size_t const &size) = 0;

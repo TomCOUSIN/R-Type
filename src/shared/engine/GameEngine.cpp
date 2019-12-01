@@ -10,7 +10,7 @@
 namespace rtype::engine {
 
 GameEngine::GameEngine() :
-_counter(1) {}
+_dlloader(), _counter(1) {}
 
 entity::Entity GameEngine::createEntity()
 { return _counter++; }

@@ -6,6 +6,7 @@
 */
 
 #include "AnimationSystem.hpp"
+#include "ParallaxSystem.hpp"
 #include "MovementSystem.hpp"
 #include "PositionSystem.hpp"
 #include "ButtonSystem.hpp"
@@ -29,6 +30,7 @@ void rtype::sfml::graphic::SfmlGraphic::init()
     _engine.loadSystem<sfml::system::ButtonSystem>(_engine, _window);
     _engine.loadSystem<sfml::system::AnimationSystem>(_engine);
     _engine.loadSystem<sfml::system::MovementSystem>(_engine);
+    _engine.loadSystem<sfml::system::ParallaxSystem>(_engine);
     _engine.loadComponentStorage<engine::component::Position>();
     _engine.loadComponentStorage<engine::component::Speed>();
     _engine.loadComponentStorage<sfml::component::Button>();
@@ -115,6 +117,12 @@ void rtype::sfml::graphic::SfmlGraphic::removeElement(const rtype::engine::entit
             return;
         }
     }
+    for (auto &parallax : _parallax) {
+        if (parallax->getBackgroundEntity() == entity) {
+            parallax->destroyParallax();
+            return;
+        }
+    }
     _engine.destroyEntity(entity);
 }
 
@@ -128,5 +136,13 @@ bool rtype::sfml::graphic::SfmlGraphic::isButtonClicked(const rtype::engine::ent
         return button->clicked;
     }
     return false;
+}
+
+rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createParallax(
+    std::string const &background_path, std::string const &foreground_path,
+    float const &background_speed_x)
+{
+    _parallax.emplace_back(std::make_shared<sfml::entity::ParallaxEntity>(_engine, background_path, foreground_path, background_speed_x));
+    return _parallax.back()->getBackgroundEntity();
 }
 

@@ -8,7 +8,9 @@
 #ifndef CPP_RTYPE_2019_SFMLGRAPHIC_HPP
 #define CPP_RTYPE_2019_SFMLGRAPHIC_HPP
 
+#include <memory>
 #include <SFML/Graphics.hpp>
+#include "ParallaxEntity.hpp"
 #include "ButtonEntity.hpp"
 #include "MouseEntity.hpp"
 #include "GameEngine.hpp"
@@ -57,6 +59,13 @@ namespace rtype::sfml::graphic {
             , float const &width
             , float const &height
             , std::function<void(void)> callback) final;
+
+        /**
+         * @brief Create a Parallax
+         */
+        engine::entity::Entity createParallax(std::string const &background_path
+            , std::string const &foreground_path
+            , float const &background_speed_x) final;
 
         /**
          * @brief Create a Text
@@ -121,6 +130,11 @@ namespace rtype::sfml::graphic {
          * @bried The Button to use
          */
         std::vector<std::shared_ptr<rtype::sfml::entity::ButtonEntity>> _buttons;
+
+        /**
+         * @bried The Parallax to use
+         */
+        std::vector<std::shared_ptr<rtype::sfml::entity::ParallaxEntity>> _parallax;
 
         /**
          * @brief the GameEngine used to load Component, System and entity

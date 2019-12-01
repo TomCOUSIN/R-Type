@@ -23,7 +23,7 @@ rtype::engine::scene::SCENE rtype::game::scene::MenuScene::displayScene()
 {
     _timer->start();
     while (_graphic->isWindowOpen() && !_end) {
-        if (_timer->getElapsedTime() >= 0.05f) {
+        if (_timer->getElapsedTime() >= 0.005f) {
             _graphic->update(_timer->getElapsedTime());
             _timer->restart();
         }

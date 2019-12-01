@@ -23,6 +23,7 @@ namespace rtype::engine::entity {
     enum ENTITY_TYPE {
         BUTTON,
         MOUSE,
+        PARALLAX,
     };
 
     class EntityCreator {

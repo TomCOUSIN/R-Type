@@ -52,10 +52,8 @@ namespace rtype::sfml::system {
 
         /**
          * @brief The SystemType of the ParallaxSystem
-         *
-         * @param entity The entity to draw
          */
-        static const engine::system::SystemType type = 6;
+        static const engine::system::SystemType type = 1 << engine::system::SYSTEM_TYPE::PARALLAX;
 
         private:
         /**

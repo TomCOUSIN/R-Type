@@ -26,10 +26,10 @@ void rtype::sfml::system::ParallaxSystem::update(float const &delta)
         if (position_store.entityHasComponent(entity) && speed_store.entityHasComponent(entity)) {
             position = position_store.getComponent<engine::component::Position>(entity);
             speed = speed_store.getComponent<engine::component::Speed>(entity);
-            if (position->x >= -1600) {
+            if (position->x >= -1920) {
                 position->x -= speed->x;
             } else {
-                position->x = 0;
+                position->x = -1 * speed->x;
             }
         }
     }

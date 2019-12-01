@@ -28,6 +28,7 @@ namespace rtype {
                 ANIMATION,
                 BUTTON,
                 INPUT,
+                PARALLAX,
                 MOVEMENT,
                 POSITION,
                 RENDER,
