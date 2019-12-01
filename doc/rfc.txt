@@ -1,0 +1,91 @@
+Network Working Group                                        L. Marandat
+Request for Comments: 0                                        T. Cousin
+Category: Informational                                         T. Oriol
+                                                                V. Dewez
+                                                        Epitech Bordeaux
+                                                           December 2019
+
+           Informations of Communication Protocol in Rtype
+
+Status of this Memo
+
+   This memo provides information for the Internet community. This
+   protocol is intended to inform about Rtype communication protocol.
+
+Copyright Notice
+
+   Copyright (C) Lucas Marandat (2019).  All Rights Reserved.
+
+Table of Contents
+
+   1.   Introduction . . . . . . . . . . . . . . . . . . . . . . . . 2
+   2.   Editorial Policy . . . . . . . . . . . . . . . . . . . . . . 3
+   3.   Format Rules . . . . . . . . . . . . . . . . . . . . . . . . 4
+   3a.   ASCII Format Rules  . . . . . . . . . . . . . . . . . . . . 5
+   3b.   PostScript Format Rules . . . . . . . . . . . . . . . . . . 6
+   4.   Header . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+   4a.   First Page Heading  . . . . . . . . . . . . . . . . . . . . 7
+   4b.   Running Header  . . . . . . . . . . . . . . . . . . . . . . 8
+   4c.   Running Footer  . . . . . . . . . . . . . . . . . . . . . . 8
+   5.   Status Section . . . . . . . . . . . . . . . . . . . . . . . 8
+   6.   Copyright Notice . . . . . . . . . . . . . . . . . . . . . . 9
+   7.   Introduction Section . . . . . . . . . . . . . . . . . . . . 9
+   8.   References Section . . . . . . . . . . . . . . . . . . . .  11
+   9.   Security Considerations Section  . . . . . . . . . . . . .  11
+   10.  Author's Address Section . . . . . . . . . . . . . . . . .  11
+   11.  Copyright Section  . . . . . . . . . . . . . . . . . . . .  11
+   12.  Relation to other RFCs . . . . . . . . . . . . . . . . . .  12
+   13.  Protocol Standards Process . . . . . . . . . . . . . . . .  13
+   14.  Contact  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+   15.  Distribution Lists . . . . . . . . . . . . . . . . . . . .  14
+   16.  RFC Index  . . . . . . . . . . . . . . . . . . . . . . . .  14
+   17.  Security Considerations  . . . . . . . . . . . . . . . . .  14
+   18.  References . . . . . . . . . . . . . . . . . . . . . . . .  14
+   19.  Authors' Addresses . . . . . . . . . . . . . . . . . . . .  15
+   20.  Appendix - RFC "nroff macros"  . . . . . . . . . . . . . .  16
+   21.  Full Copyright Statement . . . . . . . . . . . . . . . . .  20
+
+
+Marandat                     Informational                      [Page 2]
+
+RFC NNNN              Instructions to RFC Authors          December 2019
+
+1.  Introduction
+
+   This Request for Comments (RFC) provides information about the
+   communication protocol for the Rtype project which is an 3rd year
+   Epitech project. The project aims to reproduce the famous Rtype game.
+
+2.  Editorial Policy
+
+   Documents proposed to be RFCs are reviewed by the RFC Editor and
+   possibly by other reviewers he selects.
+
+   The result of the review may be to suggest to the author some
+   improvements to the document before publication. [Remplace à partir
+   du 2, j'ai fait le 1 après je connais pas, tu me dis si je peux
+   t'aider plus, ta les headers déja fait faut juste les crées au fur et
+   à mesure. faut surtout bien respecter la règle qui est : Each page
+   must be limited to 58 lines followed by a form feed on a line by
+   itself. Each line must be limited to 72 characters followed by
+   carriage return and line feed.] Et à la fin, laisse la moitié d'un
+   header c'est fait exprès c'est la RFC de 1969 qui est à chier.
+
+
+
+Marandat                     Informational                     [Page 15]
+
+RFC NNNN              Instructions to RFC Authors          December 2019
+
+19.  Authors' Addresses
+
+   Lucas Marandat
+   Epitech Bordeaux
+   4 rue Charlet
+   Bordeaux, France  33160
+
+   Phone: +33 310-822-1511
+   EMail: lucas.marandat@epitech.eu
+
+
+Marandat                     Informational                     [Page 16]
