@@ -86,9 +86,10 @@ SET(INTERFACE
         ${INTERFACE_SRC}ITimer.hpp
         ${INTERFACE_SRC}IScene.hpp
         ${INTERFACE_SRC}IEvent.hpp
+        ${INTERFACE_SRC}IAudio.hpp
         ${INTERFACE_SRC}ISystem.hpp
         ${INTERFACE_SRC}IGraphic.hpp
-        ${INTERFACE_SRC}IEntityLoader.hpp src/interface/IAudio.hpp)
+        ${INTERFACE_SRC}IEntityLoader.hpp)
 
 SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
@@ -100,7 +101,7 @@ SET(COMPONENT
 SET(ENTITY
         ${ENTITY_SRC}EntityCreator.cpp
         ${ENTITY_SRC}EntityCreator.hpp
-        ${ENTITY_SRC}Entity.hpp src/shared/sfml/entity/SoundEntity.cpp src/shared/sfml/entity/SoundEntity.hpp)
+        ${ENTITY_SRC}Entity.hpp)
 
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)
@@ -120,6 +121,8 @@ SET(NETWORK
         ${NETWORK_SRC}Packet.cpp)
 
 SET(SFML
+        ${SFML_ENTITY_SRC}SoundEntity.cpp
+        ${SFML_ENTITY_SRC}SoundEntity.hpp
         ${SFML_ENTITY_SRC}SpriteEntity.cpp
         ${SFML_ENTITY_SRC}SpriteEntity.hpp
         ${SFML_ENTITY_SRC}MouseEntity.hpp
@@ -150,7 +153,9 @@ SET(SFML
         ${SFML_GRAPHIC_SRC}SfmlGraphic.cpp
         ${SFML_GRAPHIC_SRC}SfmlGraphic.hpp
         ${SFML_TIMER_SRC}SfmlTimer.cpp
-        ${SFML_TIMER_SRC}SfmlTimer.hpp src/shared/sfml/audio/SfmlAudio.cpp src/shared/sfml/audio/SfmlAudio.hpp)
+        ${SFML_TIMER_SRC}SfmlTimer.hpp
+        ${SFML_AUDIO_SRC}SfmlAudio.cpp
+        ${SFML_AUDIO_SRC}SfmlAudio.hpp)
 
 SET(SHARED
         ${ENTITY}
