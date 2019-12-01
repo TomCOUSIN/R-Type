@@ -25,7 +25,7 @@ namespace rtype::network {
     class NetworkSession : public std::enable_shared_from_this<NetworkSession> {
     // @MARK Constructors/Destructors
         public:
-        NetworkSession(tcp::socket socket, std::size_t socket_id, INetwork::packet_callback_t callback);
+        NetworkSession(tcp::socket socket, std::size_t socket_id, INetwork::PacketCallback callback);
 
     // @MARK Methods
         public:
@@ -36,7 +36,7 @@ namespace rtype::network {
         private:
         tcp::socket _socket;
         std::size_t _socket_id;
-        INetwork::packet_callback_t _callback;
+        INetwork::PacketCallback _callback;
     };
 
     class BoostNetwork: public INetwork {
@@ -45,29 +45,32 @@ namespace rtype::network {
         BoostNetwork(void);
         virtual ~BoostNetwork(void);
 
-    // @MARK Utils
+    // @MARK Methods
         public:
-        std::size_t getUniqueSocketId(void) noexcept;
-
-    // @MARK UDP
-        public:
-        virtual void createUDPEndpoint(std::size_t const &port, packet_callback_t const callback);
-        virtual void sendUDPData(Packet &packet, std::string const &ip, std::size_t const &port);
         virtual void stop(void);
         virtual void run(void);
-        virtual void async_run(void);
+        virtual void asyncRun(void);
+        virtual std::size_t getUnusedPort(void);
 
-    // @MARK TCP
+        private:
+        std::size_t getUniqueSocketId(void) noexcept;
+
+    // @MARK Methods - UDP
         public:
-        virtual std::size_t connectToTCPServer(std::string const &ip, std::size_t const &port, packet_callback_t const callback);
-        virtual void createTCPEndpoint(std::size_t const &port, packet_callback_t const callback);
+        virtual void createUDPEndpoint(std::size_t const &port, PacketCallback const callback);
+        virtual void sendUDPData(Packet &packet, std::string const &ip, std::size_t const &port);
+
+    // @MARK Methods - TCP
+        public:
+        virtual std::size_t connectToTCPServer(std::string const &ip, std::size_t const &port, PacketCallback const callback);
+        virtual void createTCPEndpoint(std::size_t const &port, PacketCallback const callback);
         virtual void sendTCPData(Packet &packet, std::size_t const &socket_id);
 
-    // @MARK Boost Asio
-        public:
-        void readUDPData(std::shared_ptr<udp::socket> socket, packet_callback_t const callback);
-        void tcpDoAccept(packet_callback_t const callback);
-        void readTCPData(tcp::socket socket, packet_callback_t const callback);
+    // @MARK Methods - Boost Asio
+        private:
+        void readUDPData(std::shared_ptr<udp::socket> socket, PacketCallback const callback);
+        void tcpDoAccept(PacketCallback const callback);
+        void readTCPData(tcp::socket socket, PacketCallback const callback);
 
     // @MARK Properties
         private:

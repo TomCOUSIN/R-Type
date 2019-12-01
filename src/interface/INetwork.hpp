@@ -10,7 +10,6 @@
 
 #include <functional>
 #include <string>
-#include <map>
 
 #include "Packet.hpp"
 
@@ -20,7 +19,7 @@ namespace rtype::network {
 
     // @MARK Types
         public:
-        using packet_callback_t = std::function<void(Packet &)>;
+        using PacketCallback = std::function<void(Packet &)>;
 
     // @MARK Constructors/Destrcutors
         public:
@@ -34,7 +33,7 @@ namespace rtype::network {
          * @param port listening port
          * @param callback callback function fired when data is received
          */
-        virtual void createUDPEndpoint(std::size_t const &port, packet_callback_t const callback) = 0;
+        virtual void createUDPEndpoint(std::size_t const &port, PacketCallback const callback) = 0;
 
         /**
          * @brief send packet via UDP
@@ -53,7 +52,7 @@ namespace rtype::network {
          * @param port listening port
          * @param callback callback function fired when data is received
          */
-        virtual void createTCPEndpoint(std::size_t const &port, packet_callback_t const callback) = 0;
+        virtual void createTCPEndpoint(std::size_t const &port, PacketCallback const callback) = 0;
 
         /**
          * @brief connect to tcp server
@@ -63,7 +62,7 @@ namespace rtype::network {
          * @param callback callback function fired when data is received
          * @return socket id
          */
-        virtual std::size_t connectToTCPServer(std::string const &ip, std::size_t const &port, packet_callback_t const callback) = 0;
+        virtual std::size_t connectToTCPServer(std::string const &ip, std::size_t const &port, PacketCallback const callback) = 0;
 
         /**
          * @brief send packet via TCP
@@ -88,7 +87,13 @@ namespace rtype::network {
         /**
          * @brief Run the network process in an other thread
          */
-        virtual void async_run(void) = 0;
+        virtual void asyncRun(void) = 0;
+
+        /**
+         * @brief Get a non-used port
+         */
+        virtual std::size_t getUnusedPort(void) = 0;
+
     };
 
 }

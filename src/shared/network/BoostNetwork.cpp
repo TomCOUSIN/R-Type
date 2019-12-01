@@ -8,12 +8,13 @@
 #include <vector>
 #include <cstddef>
 
+#include "Shared.hpp"
 #include "BoostNetwork.hpp"
 #include "BoostNetworkException.hpp"
 
 using namespace rtype::network;
 
-NetworkSession::NetworkSession(tcp::socket socket, std::size_t socket_id, INetwork::packet_callback_t callback):
+NetworkSession::NetworkSession(tcp::socket socket, std::size_t socket_id, INetwork::PacketCallback callback):
     _socket(std::move(socket)),
     _socket_id(socket_id),
     _callback(callback)
@@ -27,7 +28,10 @@ NetworkSession::doRead(void)
 
     packet->setSocketId(_socket_id);
     auto read_payload_cb = [this, self, packet](boost::system::error_code ec, std::size_t length) {
-        if (ec || !length) {
+        if (ec) {
+#ifdef DEBUG
+            std::cout << "error: " << ec.message() << std::endl;
+#endif
             return;
         }
         _callback(*packet);
@@ -35,6 +39,9 @@ NetworkSession::doRead(void)
     };
     auto read_header_cb = [this, self, packet, read_payload_cb](boost::system::error_code ec, std::size_t length) {
         if (ec || !length) {
+#ifdef DEBUG
+            std::cout << "error: " << ec.message() << std::endl;
+#endif
             return;
         }
         packet->parseHeader();
@@ -56,7 +63,12 @@ NetworkSession::doWrite(Packet &packet)
     std::copy(static_cast<char*>(packet.payload())
              , static_cast<char*>(packet.payload()) + packet.getPayloadSize()
              , buffer.begin() + Packet::HEADER_SIZE);
-    _socket.async_write_some(boost::asio::buffer(buffer), [](boost::system::error_code, std::size_t) {});
+    _socket.async_write_some(boost::asio::buffer(buffer), [](boost::system::error_code ec, std::size_t length) {
+#ifdef DEBUG
+        std::cout << "error: " << ec.message() << std::endl;
+        std::cout << "nb written: " << length << std::endl;
+#endif
+    });
 }
 
 BoostNetwork::BoostNetwork(void):
@@ -69,6 +81,7 @@ BoostNetwork::BoostNetwork(void):
 BoostNetwork::~BoostNetwork(void)
 {
     for (auto &t : _threads) {
+        std::cout << "thread " << t.joinable() << std::endl;
         if (t.joinable()) {
             t.join();
         }
@@ -88,9 +101,18 @@ BoostNetwork::run(void)
 }
 
 void
-BoostNetwork::async_run(void)
+BoostNetwork::asyncRun(void)
 {
     _threads.push_back(std::thread([this]() { _io_context.run(); }));
+}
+
+
+std::size_t
+BoostNetwork::getUnusedPort(void)
+{
+    tcp::acceptor acceptor(_io_service, tcp::endpoint(tcp::v4(), 0));
+
+    return acceptor.local_endpoint().port();
 }
 
 std::size_t
@@ -100,7 +122,7 @@ BoostNetwork::getUniqueSocketId(void) noexcept
 }
 
 void
-BoostNetwork::createUDPEndpoint(std::size_t const &port, packet_callback_t const callback)
+BoostNetwork::createUDPEndpoint(std::size_t const &port, PacketCallback const callback)
 {
     auto udp_socket = std::make_shared<udp::socket>(_io_service);
     auto socket_id = getUniqueSocketId();
@@ -122,7 +144,7 @@ BoostNetwork::sendUDPData(Packet &packet, std::string const &ip, std::size_t con
 }
 
 void
-BoostNetwork::readUDPData(std::shared_ptr<udp::socket> socket, packet_callback_t const callback)
+BoostNetwork::readUDPData(std::shared_ptr<udp::socket> socket, PacketCallback const callback)
 {
     network::Packet packet;
     udp::endpoint remote_endpoint;
@@ -148,7 +170,7 @@ BoostNetwork::readUDPData(std::shared_ptr<udp::socket> socket, packet_callback_t
 }
 
 void
-BoostNetwork::createTCPEndpoint(std::size_t const &port, packet_callback_t const callback)
+BoostNetwork::createTCPEndpoint(std::size_t const &port, PacketCallback const callback)
 {
     _acceptor = std::make_unique<tcp::acceptor>(_io_context, tcp::endpoint(tcp::v4(), port));
 
@@ -156,7 +178,7 @@ BoostNetwork::createTCPEndpoint(std::size_t const &port, packet_callback_t const
 }
 
 std::size_t
-BoostNetwork::connectToTCPServer(std::string const &ip, std::size_t const &port, packet_callback_t const callback)
+BoostNetwork::connectToTCPServer(std::string const &ip, std::size_t const &port, PacketCallback const callback)
 {
     auto tcp_socket = tcp::socket(_io_context);
     auto socket_id = getUniqueSocketId();
@@ -187,11 +209,13 @@ BoostNetwork::sendTCPData(Packet &packet, std::size_t const &socket_id)
 }
 
 void
-BoostNetwork::tcpDoAccept(packet_callback_t const callback)
+BoostNetwork::tcpDoAccept(PacketCallback const callback)
 {
+    std::cout << "a" << std::endl;
     _acceptor->async_accept(
         [this, callback](boost::system::error_code ec, tcp::socket socket)
         {
+            std::cout << "b" << std::endl;
             if (ec) {
                 std::cout << ec.message() << std::endl;
                 return;

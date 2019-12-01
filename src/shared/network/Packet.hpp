@@ -20,8 +20,10 @@ namespace rtype::network {
 
     // @MARK Types
         public:
+		using PacketType = std::uint32_t;
         struct Header {
             std::uint16_t magic_number = MAGIC_NUMBER;
+            PacketType type = 0;
             std::uint16_t payload_size = 0;
         };
 
@@ -32,7 +34,15 @@ namespace rtype::network {
          */
         Packet(void) = default;
 
+        /**
+         * @brief Construct a new Packet object
+         */
         Packet(Packet &) = default;
+
+        /**
+         * @brief Construct a new Packet object
+         */
+        Packet(PacketType const &type);
 
         /**
          * @brief Construct a new Packet object with type and payload
@@ -42,8 +52,8 @@ namespace rtype::network {
          * @param payload packet's payload
          */
         template <typename T>
-        Packet(T const &payload)
-            : Packet()
+        Packet(PacketType const &type, T const &payload)
+            : Packet(type)
         {
             *this << payload;
         }
@@ -52,6 +62,13 @@ namespace rtype::network {
 
     // @MARK Setters/Getters
         public:
+        /**
+         * @brief Get the packet's size
+         *
+         * @return packet's size
+         */
+        const PacketType getType(void) const noexcept;
+
         /**
          * @brief Get the packet's size
          *
@@ -86,6 +103,13 @@ namespace rtype::network {
          * @return packet's port
          */
         const std::size_t getPort(void) const noexcept;
+
+        /**
+         * @brief Get the packet's size
+         *
+         * @return packet's size
+         */
+        void setType(PacketType const &packet) noexcept;
 
         /**
          * @brief Set the packet's ip

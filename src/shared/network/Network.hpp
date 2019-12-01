@@ -8,40 +8,35 @@
 #ifndef CPP_RTYPE_2019_NETWORK_HPP
 #define CPP_RTYPE_2019_NETWORK_HPP
 
+#include <unordered_map>
+#include <functional>
+
 #include "Packet.hpp"
 #include "INetwork.hpp"
 
 namespace rtype::network {
 
-	class GameNetwork {
+	class Network {
 
 	// @MARK Types
 		public:
-		enum MessageType {
-			LOAD_MAP = 1 << 0,
-			USER_EVENT = 1 << 1,
-			POSITIONS = 1 << 2,
-			CONNECTION = 1 << 3,
-			DISCONNECTION = 1 << 4,
-		};
+		using PacketHandler = std::unordered_map<Packet::PacketType, INetwork::PacketCallback>;
 
 	// @MARK Constants
 		public:
-		#define CALL_ENDPOINT_PORT (8081)
-		#define CALL_LISTENER_PORT (8080)
 		#define LOCALHOST ("127.0.0.1")
 
 	// @MARK Constructors/Destructors
 		public:
-		GameNetwork(INetwork &network, INetwork::packet_handlers_t handlers);
-		~GameNetwork(void) = default;
+		Network(INetwork &network);
+		~Network(void);
 
 	// @MARK Opperators
 		public:
-		GameNetwork(const GameNetwork &) = delete;
-		GameNetwork(GameNetwork &&) = delete;
-		GameNetwork &operator=(const GameNetwork &) = delete;
-		GameNetwork &operator=(GameNetwork &&) = delete;
+		Network(const Network &) = delete;
+		Network(Network &&) = delete;
+		Network &operator=(const Network &) = delete;
+		Network &operator=(Network &&) = delete;
 
 	// @MARK Methods
 		protected:
@@ -50,7 +45,7 @@ namespace rtype::network {
 	// @MARK Attributes
 		protected:
 		INetwork &_network;
-		INetwork::packet_handlers_t _handlers;
+		PacketHandler _handlers;
 
 	};
 

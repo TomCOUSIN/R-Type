@@ -31,7 +31,7 @@ SET(GAME_SRC ${SHARED_SRC}game/)
 SET(SFML_SRC ${SHARED_SRC}sfml/)
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
 SET(EXCEPTION_SRC ${SHARED_SRC}exception/)
-SET(NETWORK_SRC ${ENGINE_SRC}network/)
+SET(NETWORK_SRC ${SHARED_SRC}network/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
 SET(LOADER_SRC ${ENGINE_SRC}loader/)
 SET(SYSTEM_SRC ${ENGINE_SRC}system/)
@@ -53,6 +53,7 @@ SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 SET(GAME_COMPONENT_SRC ${GAME_SRC}component/)
 
 # Include directories
+include_directories(${SRC})
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
 include_directories(${ENTITY_SRC})
@@ -118,8 +119,15 @@ SET(SYSTEM
         ${SYSTEM_SRC}CollisionSystem.hpp)
 
 SET(NETWORK
+        ${NETWORK_SRC}Network.cpp
+        ${NETWORK_SRC}Network.hpp
+        ${NETWORK_SRC}NetworkException.hpp
         ${NETWORK_SRC}BoostNetwork.cpp
-        ${NETWORK_SRC}Packet.cpp)
+        ${NETWORK_SRC}BoostNetwork.hpp
+        ${NETWORK_SRC}BoostNetworkException.hpp
+        ${NETWORK_SRC}Packet.cpp
+        ${NETWORK_SRC}Packet.hpp
+        ${NETWORK_SRC}PacketException.hpp)
 
 SET(SFML
         ${SFML_ENTITY_SRC}SoundEntity.cpp
@@ -171,6 +179,7 @@ SET(SFML
         ${SFML_AUDIO_SRC}SfmlAudio.hpp)
 
 SET(SHARED
+        ${SRC}Shared.hpp
         ${ENTITY}
         ${SFML}
         ${ENTITY}
@@ -197,9 +206,13 @@ SET(GAME
         ${GAME_SRC}Game.hpp)
 
 SET(SERVER
+        ${SERVER_SRC}ServerNetwork.cpp
+        ${SERVER_SRC}ServerNetwork.hpp
         ${SERVER_SRC}main.cpp)
 
 SET(CLIENT
+        ${CLIENT_SRC}ClientNetwork.cpp
+        ${CLIENT_SRC}ClientNetwork.hpp
         ${CLIENT_SRC}main.cpp)
 
 SET(UNIT_TESTS
@@ -209,7 +222,7 @@ SET(UNIT_TESTS
         ${TESTS_SRC}component_storage_tests.cpp)
 
 # Create executable
-add_executable(r-type_server ${SERVER} ${COMMON})
+add_executable(r-type_server ${SERVER} ${COMMON} ${GAME})
 add_executable(r-type_client ${CLIENT} ${COMMON} ${GAME})
 
 message(${CONAN_LIBS})

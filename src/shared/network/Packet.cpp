@@ -9,10 +9,21 @@
 
 namespace rtype::network {
 
+    Packet::Packet(PacketType const &type)
+    {
+        _header.type = type;
+    }
+
     void
     Packet::parseHeader(void) noexcept
     {
         _payload.resize(_header.payload_size);
+    }
+
+    const Packet::PacketType
+    Packet::getType(void) const noexcept
+    {
+        return _header.type;
     }
 
     const std::size_t
@@ -43,6 +54,12 @@ namespace rtype::network {
     Packet::getPort(void) const noexcept
     {
         return _port;
+    }
+
+    void
+    Packet::setType(const PacketType &type) noexcept
+    {
+        _header.type = type;
     }
 
     void

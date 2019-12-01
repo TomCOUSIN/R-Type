@@ -11,6 +11,7 @@
 #include <memory>
 #include <iostream>
 #include <functional>
+
 #include "Entity.hpp"
 
 namespace rtype::graphic {

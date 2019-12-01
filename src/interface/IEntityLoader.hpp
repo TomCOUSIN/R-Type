@@ -8,7 +8,6 @@
 #ifndef CPP_RTYPE_2019_IENTITYLOADER_HPP
 #define CPP_RTYPE_2019_IENTITYLOADER_HPP
 
-#pragma once
 #include "GameEngine.hpp"
 
 namespace rtype::engine {
