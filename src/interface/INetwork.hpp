@@ -73,6 +73,22 @@ namespace rtype::network {
          */
         virtual void sendTCPData(Packet &packet, std::size_t const &socket_id) = 0;
 
+    // @MARK Methods
+        public:
+        /**
+         * @brief Stop the network process
+         */
+        virtual void stop(void) = 0;
+
+        /**
+         * @brief Run the network process in main thread
+         */
+        virtual void run(void) = 0;
+
+        /**
+         * @brief Run the network process in an other thread
+         */
+        virtual void async_run(void) = 0;
     };
 
 }

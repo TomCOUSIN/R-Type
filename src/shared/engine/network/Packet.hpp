@@ -32,6 +32,8 @@ namespace rtype::network {
          */
         Packet(void) = default;
 
+        Packet(Packet &) = default;
+
         /**
          * @brief Construct a new Packet object with type and payload
          *

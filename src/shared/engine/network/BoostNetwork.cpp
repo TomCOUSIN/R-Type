@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** boostNetwork
 ** File description:
-** network implementation with qt
+** created by lucasmrdt
 */
 
 #include <vector>
@@ -13,9 +13,56 @@
 
 using namespace rtype::network;
 
+NetworkSession::NetworkSession(tcp::socket socket, std::size_t socket_id, INetwork::packet_callback_t callback):
+    _socket(std::move(socket)),
+    _socket_id(socket_id),
+    _callback(callback)
+{}
+
+void
+NetworkSession::doRead(void)
+{
+    auto packet = std::make_shared<Packet>();
+    auto self(shared_from_this());
+
+    packet->setSocketId(_socket_id);
+    auto read_payload_cb = [this, self, packet](boost::system::error_code ec, std::size_t length) {
+        if (ec || !length) {
+            return;
+        }
+        _callback(*packet);
+        doRead();
+    };
+    auto read_header_cb = [this, self, packet, read_payload_cb](boost::system::error_code ec, std::size_t length) {
+        if (ec || !length) {
+            return;
+        }
+        packet->parseHeader();
+        _socket.async_read_some(boost::asio::buffer(packet->payload(), packet->getPayloadSize()), read_payload_cb);
+    };
+    _socket.async_read_some(boost::asio::buffer(packet->header(), Packet::HEADER_SIZE), read_header_cb);
+}
+
+void
+NetworkSession::doWrite(Packet &packet)
+{
+    auto self(shared_from_this());
+    boost::system::error_code error;
+    std::vector<char> buffer(Packet::HEADER_SIZE + packet.getPayloadSize());
+
+    std::copy(static_cast<char*>(packet.header())
+             , static_cast<char*>(packet.header()) + Packet::HEADER_SIZE
+             , buffer.begin());
+    std::copy(static_cast<char*>(packet.payload())
+             , static_cast<char*>(packet.payload()) + packet.getPayloadSize()
+             , buffer.begin() + Packet::HEADER_SIZE);
+    _socket.async_write_some(boost::asio::buffer(buffer), [](boost::system::error_code, std::size_t) {});
+}
+
 BoostNetwork::BoostNetwork(void):
     _socket_id_counter(0),
     _io_service(),
+    _io_context(),
     _emit_udp_socket(std::make_unique<udp::socket>(_io_service, udp::endpoint(udp::v4(), 0)))
 {}
 
@@ -26,6 +73,24 @@ BoostNetwork::~BoostNetwork(void)
             t.join();
         }
     }
+}
+
+void
+BoostNetwork::stop(void)
+{
+    _io_context.stop();
+}
+
+void
+BoostNetwork::run(void)
+{
+    _io_context.run();
+}
+
+void
+BoostNetwork::async_run(void)
+{
+    _threads.push_back(std::thread([this]() { _io_context.run(); }));
 }
 
 std::size_t
@@ -57,52 +122,6 @@ BoostNetwork::sendUDPData(Packet &packet, std::string const &ip, std::size_t con
 }
 
 void
-BoostNetwork::createTCPEndpoint(std::size_t const &port, packet_callback_t const callback)
-{
-    tcp::acceptor acceptor(_io_service, tcp::endpoint(tcp::v4(), port));
-
-    while (true) {
-        std::thread(&BoostNetwork::readTCPData, this, acceptor.accept(), callback).detach();
-    }
-}
-
-std::size_t
-BoostNetwork::connectToTCPServer(std::string const &ip, std::size_t const &port, packet_callback_t const callback)
-{
-    auto tcp_socket = std::make_shared<tcp::socket>(_io_service);
-    auto socket_id = getUniqueSocketId();
-
-    tcp_socket->connect(tcp::endpoint(address::from_string(ip), port));
-    if (!tcp_socket->is_open()) {
-        throw BoostNetworkException("Connection not established.");
-    }
-    _tcp_sockets_by_id[socket_id] = tcp_socket;
-    _listeners_by_id[socket_id] = callback;
-    return socket_id;
-}
-
-void
-BoostNetwork::sendTCPData(Packet &packet, std::size_t const &socket_id)
-{
-    std::vector<char>	buffer(Packet::HEADER_SIZE + packet.getPayloadSize());
-    std::shared_ptr<tcp::socket> tcp_socket;
-    boost::system::error_code error;
-
-    try {
-        tcp_socket = _tcp_sockets_by_id[socket_id];
-    }
-    catch (std::out_of_range) {
-        throw BoostNetworkException(std::string("Unfound socket id : '") + std::to_string(socket_id) + std::string("'."));
-    }
-    std::copy(static_cast<char*>(packet.header()), static_cast<char*>(packet.header()) + Packet::HEADER_SIZE, buffer.begin());
-    std::copy(static_cast<char*>(packet.payload()), static_cast<char*>(packet.payload()) + packet.getPayloadSize(), buffer.begin() + Packet::HEADER_SIZE);
-    boost::asio::write(*tcp_socket, boost::asio::buffer(buffer), error);
-    if (error) {
-        throw BoostNetworkException("An error occurred during writing to the socket (TCP).");
-    }
-}
-
-void
 BoostNetwork::readUDPData(std::shared_ptr<udp::socket> socket, packet_callback_t const callback)
 {
     network::Packet packet;
@@ -129,29 +148,59 @@ BoostNetwork::readUDPData(std::shared_ptr<udp::socket> socket, packet_callback_t
 }
 
 void
-BoostNetwork::readTCPData(tcp::socket socket, packet_callback_t const callback)
+BoostNetwork::createTCPEndpoint(std::size_t const &port, packet_callback_t const callback)
 {
-    auto endpoint = socket.remote_endpoint();
-    auto socket_id = getUniqueSocketId();
-    Packet packet;
+    _acceptor = std::make_unique<tcp::acceptor>(_io_context, tcp::endpoint(tcp::v4(), port));
 
-    packet.setIp(endpoint.address().to_string());
-    packet.setPort(endpoint.port());
-    _tcp_sockets_by_id[socket_id] = std::shared_ptr<tcp::socket>(&socket);
-    packet.setSocketId(socket_id);
-    try {
-        while (true) {
-            boost::asio::read(socket, boost::asio::buffer(packet.header(), Packet::HEADER_SIZE));
-            packet.parseHeader();
-            if (!packet.isValid()) {
-                continue;
-            }
-            boost::asio::read(socket, boost::asio::buffer(packet.payload(), packet. getPayloadSize()));
-            callback(packet);
-        }
-    } catch (std::exception) {
-        packet.setSocketId(socket_id);
-        // packet.setType(Packet::Type::DISCONNECT);
-        // callback(packet);
+    tcpDoAccept(callback);
+}
+
+std::size_t
+BoostNetwork::connectToTCPServer(std::string const &ip, std::size_t const &port, packet_callback_t const callback)
+{
+    auto tcp_socket = tcp::socket(_io_context);
+    auto socket_id = getUniqueSocketId();
+
+    tcp_socket.connect(tcp::endpoint(address::from_string(ip), port));
+    if (!tcp_socket.is_open()) {
+        throw BoostNetworkException("Connection not established.");
     }
+    auto session = std::make_shared<NetworkSession>(std::move(tcp_socket), socket_id, callback);
+    _tcp_sessions_by_id[socket_id] = session;
+    session->doRead();
+    return socket_id;
+}
+
+void
+BoostNetwork::sendTCPData(Packet &packet, std::size_t const &socket_id)
+{
+    std::shared_ptr<NetworkSession> tcp_session;
+
+    try {
+        tcp_session = _tcp_sessions_by_id[socket_id];
+    }
+    catch (std::out_of_range) {
+        throw BoostNetworkException(std::string("Unfound socket id : '") + std::to_string(socket_id) + std::string("'."));
+    }
+
+    tcp_session->doWrite(packet);
+}
+
+void
+BoostNetwork::tcpDoAccept(packet_callback_t const callback)
+{
+    _acceptor->async_accept(
+        [this, callback](boost::system::error_code ec, tcp::socket socket)
+        {
+            if (ec) {
+                std::cout << ec.message() << std::endl;
+                return;
+            }
+            auto socket_id = getUniqueSocketId();
+            auto tcp_session = std::make_shared<NetworkSession>(std::move(socket), socket_id, callback);
+            _tcp_sessions_by_id[socket_id] = tcp_session;
+            tcp_session->doRead();
+            tcpDoAccept(callback);
+        }
+    );
 }

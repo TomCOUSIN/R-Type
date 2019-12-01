@@ -22,6 +22,23 @@ namespace rtype::network {
     using boost::asio::ip::address;
     using boost::asio::ip::address_v4;
 
+    class NetworkSession : public std::enable_shared_from_this<NetworkSession> {
+    // @MARK Constructors/Destructors
+        public:
+        NetworkSession(tcp::socket socket, std::size_t socket_id, INetwork::packet_callback_t callback);
+
+    // @MARK Methods
+        public:
+        void doRead(void);
+        void doWrite(Packet &packet);
+
+    // @MARK Properties
+        private:
+        tcp::socket _socket;
+        std::size_t _socket_id;
+        INetwork::packet_callback_t _callback;
+    };
+
     class BoostNetwork: public INetwork {
     // @MARK Constructors/Destructors
         public:
@@ -36,6 +53,9 @@ namespace rtype::network {
         public:
         virtual void createUDPEndpoint(std::size_t const &port, packet_callback_t const callback);
         virtual void sendUDPData(Packet &packet, std::string const &ip, std::size_t const &port);
+        virtual void stop(void);
+        virtual void run(void);
+        virtual void async_run(void);
 
     // @MARK TCP
         public:
@@ -46,18 +66,21 @@ namespace rtype::network {
     // @MARK Boost Asio
         public:
         void readUDPData(std::shared_ptr<udp::socket> socket, packet_callback_t const callback);
+        void tcpDoAccept(packet_callback_t const callback);
         void readTCPData(tcp::socket socket, packet_callback_t const callback);
 
     // @MARK Properties
         private:
         std::size_t	_socket_id_counter;
         boost::asio::io_service _io_service;
+        boost::asio::io_context _io_context;
         std::vector<std::thread> _threads;
+
+        std::unique_ptr<tcp::acceptor> _acceptor;
 
         std::unique_ptr<udp::socket> _emit_udp_socket;
         std::unique_ptr<tcp::endpoint> _tcp_server;
-        std::map<std::size_t, packet_callback_t> _listeners_by_id;
-        std::map<std::size_t, std::shared_ptr<tcp::socket>> _tcp_sockets_by_id;
+        std::map<std::size_t, std::shared_ptr<NetworkSession>> _tcp_sessions_by_id;
         std::map<std::size_t, std::shared_ptr<udp::socket>> _udp_sockets_by_id;
 
     };
