@@ -117,7 +117,7 @@ bool rtype::sfml::graphic::SfmlGraphic::isButtonClicked(const rtype::engine::ent
 
     if (store.entityHasComponent(entity)) {
         button = store.getComponent<component::Button>(entity);
-        return button->hasBeenClicked;
+        return button->clicked;
     }
     return false;
 }

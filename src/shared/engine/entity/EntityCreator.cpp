@@ -9,6 +9,8 @@
 
 namespace rtype::engine::entity {
 
+const EntityType EntityCreator::type = 0;
+
 EntityCreator::EntityCreator(GameEngine &game_engine):
     _game_engine(game_engine)
 {

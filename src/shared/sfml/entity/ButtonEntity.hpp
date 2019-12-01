@@ -12,6 +12,8 @@
 
 #include "EntityCreator.hpp"
 #include "Position.hpp"
+#include "Button.hpp"
+#include "Text.hpp"
 
 namespace rtype::sfml::entity {
 
@@ -19,20 +21,30 @@ namespace rtype::sfml::entity {
 
 	// @MARK Constructors/Destructors
 		public:
-			/**
-			 * @brief Construct a new Button Entity
-			 */
-			ButtonEntity(engine::GameEngine &game_engine
-                          , std::string const &title
-                          , float const &x
-                          , float const &y
-                          , float const &width
-                          , float const &height
-                          , std::function<void(void)> callback);
+		/**
+		 * @brief Construct a new Button Entity
+		 */
+		ButtonEntity(engine::GameEngine &game_engine
+						, std::string const &title
+						, float const &x
+						, float const &y
+						, float const &width
+						, float const &height
+						, std::function<void(void)> callback);
+
+    // @MARK Static
+		public:
+		/**
+		 * @brief The type of the Created Entity
+		 */
+		static const engine::entity::EntityType type;
 
 	// @MARK Properties
 		private:
-			std::shared_ptr<engine::component::Position> _position;
+		std::function<void(void)> _callback;
+		std::shared_ptr<engine::component::Position> _position;
+		std::shared_ptr<sfml::component::Button> _button;
+		std::shared_ptr<sfml::component::Text> _text;
 	};
 
 }

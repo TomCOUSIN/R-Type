@@ -30,7 +30,7 @@ namespace rtype {
                  * @param height The height of the Button
                  */
                 Button(float const &width, float const &height) :
-                size(width, height), shape(size), hasBeenClicked(false) {
+                size(width, height), shape(size), clicked(false), hover(false) {
                     shape.setOrigin(width/2, height/2);
                     shape.setFillColor(sf::Color::Black);
                     shape.setOutlineThickness(3);
@@ -50,13 +50,18 @@ namespace rtype {
                 /**
                  * @brief Boolean to know if a button has been clicked
                  */
-                bool hasBeenClicked;
+                bool clicked;
+
+
+                /**
+                 * @brief Boolean to know if a button has been clicked
+                 */
+                bool hover;
 
                 /**
                  * @brief When the mouse isn't on the Button
                  */
                 void onDisplay() {
-                    hasBeenClicked = false;
                     shape.setFillColor(sf::Color::Black);
                 }
 
@@ -64,7 +69,6 @@ namespace rtype {
                  * @brief When the mouse is on the Button
                  */
                 void onHover() {
-                    hasBeenClicked = false;
                     shape.setFillColor(sf::Color::White);
                 }
 
@@ -72,13 +76,13 @@ namespace rtype {
                  * @brief When the mouse click on the Button
                  */
                 void onClick() {
-                    hasBeenClicked = true;
+                    shape.setFillColor(sf::Color::Red);
                 }
 
                 /**
                  * @brief The type of the Component Button
                  */
-                static const engine::component::ComponentType type = 4;
+                static const engine::component::ComponentType type = 1 << engine::component::COMPONENT_TYPE::BUTTON;
             };
         }
     }

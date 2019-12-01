@@ -63,7 +63,7 @@ namespace rtype {
                 /**
                  * @brief The SystemType of the InputSystem
                  */
-                static const engine::system::SystemType type = 1;
+                static const engine::system::SystemType type = 1 << engine::system::SYSTEM_TYPE::INPUT;
 
                 private:
                 /**

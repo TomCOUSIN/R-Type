@@ -46,7 +46,7 @@ namespace rtype::sfml::component {
         /**
          * @brief The type of the Component Text
          */
-        static const engine::component::ComponentType type = 5;
+        static const engine::component::ComponentType type = 1 << engine::component::COMPONENT_TYPE::TEXT;
     };
 }
 

@@ -61,7 +61,7 @@ namespace rtype {
                 /**
                  * @brief The SystemType of the InputSystem
                  */
-                static const engine::system::SystemType type = 3;
+                static const engine::system::SystemType type = 1 << engine::system::SYSTEM_TYPE::MOVEMENT;
 
                 private:
 

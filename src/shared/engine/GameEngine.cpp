@@ -11,7 +11,7 @@
 namespace rtype::engine {
 
 GameEngine::GameEngine() :
-_counter(0) {}
+_counter(1) {}
 
 entity::Entity GameEngine::createEntity()
 { return _counter++; }

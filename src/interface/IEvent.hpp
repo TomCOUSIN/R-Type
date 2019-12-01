@@ -18,8 +18,8 @@ namespace rtype::engine::event {
      * @brief Enum to define Event sender
      */
     enum EVENT_SENDER {
-        MOUSE,
-        KEYBOARD,
+        INPUT,
+        COLLISION,
         NETWORK
     };
 

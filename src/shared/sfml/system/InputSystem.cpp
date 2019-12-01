@@ -22,18 +22,22 @@ void InputSystem::update(float const &delta)
         if (event.type == sf::Event::Closed)
             _window.close();
         switch(event.key.code) {
-        case sf::Keyboard::Up: _engine.dispatchEvent(event::InputEvent(engine::event::KEYBOARD, event::InputEvent::ARROW_UP)); break;
-        case sf::Keyboard::Down: _engine.dispatchEvent(event::InputEvent(engine::event::KEYBOARD, event::InputEvent::ARROW_DOWN)); break;
-        case sf::Keyboard::Left: _engine.dispatchEvent(event::InputEvent(engine::event::KEYBOARD, event::InputEvent::ARROW_LEFT)); break;
-        case sf::Keyboard::Right: _engine.dispatchEvent(event::InputEvent(engine::event::KEYBOARD, event::InputEvent::ARROW_RIGHT)); break;
+        case sf::Keyboard::Up: _engine.dispatchEvent(event::InputEvent(event::InputEvent::ARROW_UP)); break;
+        case sf::Keyboard::Down: _engine.dispatchEvent(event::InputEvent(event::InputEvent::ARROW_DOWN)); break;
+        case sf::Keyboard::Left: _engine.dispatchEvent(event::InputEvent(event::InputEvent::ARROW_LEFT)); break;
+        case sf::Keyboard::Right: _engine.dispatchEvent(event::InputEvent(event::InputEvent::ARROW_RIGHT)); break;
         default: break;
         }
         if (event.type == sf::Event::MouseMoved) {
-            _engine.dispatchEvent(event::InputEvent(engine::event::MOUSE, event::InputEvent::MOUSE_MOVE,
+            _engine.dispatchEvent(event::InputEvent(event::InputEvent::MOUSE_MOVE,
                 std::make_shared<engine::component::Position>(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y)));
         }
         if (event.type == sf::Event::MouseButtonPressed) {
-            _engine.dispatchEvent(event::InputEvent(engine::event::MOUSE, event::InputEvent::MOUSE_CLICK,
+            _engine.dispatchEvent(event::InputEvent(event::InputEvent::MOUSE_PRESSED,
+                std::make_shared<engine::component::Position>(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y)));
+        }
+        if (event.type == sf::Event::MouseButtonReleased) {
+            _engine.dispatchEvent(event::InputEvent(event::InputEvent::MOUSE_RELEASED,
                 std::make_shared<engine::component::Position>(sf::Mouse::getPosition(_window).x, sf::Mouse::getPosition(_window).y)));
         }
     }

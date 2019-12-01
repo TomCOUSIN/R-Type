@@ -22,6 +22,19 @@ namespace rtype {
             typedef unsigned long SystemType;
 
             /**
+             * @brief enum SYSTEM_TYPE
+             */
+            enum SYSTEM_TYPE {
+                ANIMATION,
+                BUTTON,
+                INPUT,
+                MOVEMENT,
+                POSITION,
+                RENDER,
+                COLLISION,
+            };
+
+            /**
              * @brief Interface for all System of the GameEngine
              */
             class ISystem {

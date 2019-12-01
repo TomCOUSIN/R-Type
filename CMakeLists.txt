@@ -34,6 +34,7 @@ SET(EXCEPTION_SRC ${SHARED_SRC}exception/)
 SET(NETWORK_SRC ${ENGINE_SRC}network/)
 SET(ENTITY_SRC ${ENGINE_SRC}entity/)
 SET(LOADER_SRC ${ENGINE_SRC}loader/)
+SET(SYSTEM_SRC ${ENGINE_SRC}system/)
 SET(COMPONENT_SRC ${ENGINE_SRC}component/)
 SET(EVENT_SRC ${ENGINE_SRC}event/)
 
@@ -44,10 +45,10 @@ SET(SFML_COMPONENT_SRC ${SFML_SRC}component/)
 SET(SFML_SYSTEM_SRC ${SFML_SRC}system/)
 SET(SFML_GRAPHIC_SRC ${SFML_SRC}graphic/)
 SET(SFML_TIMER_SRC ${SFML_SRC}timer/)
-
-SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 SET(SFML_EVENT_SRC ${SFML_SRC}event/)
 SET(SFML_ENTITY_SRC ${SFML_SRC}entity/)
+
+SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 
 # Include directories
 include_directories(${INTERFACE_SRC})
@@ -55,6 +56,8 @@ include_directories(${ENGINE_SRC})
 include_directories(${ENTITY_SRC})
 include_directories(${EXCEPTION_SRC})
 include_directories(${NETWORK_SRC})
+include_directories(${SYSTEM_SRC})
+include_directories(${EVENT_SRC})
 include_directories(${COMPONENT_SRC})
 include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
@@ -86,6 +89,7 @@ SET(INTERFACE
 
 SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
+        ${COMPONENT_SRC}Collision.hpp
         ${COMPONENT_SRC}Position.hpp
         ${COMPONENT_SRC}ComponentStorage.hpp
         ${COMPONENT_SRC}Component.hpp
@@ -99,13 +103,25 @@ SET(ENTITY
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)
 
+SET(EVENT
+        ${EVENT_SRC}CollisionEvent.cpp
+        ${EVENT_SRC}CollisionEvent.hpp
+        ${EVENT_SRC}Event.cpp
+        ${EVENT_SRC}Event.hpp)
+
+SET(SYSTEM
+        ${SYSTEM_SRC}CollisionSystem.cpp
+        ${SYSTEM_SRC}CollisionSystem.hpp)
+
 SET(NETWORK
         ${NETWORK_SRC}BoostNetwork.cpp
         ${NETWORK_SRC}Packet.cpp)
 
 SET(SFML
-        ${SFML_ENTITY_SRC}ButtonEntity.cpp
+        ${SFML_ENTITY_SRC}MouseEntity.hpp
+        ${SFML_ENTITY_SRC}MouseEntity.cpp
         ${SFML_ENTITY_SRC}ButtonEntity.hpp
+        ${SFML_ENTITY_SRC}ButtonEntity.cpp
         ${SFML_ENTITY_SRC}ParallaxEntity.cpp
         ${SFML_ENTITY_SRC}ParallaxEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp
@@ -133,13 +149,14 @@ SET(SFML
         ${SFML_TIMER_SRC}SfmlTimer.hpp)
 
 SET(SHARED
+        ${ENTITY}
         ${SFML}
         ${ENTITY}
         ${COMPONENT}
         ${EXCEPTION}
         ${NETWORK}
-        ${EVENT_SRC}Event.cpp
-        ${EVENT_SRC}Event.hpp
+        ${EVENT}
+        ${SYSTEM}
         ${LOADER_SRC}DLLoader.hpp
         ${ENGINE_SRC}GameEngine.cpp
         ${ENGINE_SRC}GameEngine.hpp)

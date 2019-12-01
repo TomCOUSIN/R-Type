@@ -72,7 +72,7 @@ namespace rtype::sfml::system {
         /**
          * @brief The SystemType of the PositionSystem
          */
-        static const engine::system::SystemType type = 4;
+        static const engine::system::SystemType type = 1 << engine::system::SYSTEM_TYPE::POSITION;
 
         private:
 

@@ -24,7 +24,7 @@ namespace rtype {
              *
              * @tparam C The Component to store
              */
-            template <typename C>
+            template <typename C = Component>
             class ComponentStorage {
 
                 public:
@@ -37,6 +37,11 @@ namespace rtype {
                  * @brief Destroy a ComponentStorage
                  */
                 virtual ~ComponentStorage() = default;
+
+                std::size_t size(void) const
+                {
+                    return _store.size();
+                }
 
                 /**
                  * @brief Add a new Entity to link the the Component

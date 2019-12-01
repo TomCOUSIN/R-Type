@@ -26,7 +26,7 @@ void ButtonSystem::update(float const &delta)
             auto button = button_store.getComponent<component::Button>(entity);
             auto position = position_store.getComponent<rtype::engine::component::Position>(entity);
             checkButtonDisplay(button, position);
-            checkButtonPressed(button, position);
+            // checkButtonPressed(button, position);
         }
     }
 }
@@ -49,22 +49,29 @@ void ButtonSystem::removeEntity(const rtype::engine::entity::Entity &entity)
 
 void ButtonSystem::checkButtonDisplay(std::shared_ptr<component::Button> button, std::shared_ptr<engine::component::Position> button_position)
 {
-    sf::Vector2i mouse_position = sf::Mouse::getPosition(_window);
-    bool x = false;
-    bool y = false;
-
-    if (mouse_position.x >= button_position->x && mouse_position.x <= button_position->x + button->size.x) {
-        x = true;
-    }
-    if (mouse_position.y >= button_position->y && mouse_position.y <= button_position->y + button->size.y) {
-        y = true;
-    }
-    if (x && y) {
+    if (button->clicked) {
+        button->onClick();
+    } else if (button->hover) {
         button->onHover();
-    }
-    else {
+    } else {
         button->onDisplay();
     }
+    // sf::Vector2i mouse_position = sf::Mouse::getPosition(_window);
+    // bool x = false;
+    // bool y = false;
+
+    // if (mouse_position.x >= button_position->x && mouse_position.x <= button_position->x + button->size.x) {
+    //     x = true;
+    // }
+    // if (mouse_position.y >= button_position->y && mouse_position.y <= button_position->y + button->size.y) {
+    //     y = true;
+    // }
+    // if (x && y) {
+    //     button->onHover();
+    // }
+    // else {
+        // button->onDisplay();
+    // }
 }
 
 void ButtonSystem::checkButtonPressed(std::shared_ptr<component::Button> button, std::shared_ptr<engine::component::Position> button_position)

@@ -9,8 +9,6 @@
 
 namespace rtype::engine::event {
 
-EventType Event::event_type_counter = 0;
-
 Event::Event(EVENT_SENDER sender,
     EventType event_type,
     std::shared_ptr<component::Component> data) :

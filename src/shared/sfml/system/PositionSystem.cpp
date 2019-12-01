@@ -11,16 +11,20 @@
 #include "Button.hpp"
 #include "Text.hpp"
 
+#include <thread>
+
 using namespace rtype::sfml::component;
 
 rtype::sfml::system::PositionSystem::PositionSystem(engine::GameEngine &engine) :
-_engine(engine) {}
+_engine(engine) {
+}
 
 void rtype::sfml::system::PositionSystem::update(float const &delta)
 {
-    if (!_engine.hasComponentStorage<engine::component::Position>())
-        return;
-    auto position_store = _engine.getComponentStorage<engine::component::Position>();
+    static engine::component::ComponentStorage position_store;
+    if (position_store.size() == 0) {
+        position_store = _engine.getComponentStorage<engine::component::Position>();
+    }
 
     for (auto &entity : _entities) {
         if (position_store.entityHasComponent(entity)) {
@@ -53,7 +57,10 @@ void rtype::sfml::system::PositionSystem::removeEntity(const engine::entity::Ent
 
 void rtype::sfml::system::PositionSystem::updateSpritePosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    auto sprite_store = _engine.getComponentStorage<component::Sprite>();
+    static engine::component::ComponentStorage sprite_store;
+    if (sprite_store.size() == 0) {
+        sprite_store = _engine.getComponentStorage<component::Sprite>();
+    }
 
     if (sprite_store.entityHasComponent(entity)) {
         auto sprite = sprite_store.getComponent<component::Sprite>(entity);
@@ -63,7 +70,10 @@ void rtype::sfml::system::PositionSystem::updateSpritePosition(std::shared_ptr<e
 
 void rtype::sfml::system::PositionSystem::updateButtonPosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    auto button_store = _engine.getComponentStorage<component::Button>();
+    static engine::component::ComponentStorage button_store;
+    if (button_store.size() == 0) {
+        button_store = _engine.getComponentStorage<component::Button>();
+    }
 
     if (button_store.entityHasComponent(entity)) {
         auto button = button_store.getComponent<component::Button>(entity);
@@ -73,7 +83,10 @@ void rtype::sfml::system::PositionSystem::updateButtonPosition(std::shared_ptr<e
 
 void rtype::sfml::system::PositionSystem::updateTextPosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    auto text_store = _engine.getComponentStorage<component::Text>();
+    static engine::component::ComponentStorage text_store;
+    if (text_store.size() == 0) {
+        text_store = _engine.getComponentStorage<component::Text>();
+    }
 
     if (text_store.entityHasComponent(entity)) {
         auto text = text_store.getComponent<component::Text>(entity);

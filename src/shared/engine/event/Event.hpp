@@ -67,9 +67,6 @@ namespace rtype::engine::event {
         }
 
     // @MARK Properties
-        public:
-        static EventType event_type_counter;
-
         protected:
         /**
          * @bried The sender of the Event

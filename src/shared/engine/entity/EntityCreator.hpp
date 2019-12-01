@@ -12,23 +12,44 @@
 
 namespace rtype::engine::entity {
 
+    /**
+     * @brief Define the EntityType
+     */
+    typedef unsigned long EntityType;
+
+    /**
+     * @brief ENTITY_TYPE
+     */
+    enum ENTITY_TYPE {
+        BUTTON,
+        MOUSE,
+    };
+
     class EntityCreator {
 
     // @MARK Constructors/Destructors
         public:
-            /**
-             * @brief Construct a new Entity Creator
-             */
-            EntityCreator(GameEngine &game_engine);
+        /**
+         * @brief Construct a new Entity Creator
+         */
+        EntityCreator(GameEngine &game_engine);
 
-            /**
-             * @brief Destroy the Entity Creator
-             */
-            ~EntityCreator() = default;
+        /**
+         * @brief Destroy the Entity Creator
+         */
+        ~EntityCreator() = default;
+
+    // @MARK Static
+        public:
+        /**
+         * @brief The type of the Created Entity
+         */
+        static const EntityType type;
+
 
     // @MARK Properties
         protected:
-            GameEngine &_game_engine;
+        GameEngine &_game_engine;
 
     };
 
