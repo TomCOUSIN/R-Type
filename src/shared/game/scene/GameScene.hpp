@@ -11,6 +11,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "IGraphic.hpp"
+#include "IAudio.hpp"
 #include "IScene.hpp"
 #include "ITimer.hpp"
 #include "Entity.hpp"
@@ -29,7 +30,9 @@ namespace rtype::game::scene {
          * @param graphic The IGraphic to use
          * @param timer The ITimer to use
          */
-        explicit GameScene(std::shared_ptr<graphic::IGraphic> graphic, std::shared_ptr<timer::ITimer> timer);
+        explicit GameScene(std::shared_ptr<graphic::IGraphic> graphic
+            , std::shared_ptr<timer::ITimer> timer
+            , std::shared_ptr<audio::IAudio> audio);
 
         /**
          * @brief Destroy an GameScene object
@@ -53,7 +56,11 @@ namespace rtype::game::scene {
 
 
         private:
-        bool _end;
+        /**
+         * @brief the Iaudio to use
+         */
+        std::shared_ptr<audio::IAudio> _audio;
+
         /**
          * @brief the ITimer to use
          */

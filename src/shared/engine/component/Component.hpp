@@ -30,6 +30,8 @@ namespace rtype {
                 BUTTON,
                 SPRITE,
                 TEXT,
+                SOUND,
+                MUSIC,
             };
 
             /**

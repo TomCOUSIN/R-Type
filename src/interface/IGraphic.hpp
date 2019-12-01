@@ -92,15 +92,6 @@ namespace rtype::graphic {
         virtual void setVisible(engine::entity::Entity const &entity, bool visible) = 0;
 
         /**
-         *  @brief Set a Component to be movable using event
-         *
-         *  @param entity The Entity to use
-         *  @param x_speed The x value of the Speed
-         *  @param y_speed The y value of the Speed
-         */
-        virtual void setMovable(engine::entity::Entity const &entity, float const &x_speed, float const &y_value) = 0;
-
-        /**
          * @brief Remove an element
          *
          * @param entity the Entity of the element to remove

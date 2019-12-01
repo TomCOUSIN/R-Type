@@ -8,8 +8,10 @@
 #include <iostream>
 #include "MenuScene.hpp"
 
-rtype::game::scene::MenuScene::MenuScene(std::shared_ptr<graphic::IGraphic> graphic, std::shared_ptr<timer::ITimer> timer) :
-_timer(timer), _graphic(graphic) {}
+rtype::game::scene::MenuScene::MenuScene(std::shared_ptr<graphic::IGraphic> graphic
+    , std::shared_ptr<timer::ITimer> timer
+    , std::shared_ptr<audio::IAudio> audio) :
+_timer(timer), _graphic(graphic), _audio(audio) {}
 
 void rtype::game::scene::MenuScene::loadScene()
 {

@@ -7,6 +7,7 @@
 
 #include "SfmlGraphic.hpp"
 #include "SfmlTimer.hpp"
+#include "SfmlAudio.hpp"
 #include "MenuScene.hpp"
 #include "GameScene.hpp"
 #include "Game.hpp"
@@ -15,11 +16,12 @@ rtype::game::Game::Game() :
 _engine(),
 _timer(new rtype::sfml::timer::SfmlTimer()),
 _graphic(new rtype::sfml::graphic::SfmlGraphic(_engine)),
+_audio(new rtype::sfml::audio::SfmlAudio(_engine)),
 _actual_scene(nullptr),
 _scenes()
 {
-    _scenes.emplace(std::pair(0, new rtype::game::scene::MenuScene(_graphic, _timer)));
-    _scenes.emplace(std::pair(1, new rtype::game::scene::GameScene(_graphic, _timer)));
+    _scenes.emplace(std::pair(0, new rtype::game::scene::MenuScene(_graphic, _timer, _audio)));
+    _scenes.emplace(std::pair(1, new rtype::game::scene::GameScene(_graphic, _timer, _audio)));
     _graphic->init();
 }
 

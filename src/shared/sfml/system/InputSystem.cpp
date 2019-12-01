@@ -26,6 +26,7 @@ void InputSystem::update(float const &delta)
         case sf::Keyboard::Down: _engine.dispatchEvent(event::InputEvent(event::InputEvent::ARROW_DOWN)); break;
         case sf::Keyboard::Left: _engine.dispatchEvent(event::InputEvent(event::InputEvent::ARROW_LEFT)); break;
         case sf::Keyboard::Right: _engine.dispatchEvent(event::InputEvent(event::InputEvent::ARROW_RIGHT)); break;
+        case sf::Keyboard::Space: _engine.dispatchEvent(event::InputEvent(event::InputEvent::SPACE)); break;
         default: break;
         }
         if (event.type == sf::Event::MouseMoved) {

@@ -47,6 +47,7 @@ SET(SFML_GRAPHIC_SRC ${SFML_SRC}graphic/)
 SET(SFML_TIMER_SRC ${SFML_SRC}timer/)
 SET(SFML_EVENT_SRC ${SFML_SRC}event/)
 SET(SFML_ENTITY_SRC ${SFML_SRC}entity/)
+SET(SFML_AUDIO_SRC ${SFML_SRC}audio/)
 
 SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 SET(GAME_COMPONENT_SRC ${GAME_SRC}component/)
@@ -68,6 +69,7 @@ include_directories(${SFML_SYSTEM_SRC})
 include_directories(${SFML_EVENT_SRC})
 include_directories(${SFML_TIMER_SRC})
 include_directories(${SFML_ENTITY_SRC})
+include_directories(${SFML_AUDIO_SRC})
 include_directories(${GAME_SCENE_SRC})
 include_directories(${INTERFACE_SRC})
 include_directories(${EXCEPTION_SRC})
@@ -86,7 +88,7 @@ SET(INTERFACE
         ${INTERFACE_SRC}IEvent.hpp
         ${INTERFACE_SRC}ISystem.hpp
         ${INTERFACE_SRC}IGraphic.hpp
-        ${INTERFACE_SRC}IEntityLoader.hpp)
+        ${INTERFACE_SRC}IEntityLoader.hpp src/interface/IAudio.hpp)
 
 SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
@@ -98,7 +100,7 @@ SET(COMPONENT
 SET(ENTITY
         ${ENTITY_SRC}EntityCreator.cpp
         ${ENTITY_SRC}EntityCreator.hpp
-        ${ENTITY_SRC}Entity.hpp)
+        ${ENTITY_SRC}Entity.hpp src/shared/sfml/entity/SoundEntity.cpp src/shared/sfml/entity/SoundEntity.hpp)
 
 SET(EXCEPTION
         ${EXCEPTION_SRC}BaseException.cpp)
@@ -136,19 +138,19 @@ SET(SFML
         ${SFML_SYSTEM_SRC}PositionSystem.hpp
         ${SFML_SYSTEM_SRC}AnimationSystem.cpp
         ${SFML_SYSTEM_SRC}AnimationSystem.hpp
-        ${SFML_SYSTEM_SRC}MovementSystem.cpp
-        ${SFML_SYSTEM_SRC}MovementSystem.hpp
         ${SFML_SYSTEM_SRC}ButtonSystem.cpp
         ${SFML_SYSTEM_SRC}ButtonSystem.hpp
         ${SFML_SYSTEM_SRC}ParallaxSystem.cpp
         ${SFML_SYSTEM_SRC}ParallaxSystem.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
         ${SFML_COMPONENT_SRC}Button.hpp
+        ${SFML_COMPONENT_SRC}Sound.hpp
+        ${SFML_COMPONENT_SRC}Music.hpp
         ${SFML_COMPONENT_SRC}Text.hpp
         ${SFML_GRAPHIC_SRC}SfmlGraphic.cpp
         ${SFML_GRAPHIC_SRC}SfmlGraphic.hpp
         ${SFML_TIMER_SRC}SfmlTimer.cpp
-        ${SFML_TIMER_SRC}SfmlTimer.hpp)
+        ${SFML_TIMER_SRC}SfmlTimer.hpp src/shared/sfml/audio/SfmlAudio.cpp src/shared/sfml/audio/SfmlAudio.hpp)
 
 SET(SHARED
         ${ENTITY}

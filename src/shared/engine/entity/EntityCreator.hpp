@@ -24,7 +24,8 @@ namespace rtype::engine::entity {
         BUTTON,
         MOUSE,
         PARALLAX,
-        SPRITE
+        SPRITE,
+        SOUND
     };
 
     class EntityCreator {

@@ -102,15 +102,6 @@ namespace rtype::sfml::graphic {
         void setVisible(engine::entity::Entity const &entity, bool visible) final;
 
         /**
-         *  @brief Set a Component to be movable using event
-         *
-         *  @param entity The Entity to use
-         *  @param x_speed The x value of the Speed
-         *  @param y_speed The y value of the Speed
-         */
-        void setMovable(engine::entity::Entity const &entity, float const &x_speed, float const &y_value) final;
-
-        /**
          * @brief Remove an element
          *
          * @param entity the Entity of the element to remove
