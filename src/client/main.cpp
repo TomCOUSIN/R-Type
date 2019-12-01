@@ -36,9 +36,14 @@ int main(void)
     engine.loadSystem<sfml::system::PositionSystem>(engine);
     engine.loadSystem<engine::system::CollisionSystem>(engine);
 
-    auto button = sfml::entity::ButtonEntity(engine, "bonjour", 400, 300, 100, 50, []{});
-    auto button_2 = sfml::entity::ButtonEntity(engine, "test", 200, 300, 100, 50, []{});
     auto mouse = sfml::entity::MouseEntity(engine);
+    std::vector<std::shared_ptr<sfml::entity::ButtonEntity>> arr;
+
+    for (size_t i = 10; i < 800; i += 100) {
+        for (size_t j = 10; j < 600; j += 60) {
+            arr.push_back(std::make_shared<sfml::entity::ButtonEntity>(engine, "test", i, j, 100, 50, []{}));
+        }
+    }
 
     while (window.isOpen()) {
         if (clock.getElapsedTime().asMicroseconds() > 10000) {

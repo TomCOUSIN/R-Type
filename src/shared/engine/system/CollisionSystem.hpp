@@ -70,7 +70,8 @@ namespace rtype::engine::system {
         void removeEntity(engine::entity::Entity const &entity) final;
 
         private:
-        void checkCollision(engine::entity::Entity const &entity
+        void checkCollision(engine::entity::Entity const &entity_a
+                           , engine::entity::Entity const &entity_b
                            , std::shared_ptr<component::Collision> collision_a
                            , std::shared_ptr<component::Position> position_a
                            , std::shared_ptr<component::Collision> collision_b

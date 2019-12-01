@@ -8,29 +8,37 @@
 #include "CollisionSystem.hpp"
 #include "CollisionEvent.hpp"
 
+// @todo optimize this !
+
 namespace rtype::engine::system {
 
 CollisionSystem::CollisionSystem(GameEngine &engine) :
-_engine(engine) {}
+_engine(engine) {
+}
 
 void CollisionSystem::update(float const &delta)
 {
-    if (!_engine.hasComponentStorage<component::Position>() ||
-        !_engine.hasComponentStorage<component::Collision>())
-        return;
-    auto position_store = _engine.getComponentStorage<component::Position>();
-    auto collision_store = _engine.getComponentStorage<component::Collision>();
+    static engine::component::ComponentStorage position_store;
+    if (position_store.size() == 0) {
+        position_store = _engine.getComponentStorage<component::Position>();
+    }
 
-    for (auto &entity_a : _entities) {
-        for (auto &entity_b : _entities) {
-            if (entity_a != entity_b
-            && collision_store.entityHasComponent(entity_a) && position_store.entityHasComponent(entity_a)
+    static engine::component::ComponentStorage collision_store;
+    if (collision_store.size() == 0) {
+        collision_store = _engine.getComponentStorage<component::Collision>();
+    }
+
+    for (size_t i = 0; i < _entities.size(); ++i) {
+        for (size_t j = i + 1; j < _entities.size(); ++j) {
+            auto &entity_a = _entities[i];
+            auto &entity_b = _entities[j];
+            if (collision_store.entityHasComponent(entity_a) && position_store.entityHasComponent(entity_a)
             && collision_store.entityHasComponent(entity_b) && position_store.entityHasComponent(entity_b)) {
                 auto collision_a = collision_store.getComponent<component::Collision>(entity_a);
                 auto position_a = position_store.getComponent<component::Position>(entity_a);
                 auto collision_b = collision_store.getComponent<component::Collision>(entity_b);
                 auto position_b = position_store.getComponent<component::Position>(entity_b);
-                checkCollision(entity_a, collision_a, position_a, collision_b, position_b);
+                checkCollision(entity_a, entity_b, collision_a, position_a, collision_b, position_b);
             }
         }
     }
@@ -57,7 +65,8 @@ void CollisionSystem::removeEntity(const entity::Entity &entity)
     }
 }
 
-void CollisionSystem::checkCollision(engine::entity::Entity const &entity
+void CollisionSystem::checkCollision(engine::entity::Entity const &entity_a
+                                    , engine::entity::Entity const &entity_b
                                     , std::shared_ptr<component::Collision> collision_a
                                     , std::shared_ptr<component::Position> position_a
                                     , std::shared_ptr<component::Collision> collision_b
@@ -73,10 +82,14 @@ void CollisionSystem::checkCollision(engine::entity::Entity const &entity
     || rect_a.top > rect_b.bottom) {
         return;
     }
-    // std::cout << "collide for (" << position_a->x << "," << position_a->y << " and (" << position_b->x << "," << position_b->y << ")" << std::endl;
-    _engine.dispatchEvent(event::CollisionEvent(event::CollisionEvent::BEGIN_COLLIDE, entity, collision_b->id));
-    _previous_collisions.erase(collision_b->id ^ entity);
-    _current_collisions.insert(collision_b->id ^ entity);
+    _engine.dispatchEvent(event::CollisionEvent(event::CollisionEvent::BEGIN_COLLIDE, entity_a, collision_b->id));
+    _engine.dispatchEvent(event::CollisionEvent(event::CollisionEvent::BEGIN_COLLIDE, entity_b, collision_a->id));
+    auto id_a = event::CollisionEvent::getId(entity_a, collision_b->id);
+    auto id_b = event::CollisionEvent::getId(entity_b, collision_a->id);
+    _previous_collisions.erase(id_a);
+    _previous_collisions.erase(id_b);
+    _current_collisions.insert(id_a);
+    _current_collisions.insert(id_b);
 }
 
 CollisionSystem::Rect CollisionSystem::getRect(std::shared_ptr<component::Collision> collision

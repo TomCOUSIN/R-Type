@@ -43,6 +43,10 @@ namespace rtype::engine::event {
          */
         ~CollisionEvent() = default;
 
+    // @MARK Static methods
+        public:
+        static engine::event::EventType getId(engine::entity::Entity entity, component::Collision::IdType component_type);
+
     };
 
 }
