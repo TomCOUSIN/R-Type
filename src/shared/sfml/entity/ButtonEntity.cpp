@@ -32,7 +32,7 @@ ButtonEntity::ButtonEntity(engine::GameEngine &game_engine
     _callback(callback),
     _position(std::make_shared<engine::component::Position>(x, y, true)),
     _button(std::make_shared<sfml::component::Button>(width, height)),
-    _text(std::make_shared<sfml::component::Text>(title))
+    _text(std::make_shared<sfml::component::Text>(title, 24))
 {
     _game_engine.loadComponentStorage<engine::component::Position>();
     _game_engine.loadComponentStorage<engine::component::Collision>();

@@ -59,11 +59,11 @@ rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createButton(
 }
 
 rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createText(
-    std::string const &message)
+    std::string const &message, size_t const &size)
 {
     engine::entity::Entity entity = _engine.createEntity();
 
-    _engine.linkEntityWithComponent<sfml::component::Text>(entity, message);
+    _engine.linkEntityWithComponent<sfml::component::Text>(entity, message, size);
     return entity;
 }
 

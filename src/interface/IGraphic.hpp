@@ -52,7 +52,7 @@ namespace rtype::graphic {
         /**
          * @brief Create a Text
          */
-        virtual engine::entity::Entity createText(std::string const &message) = 0;
+        virtual engine::entity::Entity createText(std::string const &message, size_t const &size) = 0;
 
         /**
          * @brief Create a Sprite

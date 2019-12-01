@@ -61,7 +61,7 @@ namespace rtype::sfml::graphic {
         /**
          * @brief Create a Text
          */
-        engine::entity::Entity createText(std::string const &message) final;
+        engine::entity::Entity createText(std::string const &message, size_t const &size) final;
 
         /**
          * @brief Create a Sprite

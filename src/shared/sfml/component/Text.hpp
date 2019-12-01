@@ -19,11 +19,11 @@ namespace rtype::sfml::component {
      */
     struct Text : public engine::component::Component {
 
-        explicit Text(std::string const &message) {
+        explicit Text(std::string const &message, size_t const &size) {
             font.loadFromFile("./assets/fonts/Roboto-Condensed.ttf");
             text.setFont(font);
             text.setString(message);
-            text.setCharacterSize(24);
+            text.setCharacterSize(size);
             text.setFillColor(sf::Color::White);
             auto textRect = text.getLocalBounds();
             text.setOrigin(textRect.width/2, textRect.height/2);
