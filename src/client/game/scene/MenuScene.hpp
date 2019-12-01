@@ -50,6 +50,7 @@ namespace rtype::game::scene {
 
 
         private:
+        bool _end;
         /**
          * @brief the ITimer to use
          */

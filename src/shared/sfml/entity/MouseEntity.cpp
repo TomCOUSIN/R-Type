@@ -22,6 +22,9 @@ MouseEntity::MouseEntity(engine::GameEngine &game_engine):
     _clicked(true),
     _position(std::make_shared<engine::component::Position>(0, 0))
 {
+    _game_engine.loadSystem<system::PositionSystem>(_game_engine);
+    _game_engine.loadSystem<engine::system::CollisionSystem>(_game_engine);
+
     _game_engine.loadComponentStorage<engine::component::Position>();
     _game_engine.loadComponentStorage<engine::component::Collision>();
 

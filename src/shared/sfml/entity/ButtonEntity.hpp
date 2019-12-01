@@ -32,6 +32,17 @@ namespace rtype::sfml::entity {
 						, float const &height
 						, std::function<void(void)> callback);
 
+		/**
+		 * @brief Get the Entity of the Button
+		 * @return
+		 */
+		engine::entity::Entity getButtonEntity() const;
+
+		/**
+		 * @brief Destroy the Entity inside of the GameEngine
+		 */
+		void destroyEntityButton();
+
     // @MARK Static
 		public:
 		/**
@@ -41,6 +52,8 @@ namespace rtype::sfml::entity {
 
 	// @MARK Properties
 		private:
+	    engine::entity::Entity _button_entity;
+	    engine::entity::Entity _text_entity;
 		std::function<void(void)> _callback;
 		std::shared_ptr<engine::component::Position> _position;
 		std::shared_ptr<sfml::component::Button> _button;

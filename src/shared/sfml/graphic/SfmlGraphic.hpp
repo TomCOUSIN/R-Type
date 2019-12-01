@@ -9,6 +9,8 @@
 #define CPP_RTYPE_2019_SFMLGRAPHIC_HPP
 
 #include <SFML/Graphics.hpp>
+#include "ButtonEntity.hpp"
+#include "MouseEntity.hpp"
 #include "GameEngine.hpp"
 #include "IGraphic.hpp"
 
@@ -49,7 +51,12 @@ namespace rtype::sfml::graphic {
         /**
          * @brief Create a Button
          */
-        engine::entity::Entity createButton(float const &width, float const &height) final;
+        engine::entity::Entity createButton(std::string const &title
+            , float const &x
+            , float const &y
+            , float const &width
+            , float const &height
+            , std::function<void(void)> callback) final;
 
         /**
          * @brief Create a Text
@@ -105,6 +112,16 @@ namespace rtype::sfml::graphic {
         bool isButtonClicked(engine::entity::Entity const &entity) final;
 
         private:
+        /**
+         * @brief The MouseEntity to handle mouse gesture
+         */
+        rtype::sfml::entity::MouseEntity _mouse;
+
+        /**
+         * @bried The Button to use
+         */
+        std::vector<std::shared_ptr<rtype::sfml::entity::ButtonEntity>> _buttons;
+
         /**
          * @brief the GameEngine used to load Component, System and entity
          */

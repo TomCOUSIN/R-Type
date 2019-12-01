@@ -41,6 +41,8 @@ ButtonEntity::ButtonEntity(engine::GameEngine &game_engine
 
     auto button_entity = _game_engine.createEntity();
     auto text_entity = _game_engine.createEntity();
+    _button_entity = button_entity;
+    _text_entity = text_entity;
 
     _game_engine.linkEntityWithComponent(button_entity, engine::component::Position::type, _position);
     _game_engine.linkEntityWithComponent(text_entity, engine::component::Position::type, _position);
@@ -75,7 +77,10 @@ ButtonEntity::ButtonEntity(engine::GameEngine &game_engine
         event::InputEvent(event::InputEvent::MOUSE_PRESSED),
         [this] (engine::event::Event const &event) {
             _button->clicked = _button->hover;
-            _callback();
+            if (_button->clicked) {
+                _button->shape.setFillColor(sf::Color::Red);
+                _callback();
+            }
         }
     );
 
@@ -98,4 +103,14 @@ ButtonEntity::ButtonEntity(engine::GameEngine &game_engine
     );
 }
 
+    engine::entity::Entity ButtonEntity::getButtonEntity() const
+    {
+        return _button_entity;
+    }
+
+    void ButtonEntity::destroyEntityButton()
+    {
+        _game_engine.destroyEntity(_button_entity);
+        _game_engine.destroyEntity(_text_entity);
+    }
 }

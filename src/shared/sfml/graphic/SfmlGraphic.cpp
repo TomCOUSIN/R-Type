@@ -19,7 +19,7 @@
 #include "Text.hpp"
 
 rtype::sfml::graphic::SfmlGraphic::SfmlGraphic(rtype::engine::GameEngine &engine) :
-_engine(engine), _window(sf::VideoMode(1920, 1080), "Rtype") {}
+_mouse(engine), _engine(engine), _window(sf::VideoMode(1920, 1080), "Rtype") {}
 
 void rtype::sfml::graphic::SfmlGraphic::init()
 {
@@ -47,13 +47,15 @@ void rtype::sfml::graphic::SfmlGraphic::update(float const &delta)
 }
 
 rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createButton(
-    float const &width, float const &height)
+    std::string const &title
+    , float const &x
+    , float const &y
+    , float const &width
+    , float const &height
+    , std::function<void(void)> callback)
 {
-    engine::entity::Entity entity = _engine.createEntity();
-
-    _engine.linkEntityWithComponent<sfml::component::Button>(entity, width, height);
-    _engine.linkEntityWithSystem<sfml::system::ButtonSystem>(entity);
-    return entity;
+    _buttons.emplace_back(std::make_shared<rtype::sfml::entity::ButtonEntity>(_engine, title, x, y, width, height, callback));
+    return _buttons.back()->getButtonEntity();
 }
 
 rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createText(
@@ -83,7 +85,7 @@ void rtype::sfml::graphic::SfmlGraphic::setPosition(
     const rtype::engine::entity::Entity &entity, float const &x_position,
     float const &y_position)
 {
-    _engine.linkEntityWithComponent<engine::component::Position>(entity, x_position, y_position);
+    _engine.linkEntityWithComponent<engine::component::Position>(entity, x_position, y_position, true);
     _engine.linkEntityWithSystem<sfml::system::PositionSystem>(entity);
 }
 
@@ -107,6 +109,12 @@ void rtype::sfml::graphic::SfmlGraphic::setMovable(
 
 void rtype::sfml::graphic::SfmlGraphic::removeElement(const rtype::engine::entity::Entity &entity)
 {
+    for (auto &button : _buttons) {
+        if (button->getButtonEntity() == entity) {
+            button->destroyEntityButton();
+            return;
+        }
+    }
     _engine.destroyEntity(entity);
 }
 
