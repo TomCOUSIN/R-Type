@@ -25,7 +25,7 @@ namespace rtype::sfml::component {
          * @param path The path to the music
          */
         Music(std::string const &path) {
-            music.openFromFile("path");
+            music.openFromFile(path);
         };
 
         /**

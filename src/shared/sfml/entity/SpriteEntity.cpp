@@ -5,10 +5,11 @@
 ** Created by tomcousin,
 */
 
-#include <AnimationSystem.hpp>
+#include "AnimationSystem.hpp"
 #include "PositionSystem.hpp"
 #include "SpriteEntity.hpp"
 #include "RenderSystem.hpp"
+#include "EnemySystem.hpp"
 #include "InputEvent.hpp"
 #include "FireEvent.hpp"
 #include "Position.hpp"
@@ -60,6 +61,7 @@ _speed(std::make_shared<engine::component::Speed>(speed_x, speed_y))
     }
 
     if (can_fire) {
+        _game_engine.loadSystem<sfml::system::EnemySystem>(_game_engine);
         engine.subscribeTo(
             event::InputEvent(event::InputEvent::SPACE),
             std::bind(&SpriteEntity::onFire, this, std::placeholders::_1)

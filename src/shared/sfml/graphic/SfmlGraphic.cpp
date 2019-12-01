@@ -13,6 +13,7 @@
 #include "RenderSystem.hpp"
 #include "InputSystem.hpp"
 #include "SfmlGraphic.hpp"
+#include "EnemySystem.hpp"
 #include "Position.hpp"
 #include "Button.hpp"
 #include "Sprite.hpp"
