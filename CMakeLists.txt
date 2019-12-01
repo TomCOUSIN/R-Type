@@ -110,11 +110,11 @@ SET(EVENT
         ${EVENT_SRC}CollisionEvent.cpp
         ${EVENT_SRC}CollisionEvent.hpp
         ${EVENT_SRC}Event.cpp
-        ${EVENT_SRC}Event.hpp src/shared/sfml/event/FireEvent.cpp src/shared/sfml/event/FireEvent.hpp)
+        ${EVENT_SRC}Event.hpp)
 
 SET(SYSTEM
         ${SYSTEM_SRC}CollisionSystem.cpp
-        ${SYSTEM_SRC}CollisionSystem.hpp src/shared/sfml/system/BulletSystem.cpp src/shared/sfml/system/BulletSystem.hpp)
+        ${SYSTEM_SRC}CollisionSystem.hpp)
 
 SET(NETWORK
         ${NETWORK_SRC}BoostNetwork.cpp
@@ -133,6 +133,8 @@ SET(SFML
         ${SFML_ENTITY_SRC}ParallaxEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp
         ${SFML_EVENT_SRC}InputEvent.hpp
+        ${SFML_EVENT_SRC}FireEvent.cpp
+        ${SFML_EVENT_SRC}FireEvent.hpp
         ${SFML_SYSTEM_SRC}InputSystem.cpp
         ${SFML_SYSTEM_SRC}InputSystem.hpp
         ${SFML_SYSTEM_SRC}RenderSystem.cpp
@@ -145,6 +147,10 @@ SET(SFML
         ${SFML_SYSTEM_SRC}ButtonSystem.hpp
         ${SFML_SYSTEM_SRC}ParallaxSystem.cpp
         ${SFML_SYSTEM_SRC}ParallaxSystem.hpp
+        ${SFML_SYSTEM_SRC}BulletSystem.cpp
+        ${SFML_SYSTEM_SRC}BulletSystem.hpp
+        ${SFML_SYSTEM_SRC}EnemySystem.cpp
+        ${SFML_SYSTEM_SRC}EnemySystem.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
         ${SFML_COMPONENT_SRC}Button.hpp
         ${SFML_COMPONENT_SRC}Sound.hpp

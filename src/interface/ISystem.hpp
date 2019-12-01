@@ -29,6 +29,7 @@ namespace rtype {
                 BUTTON,
                 INPUT,
                 BULLET,
+                ENEMY,
                 PARALLAX,
                 POSITION,
                 COLLISION,
