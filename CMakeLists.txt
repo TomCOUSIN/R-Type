@@ -129,6 +129,10 @@ SET(SFML
         ${SFML_ENTITY_SRC}MouseEntity.cpp
         ${SFML_ENTITY_SRC}ButtonEntity.hpp
         ${SFML_ENTITY_SRC}ButtonEntity.cpp
+        ${SFML_ENTITY_SRC}BulletEntity.cpp
+        ${SFML_ENTITY_SRC}BulletEntity.hpp
+        ${SFML_ENTITY_SRC}EnemyEntity.cpp
+        ${SFML_ENTITY_SRC}EnemyEntity.hpp
         ${SFML_ENTITY_SRC}ParallaxEntity.cpp
         ${SFML_ENTITY_SRC}ParallaxEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp

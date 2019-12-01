@@ -9,6 +9,7 @@
 #define CPP_RTYPE_2019_ENEMYSYSTEM_HPP
 
 #include "SpriteEntity.hpp"
+#include "EnemyEntity.hpp"
 #include "GameEngine.hpp"
 #include "ISystem.hpp"
 
@@ -22,7 +23,7 @@ namespace rtype::sfml::system {
          *
          * @param engine The GameEngine to use to create Enemy
          */
-        EnemySystem(engine::GameEngine &engine);
+        explicit EnemySystem(engine::GameEngine &engine);
 
         /**
          * @brief Destroy an EnemySystem object
@@ -69,7 +70,7 @@ namespace rtype::sfml::system {
         /**
          * @brief The vector of enemy
          */
-        std::vector<std::shared_ptr<sfml::entity::SpriteEntity>> _enemys;
+        std::vector<std::shared_ptr<sfml::entity::EnemyEntity>> _enemys;
     };
 }
 
