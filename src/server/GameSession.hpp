@@ -60,6 +60,8 @@ namespace rtype::server {
 
 		void onMouse(network::Packet &packet);
 
+		void onFire(network::Packet &packet);
+
 		void onStartGame(network::Packet &packet);
 
 	// @MARK Properties

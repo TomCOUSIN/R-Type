@@ -56,11 +56,6 @@ namespace rtype::sfml::system {
         void removeEntity(engine::entity::Entity const &entity) final;
 
         /**
-         * @brief Add a bullet to the list of bullets
-         */
-        void addBullet(const rtype::engine::event::Event &event);
-
-        /**
          * @brief The SystemType of the InputSystem
          */
         static const engine::system::SystemType type = 1 << engine::system::SYSTEM_TYPE::BULLET;
@@ -72,9 +67,9 @@ namespace rtype::sfml::system {
         engine::GameEngine &_engine;
 
         /**
-         * @brief The vector of bullets
+         * @brief The vector of Entity
          */
-        std::vector<std::shared_ptr<sfml::entity::BulletEntity>> _bullets;
+        std::vector<engine::entity::Entity> _entities;
     };
 }
 

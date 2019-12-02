@@ -81,6 +81,15 @@ ClientNetwork::sendMouse(engine::component::Position position)
 	_network.sendUDPData(packet, _server_ip, _session_port);
 }
 
+void ClientNetwork::sendFire(engine::component::Position position)
+{
+    auto packet = network::Packet(game::network::FIRE);
+
+    packet << position;
+    packet << _user;
+    _network.sendUDPData(packet, _server_ip, _session_port);
+}
+
 void
 ClientNetwork::startGame(void)
 {

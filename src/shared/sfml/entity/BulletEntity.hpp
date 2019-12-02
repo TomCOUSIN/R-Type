@@ -43,11 +43,6 @@ namespace rtype::sfml::entity {
         engine::entity::Entity getBulletEntity() const;
 
         /**
-         * @brief When the Bullet is colliding
-         */
-        void onCollision(engine::event::Event const &event);
-
-        /**
          * @brief The type of the Created Entity
          */
         static const engine::entity::EntityType type;

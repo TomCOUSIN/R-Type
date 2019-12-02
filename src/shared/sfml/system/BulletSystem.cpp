@@ -10,12 +10,7 @@
 
 rtype::sfml::system::BulletSystem::BulletSystem(rtype::engine::GameEngine &engine) :
 _engine(engine)
-{
-    _engine.subscribeTo(
-        rtype::sfml::event::FireEvent(rtype::sfml::event::FireEvent::FireEventType::ALLY),
-        std::bind(&BulletSystem::addBullet, this, std::placeholders::_1)
-    );
-}
+{}
 
 void rtype::sfml::system::BulletSystem::update(float const &delta)
 {
@@ -27,14 +22,13 @@ void rtype::sfml::system::BulletSystem::update(float const &delta)
 
     position_store = _engine.getComponentStorage<engine::component::Position>();
     speed_store = _engine.getComponentStorage<engine::component::Speed>();
-    for (auto &bullet : _bullets) {
-        position = position_store.getComponent<engine::component::Position>(bullet->getBulletEntity());
-        speed = speed_store.getComponent<engine::component::Speed>(bullet->getBulletEntity());
+    for (auto &entity : _entities) {
+        position = position_store.getComponent<engine::component::Position>(entity);
+        speed = speed_store.getComponent<engine::component::Speed>(entity);
         if (position && speed) {
             position->x += speed->x;
             if (position->x >= 1920) {
-                _engine.destroyEntity(bullet->getBulletEntity());
-                _bullets.erase(_bullets.begin() + count);
+                _engine.destroyEntity(entity);
                 return;
             }
         }
@@ -44,16 +38,16 @@ void rtype::sfml::system::BulletSystem::update(float const &delta)
 
 void rtype::sfml::system::BulletSystem::addEntity(const rtype::engine::entity::Entity &entity)
 {
-    (void)entity;
+    _entities.emplace_back(entity);
 }
 
 void rtype::sfml::system::BulletSystem::removeEntity(const rtype::engine::entity::Entity &entity)
 {
-    (void)entity;
-}
-
-void rtype::sfml::system::BulletSystem::addBullet(const rtype::engine::event::Event &event)
-{
-    auto position = event.getEventData<engine::component::Position>();
-    _bullets.emplace_back(std::make_shared<sfml::entity::BulletEntity>(_engine, "./assets/bullet.gif", position->x, position->y, 32, 12, 3, 3, 3, 1));
+    for (unsigned long index = 0; index < _entities.size(); ++index) {
+        if (_entities[index] == entity) {
+            _entities.erase(_entities.begin() + index);
+            break;
+        }
+        ++index;
+    }
 }

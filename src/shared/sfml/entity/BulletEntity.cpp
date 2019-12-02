@@ -10,6 +10,7 @@
 #include "PositionSystem.hpp"
 #include "CollisionEvent.hpp"
 #include "RenderSystem.hpp"
+#include "BulletSystem.hpp"
 #include "BulletEntity.hpp"
 #include "EnemyEntity.hpp"
 #include "Sprite.hpp"
@@ -39,22 +40,12 @@ _speed(std::make_shared<engine::component::Speed>(10 * direction, 0))
     engine.linkEntityWithComponent(_bullet_entity, engine::component::Speed::type, _speed);
     engine.linkEntityWithComponent<engine::component::Collision>(_bullet_entity, width, height, type);
     engine.linkEntityWithSystem<sfml::system::PositionSystem>(_bullet_entity);
-    engine.linkEntityWithSystem<engine::system::CollisionSystem>(_bullet_entity);
+    engine.linkEntityWithSystem<sfml::system::BulletSystem>(_bullet_entity);
     engine.linkEntityWithSystem<sfml::system::RenderSystem>(_bullet_entity);
     engine.linkEntityWithSystem<sfml::system::AnimationSystem>(_bullet_entity);
-
-    _game_engine.subscribeTo(
-        engine::event::CollisionEvent(engine::event::CollisionEvent::BEGIN_COLLIDE, _bullet_entity, EnemyEntity::type),
-        std::bind(&BulletEntity::onCollision, this, std::placeholders::_1)
-    );
 }
 
 rtype::engine::entity::Entity rtype::sfml::entity::BulletEntity::getBulletEntity() const
 {
     return _bullet_entity;
-}
-
-void rtype::sfml::entity::BulletEntity::onCollision(const rtype::engine::event::Event &event)
-{
-    _game_engine.destroyEntity(_bullet_entity);
 }

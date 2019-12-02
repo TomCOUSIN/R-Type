@@ -56,6 +56,8 @@ namespace rtype::client {
 
 		void sendMouse(engine::component::Position position);
 
+		void sendFire(engine::component::Position position);
+
 		void startGame(void);
 
 		private:

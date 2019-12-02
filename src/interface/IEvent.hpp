@@ -21,7 +21,8 @@ namespace rtype::engine::event {
         INPUT,
         COLLISION,
         NETWORK,
-        ENTITY
+        ENTITY,
+        FIRE
     };
 
     /**

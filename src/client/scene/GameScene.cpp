@@ -31,6 +31,7 @@ void GameScene::loadScene()
 {
     auto on_input = [this](engine::event::Event const &event) { _network.sendInput(event.getEventType()); };
     auto on_mouse = [this](engine::event::Event const &event) { _network.sendMouse(*event.getEventData<engine::component::Position>()); };
+    auto on_fire = [this](engine::event::Event const &event) { _network.sendFire(*event.getEventData<engine::component::Position>()); };
     _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_DOWN), on_input);
     _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_UP), on_input);
     _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_RIGHT), on_input);
@@ -39,6 +40,9 @@ void GameScene::loadScene()
 
     _network.subscribeTo(game::network::CREATE_PLAYER, std::bind(&GameScene::onCreatePlayer, this, std::placeholders::_1));
     _network.subscribeTo(game::network::MOVE_PLAYER, std::bind(&GameScene::onMovePlayer, this, std::placeholders::_1));
+    _network.subscribeTo(game::network::CREATE_BULLET, std::bind(&GameScene::onBulletFired, this, std::placeholders::_1));
+
+    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::FIRE, game::event::FireEventType::ALLY), on_fire);
 
     _entities.emplace(std::pair("level", _audio.createMusic("./assets/sounds/level1.ogg")));
     _entities.emplace("parallax", _graphic.createParallax("./assets/parallax/Background.jpg", "./assets/parallax/Foreground.png", 2));
@@ -85,7 +89,15 @@ void GameScene::onCreatePlayer(rtype::network::Packet &packet)
 {
     auto position = packet.getPayload<engine::component::Position>();
     auto remote_entity = packet.getPayload<std::string>();
-    auto sprite = _graphic.createSprite("./assets/spaceship.gif", position.x, position.y, 33, 17, 3, 3, 1, false, 10, 10, false);
+    auto sprite = _graphic.createSprite("./assets/spaceship.gif", position.x, position.y, 33, 17, 3, 3, 1, false, 10, 10, true);
+    _entities.emplace(remote_entity, sprite);
+}
+
+void GameScene::onBulletFired(rtype::network::Packet &packet)
+{
+    auto position = packet.getPayload<engine::component::Position>();
+    auto remote_entity = packet.getPayload<std::string>();
+    auto sprite = _graphic.createBullet(_engine, "./assets/bullet.gif", position.x, position.y, 32, 12, 3, 3, 3, 1);
     _entities.emplace(remote_entity, sprite);
 }
 

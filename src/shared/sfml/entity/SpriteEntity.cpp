@@ -61,7 +61,6 @@ rtype::sfml::entity::SpriteEntity::SpriteEntity(engine::GameEngine &engine,
     }
 
     if (can_fire) {
-        _game_engine.loadSystem<sfml::system::EnemySystem>(_game_engine);
         engine.subscribeTo(
             event::InputEvent(event::InputEvent::SPACE),
             std::bind(&SpriteEntity::onFire, this, std::placeholders::_1)
@@ -91,7 +90,7 @@ void rtype::sfml::entity::SpriteEntity::onArrowLeftPressed(const rtype::engine::
 
 void rtype::sfml::entity::SpriteEntity::onFire(const rtype::engine::event::Event &event)
 {
-    _game_engine.dispatchEvent(event::FireEvent(event::FireEvent::ALLY, _position));
+    _game_engine.dispatchEvent(engine::event::Event(engine::event::EVENT_SENDER::FIRE, game::event::FireEventType::ALLY, _position));
 }
 
 rtype::engine::entity::Entity rtype::sfml::entity::SpriteEntity::getSpriteEntity() const

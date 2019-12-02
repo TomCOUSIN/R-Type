@@ -26,6 +26,7 @@ GameSession::GameSession(network::INetwork &network, engine::GameEngine &engine)
 	_handlers.emplace(std::make_pair(rtype::game::network::INPUT, std::bind(&GameSession::onInput, this, std::placeholders::_1)));
 	_handlers.emplace(std::make_pair(rtype::game::network::MOUSE, std::bind(&GameSession::onMouse, this, std::placeholders::_1)));
 	_handlers.emplace(std::make_pair(rtype::game::network::START_GAME, std::bind(&GameSession::onStartGame, this, std::placeholders::_1)));
+    _handlers.emplace(std::make_pair(rtype::game::network::FIRE, std::bind(&GameSession::onFire, this, std::placeholders::_1)));
 }
 
 void
@@ -120,6 +121,30 @@ GameSession::onMouse(network::Packet &packet)
 }
 
 
+    void
+    GameSession::onFire(network::Packet &packet)
+    {
+        auto position = packet.getPayload<engine::component::Position>();
+        auto user = packet.getPayload<std::string>();
+        auto entity = _players.find(user);
+
+        if (entity == _players.end()) {
+            std::cout << "unfound user " << user << " in current players" << std::endl;
+            return;
+        }
+
+        auto entity_position = entity->second.getPosition();
+        entity_position->x = position.x;
+        entity_position->y = position.y;
+
+        auto response_packet = network::Packet(game::network::CREATE_BULLET);
+        response_packet << *entity_position;
+        response_packet << user;
+        for (auto &id : _udp_connections) {
+            _network.sendUDPData(response_packet, id.second.first, id.second.second);
+        }
+    }
+
 void
 GameSession::onStartGame(network::Packet &packet)
 {
@@ -147,6 +172,4 @@ GameSession::onStartGame(network::Packet &packet)
 	}
 	std::cout << "connect success of " << user << std::endl;
 }
-
-
 }

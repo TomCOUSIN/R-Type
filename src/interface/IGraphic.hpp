@@ -11,6 +11,7 @@
 #include <memory>
 #include <iostream>
 #include <functional>
+#include "GameEngine.hpp"
 
 #include "Entity.hpp"
 
@@ -90,6 +91,21 @@ namespace rtype::graphic {
             , float const &speed_x
             , float const &speed_y
             , bool const &can_fire) = 0;
+
+        /**
+         * @brief Create a Bullet Entity
+         */
+         virtual rtype::engine::entity::Entity createBullet(
+             rtype::engine::GameEngine &engine
+             , std::string const &texture_path
+             , float const &x
+             , float const &y
+             , float const &width
+             , float const &height
+             , float const &scale_width
+             , float const &scale_height
+             , size_t const &sprite_count
+             , int const &direction) = 0;
 
         /**
          * @brief The the position of a Component

@@ -18,8 +18,10 @@ namespace rtype::game {
             JOIN_SESSION,
             INPUT,
             MOUSE,
+            FIRE,
             CREATE_PLAYER,
             MOVE_PLAYER,
+            CREATE_BULLET,
             START_GAME,
         };
     }
@@ -32,6 +34,11 @@ namespace rtype::game {
             ARROW_LEFT,
             MOUSE_MOUVED,
             LastInputEventType
+        };
+
+        enum FireEventType {
+            ALLY,
+            ENEMY
         };
     }
 

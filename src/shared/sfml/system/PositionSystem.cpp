@@ -54,7 +54,7 @@ void rtype::sfml::system::PositionSystem::removeEntity(const engine::entity::Ent
 
 void rtype::sfml::system::PositionSystem::updateSpritePosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    static auto &sprite_store = _engine.getComponentStorage<component::Sprite>();
+    auto &sprite_store = _engine.getComponentStorage<component::Sprite>();
 
     if (sprite_store.entityHasComponent(entity)) {
         auto sprite = sprite_store.getComponent<component::Sprite>(entity);

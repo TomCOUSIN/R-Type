@@ -156,3 +156,13 @@ rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createParallax(
     return _parallax.back()->getBackgroundEntity();
 }
 
+rtype::engine::entity::Entity rtype::sfml::graphic::SfmlGraphic::createBullet(
+    rtype::engine::GameEngine &engine, std::string const &texture_path,
+    float const &x, float const &y, float const &width, float const &height,
+    float const &scale_width, float const &scale_height,
+    size_t const &sprite_count, int const &direction)
+{
+    _bullets.emplace_back(std::make_shared<sfml::entity::BulletEntity>(engine, texture_path, x, y, width, height, scale_width, scale_height, sprite_count, direction));
+    return _bullets.back()->getBulletEntity();
+}
+

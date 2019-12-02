@@ -62,6 +62,8 @@ namespace rtype::client::scene {
 
         void onMovePlayer(rtype::network::Packet &packet);
 
+        void onBulletFired(rtype::network::Packet &packet);
+
         private:
         /**
          * @brief Scene framerate
