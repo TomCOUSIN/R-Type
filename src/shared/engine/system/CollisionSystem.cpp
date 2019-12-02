@@ -18,12 +18,12 @@ _engine(engine) {
 
 void CollisionSystem::update(float const &delta)
 {
-    static engine::component::ComponentStorage position_store;
+    engine::component::ComponentStorage position_store;
     if (position_store.size() == 0) {
         position_store = _engine.getComponentStorage<component::Position>();
     }
 
-    static engine::component::ComponentStorage collision_store;
+    engine::component::ComponentStorage collision_store;
     if (collision_store.size() == 0) {
         collision_store = _engine.getComponentStorage<component::Collision>();
     }

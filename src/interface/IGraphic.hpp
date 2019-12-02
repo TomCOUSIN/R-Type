@@ -87,7 +87,8 @@ namespace rtype::graphic {
             , size_t const &sprite_count
             , bool const &movable
             , float const &speed_x
-            , float const &speed_y) = 0;
+            , float const &speed_y
+            , bool const &can_fire) = 0;
 
         /**
          * @brief The the position of a Component

@@ -17,12 +17,13 @@ void rtype::game::scene::MenuScene::loadScene()
 {
     _quit = false;
     _play = false;
+    _entities.emplace(std::pair("main_theme", _audio->createMusic("./assets/sounds/main_theme.ogg")));
     _entities.emplace(std::pair("title", _graphic->createText("R-Type", 50)));
     _graphic->setPosition(_entities["title"], 960.0f, 100.0f);
     _graphic->setVisible(_entities["title"], true);
     _entities.emplace(std::pair("play", _graphic->createButton("Play", 960, 400, 200, 100, [this]{_play = true;})));
     _entities.emplace(std::pair("quit", _graphic->createButton("Quit", 960, 600, 200, 100, [this]{_quit = true;})));
-    _entities.emplace(std::pair("input", _graphic->createInput("Input", 200, 200, 200, 100, [](std::string value) { std::cout << value << std::endl; })));
+    _audio->play(_entities["main_theme"]);
 }
 
 rtype::engine::scene::SCENE rtype::game::scene::MenuScene::displayScene()
@@ -39,8 +40,10 @@ rtype::engine::scene::SCENE rtype::game::scene::MenuScene::displayScene()
 
 void rtype::game::scene::MenuScene::unloadScene()
 {
+    _audio->stop(_entities["main_theme"]);
     _graphic->removeElement(_entities["title"]);
     _graphic->removeElement(_entities["play"]);
     _graphic->removeElement(_entities["quit"]);
+    _audio->destroy(_entities["main_theme"]);
     _entities.clear();
 }

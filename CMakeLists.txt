@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.11)
 project(CPP_rtype_2019)
 
 # Define c++ version to use
@@ -132,10 +132,16 @@ SET(SFML
         ${SFML_ENTITY_SRC}ButtonEntity.cpp
         ${SFML_ENTITY_SRC}InputEntity.hpp
         ${SFML_ENTITY_SRC}InputEntity.cpp
+        ${SFML_ENTITY_SRC}BulletEntity.cpp
+        ${SFML_ENTITY_SRC}BulletEntity.hpp
+        ${SFML_ENTITY_SRC}EnemyEntity.cpp
+        ${SFML_ENTITY_SRC}EnemyEntity.hpp
         ${SFML_ENTITY_SRC}ParallaxEntity.cpp
         ${SFML_ENTITY_SRC}ParallaxEntity.hpp
         ${SFML_EVENT_SRC}InputEvent.cpp
         ${SFML_EVENT_SRC}InputEvent.hpp
+        ${SFML_EVENT_SRC}FireEvent.cpp
+        ${SFML_EVENT_SRC}FireEvent.hpp
         ${SFML_SYSTEM_SRC}InputSystem.cpp
         ${SFML_SYSTEM_SRC}InputSystem.hpp
         ${SFML_SYSTEM_SRC}RenderSystem.cpp
@@ -148,6 +154,10 @@ SET(SFML
         ${SFML_SYSTEM_SRC}ButtonSystem.hpp
         ${SFML_SYSTEM_SRC}ParallaxSystem.cpp
         ${SFML_SYSTEM_SRC}ParallaxSystem.hpp
+        ${SFML_SYSTEM_SRC}BulletSystem.cpp
+        ${SFML_SYSTEM_SRC}BulletSystem.hpp
+        ${SFML_SYSTEM_SRC}EnemySystem.cpp
+        ${SFML_SYSTEM_SRC}EnemySystem.hpp
         ${SFML_COMPONENT_SRC}Sprite.hpp
         ${SFML_COMPONENT_SRC}Button.hpp
         ${SFML_COMPONENT_SRC}Sound.hpp

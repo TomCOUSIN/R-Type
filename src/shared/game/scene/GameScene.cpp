@@ -15,9 +15,11 @@ _timer(timer), _graphic(graphic), _audio(audio) {}
 
 void rtype::game::scene::GameScene::loadScene()
 {
+    _entities.emplace(std::pair("level", _audio->createMusic("./assets/sounds/level1.ogg")));
     _entities.emplace("parallax", _graphic->createParallax("./assets/parallax/Background.jpg", "./assets/parallax/Foreground.png", 2));
-    _entities.emplace("sprite", _graphic->createSprite("./assets/spaceship.gif", 300, 300, 33, 17, 3, 3, 1, true, 10, 10));
+    _entities.emplace("sprite", _graphic->createSprite("./assets/spaceship.gif", 300, 300, 33, 17, 3, 3, 1, true, 10, 10, true));
     _entities.emplace("shot_sound", _audio->createSound("./assets/sounds/shot.wav", rtype::sfml::event::InputEvent::InputEventType::SPACE));
+    _audio->play(_entities["level"]);
 }
 
 rtype::engine::scene::SCENE rtype::game::scene::GameScene::displayScene()
@@ -34,7 +36,10 @@ rtype::engine::scene::SCENE rtype::game::scene::GameScene::displayScene()
 
 void rtype::game::scene::GameScene::unloadScene()
 {
+    _audio->stop(_entities["level"]);
     _graphic->removeElement(_entities["sprite"]);
     _graphic->removeElement(_entities["parallax"]);
+    _audio->destroy(_entities["level"]);
+    _audio->destroy(_entities["shot_sound"]);
     _entities.clear();
 }
