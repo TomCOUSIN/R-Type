@@ -21,7 +21,7 @@ _engine(engine) {
 
 void rtype::sfml::system::PositionSystem::update(float const &delta)
 {
-    static auto &position_store = _engine.getComponentStorage<engine::component::Position>();
+    auto &position_store = _engine.getComponentStorage<engine::component::Position>();
 
     for (auto &entity : _entities) {
         if (position_store.entityHasComponent(entity)) {
@@ -64,7 +64,7 @@ void rtype::sfml::system::PositionSystem::updateSpritePosition(std::shared_ptr<e
 
 void rtype::sfml::system::PositionSystem::updateButtonPosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    static auto &button_store = _engine.getComponentStorage<component::Button>();
+    auto &button_store = _engine.getComponentStorage<component::Button>();
 
     if (button_store.entityHasComponent(entity)) {
         auto button = button_store.getComponent<component::Button>(entity);
@@ -74,7 +74,7 @@ void rtype::sfml::system::PositionSystem::updateButtonPosition(std::shared_ptr<e
 
 void rtype::sfml::system::PositionSystem::updateTextPosition(std::shared_ptr<engine::component::Position> position, const rtype::engine::entity::Entity &entity)
 {
-    static auto &text_store = _engine.getComponentStorage<component::Text>();
+    auto &text_store = _engine.getComponentStorage<component::Text>();
 
     if (text_store.entityHasComponent(entity)) {
         auto text = text_store.getComponent<component::Text>(entity);

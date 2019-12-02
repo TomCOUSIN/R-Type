@@ -44,7 +44,7 @@ Test(packet_tests, test_packet_advenced_item_insertion)
 Test(packet_tests, test_packet_creation)
 {
     std::string label = "test";
-    Packet packet(label);
+    Packet packet(0, label);
     std::string test;
 
     packet >> test;

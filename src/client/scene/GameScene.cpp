@@ -87,10 +87,17 @@ void GameScene::onMovePlayer(rtype::network::Packet &packet)
 
 void GameScene::onCreatePlayer(rtype::network::Packet &packet)
 {
+    static bool first_player = true;
     auto position = packet.getPayload<engine::component::Position>();
     auto remote_entity = packet.getPayload<std::string>();
-    auto sprite = _graphic.createSprite("./assets/spaceship.gif", position.x, position.y, 33, 17, 3, 3, 1, false, 10, 10, true);
-    _entities.emplace(remote_entity, sprite);
+    if (first_player) {
+        first_player = !first_player;
+        auto sprite = _graphic.createSprite("./assets/spaceship.gif", position.x, position.y, 33, 17, 3, 3, 1, false, 10, 10, true);
+        _entities.emplace(remote_entity, sprite);
+    } else {
+        auto sprite = _graphic.createSprite("./assets/spaceship.gif", position.x, position.y, 33, 17, 3, 3, 1, false, 10, 10, false);
+        _entities.emplace(remote_entity, sprite);
+    }
 }
 
 void GameScene::onBulletFired(rtype::network::Packet &packet)

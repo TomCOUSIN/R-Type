@@ -17,7 +17,7 @@ Test(boost_tests, test_boost_udp)
     BoostNetwork network;
     std::size_t port = 8084;
     const std::string payload = "test";
-    Packet data(payload);
+    Packet data(0, payload);
 
     network.createUDPEndpoint(port, [=](Packet &packet) {
         std::string received_payload;
