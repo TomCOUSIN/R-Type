@@ -5,15 +5,17 @@
 ** created by lucasmrdt
 */
 
-#ifndef SERVERNETWORK_HPP_
-#define SERVERNETWORK_HPP_
+#ifndef SERVER_HPP_
+#define SERVER_HPP_
+
+#include <unordered_map>
 
 #include "Network.hpp"
-#include <unordered_map>
+#include "GameEngine.hpp"
 
 namespace rtype::server {
 
-	class ServerNetwork : public network::Network {
+	class Server : public network::Network {
 	// @MARK Constructors/Destructors
 		public:
 		/**
@@ -21,12 +23,12 @@ namespace rtype::server {
 		 *
 		 * @param network network implementation
 		 */
-		ServerNetwork(network::INetwork &network);
+		Server(network::INetwork &network, engine::GameEngine &engine);
 
 		/**
 		 * @brief Destroy the Server Network object
 		 */
-		~ServerNetwork() = default;
+		~Server() = default;
 
 	// @MARK Methods
 		public:
@@ -77,6 +79,8 @@ namespace rtype::server {
 
 	// @MARK Properties
 		private:
+		engine::GameEngine &_engine;
+
 		/**
 		 * @brief Session port by users
 		 */
@@ -95,4 +99,4 @@ namespace rtype::server {
 
 }
 
-#endif /* !SERVERNETWORK_HPP_ */
+#endif /* !SERVER_HPP_ */

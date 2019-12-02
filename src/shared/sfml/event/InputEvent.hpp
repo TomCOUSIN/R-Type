@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 
+#include "Game.hpp"
 #include "Event.hpp"
 
 namespace rtype::sfml::event {
@@ -19,13 +20,13 @@ namespace rtype::sfml::event {
     // @MARK Types
         public:
         enum InputEventType : engine::event::EventType {
-            MOUSE_PRESSED,
+            ARROW_UP = game::event::ARROW_UP,
+            ARROW_DOWN = game::event::ARROW_DOWN,
+            ARROW_RIGHT = game::event::ARROW_RIGHT,
+            ARROW_LEFT = game::event::ARROW_LEFT,
+            MOUSE_PRESSED = game::event::LastInputEventType,
             MOUSE_RELEASED,
             MOUSE_MOVED,
-            ARROW_UP,
-            ARROW_DOWN,
-            ARROW_RIGHT,
-            ARROW_LEFT,
             BACKSPACE,
             TEXT_ENTERED,
             KEY_A,

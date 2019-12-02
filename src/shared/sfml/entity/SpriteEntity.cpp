@@ -21,10 +21,10 @@ rtype::sfml::entity::SpriteEntity::SpriteEntity(engine::GameEngine &engine,
     std::string const &texture_path, float const &x, float const &y,
     float const &width, float const &height, float const &scale_width,
     float const &scale_height, size_t const &sprite_count, bool const &movable,
-    float const &speed_x, float const &speed_y, bool const &can_fire) :
-engine::entity::EntityCreator(engine),
-_position(std::make_shared<engine::component::Position>(x, y)),
-_speed(std::make_shared<engine::component::Speed>(speed_x, speed_y))
+    float const &speed_x, float const &speed_y, bool const &can_fire)
+        : engine::entity::EntityCreator(engine)
+        , _position(std::make_shared<engine::component::Position>(x, y))
+        , _speed(std::make_shared<engine::component::Speed>(speed_x, speed_y))
 {
     _sprite_entity = engine.createEntity();
 

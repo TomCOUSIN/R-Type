@@ -18,6 +18,7 @@ namespace rtype::sfml::entity {
 
     class SpriteEntity : public engine::entity::EntityCreator {
 
+    // @MARK Constructors/Destructors
         public:
         /**
          * @brief Construct a new SpriteEntity Entity
@@ -36,12 +37,20 @@ namespace rtype::sfml::entity {
             , float const &speed_y = 1.0f
             , bool const &can_fire = false);
 
+    // @MARK Getters
+        public:
         /**
          * @brief Get the Entity of the Sprite
          * @return
          */
         engine::entity::Entity getSpriteEntity() const;
 
+        std::shared_ptr<engine::component::Position> getPosition(void) { return _position; }
+
+        std::shared_ptr<engine::component::Speed> getSpeed(void) { return _speed; }
+
+    // @MARK Handlers
+        private:
         /**
          * @brief When the arrow up key is pressed
          */

@@ -10,11 +10,11 @@
 #include "LoginScene.hpp"
 #include "LobbyScene.hpp"
 #include "GameScene.hpp"
-#include "Game.hpp"
+#include "Client.hpp"
 
-namespace rtype::game {
+namespace rtype::client {
 
-Game::Game(engine::GameEngine &engine
+Client::Client(engine::GameEngine &engine
           , graphic::IGraphic &graphic
           , audio::IAudio &audio
           , client::ClientNetwork &network
@@ -29,25 +29,25 @@ Game::Game(engine::GameEngine &engine
     _scenes.emplace(std::pair(engine::scene::LOGIN, new scene::LoginScene(_graphic, _audio, _network, framerate)));
     _scenes.emplace(std::pair(engine::scene::MENU, new scene::MenuScene(_graphic, _audio, _network, framerate)));
     _scenes.emplace(std::pair(engine::scene::LOBBY, new scene::LobbyScene(_graphic, _audio, _network, framerate)));
-    _scenes.emplace(std::pair(engine::scene::GAME, new scene::GameScene(_graphic, _audio, _network, framerate)));
+    _scenes.emplace(std::pair(engine::scene::GAME, new scene::GameScene(_engine, _graphic, _audio, _network, framerate)));
     _graphic.init();
 }
 
-void Game::start()
+void Client::start()
 {
     _actual_scene = _scenes.find(0)->second;
     _actual_scene->loadScene();
     loop();
 }
 
-void Game::changeScene(size_t const &id)
+void Client::changeScene(size_t const &id)
 {
     _actual_scene->unloadScene();
     _actual_scene = _scenes.find(id)->second;
     _actual_scene->loadScene();
 }
 
-void Game::loop()
+void Client::loop()
 {
     while (_graphic.isWindowOpen()) {
         auto redirected_scene = _actual_scene->displayScene();
@@ -58,7 +58,7 @@ void Game::loop()
     }
 }
 
-void Game::stop()
+void Client::stop()
 {
     for (auto &scene : _scenes) {
         scene.second->unloadScene();

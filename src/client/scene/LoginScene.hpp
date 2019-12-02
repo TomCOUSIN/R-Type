@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2022
 ** CPP_rtype_2019
 ** File description:
-** Created by lucasmrdt,
+** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_LOBBYSCENE_HPP
-#define CPP_RTYPE_2019_LOBBYSCENE_HPP
+#ifndef CPP_RTYPE_2019_LOGINSCENE_HPP
+#define CPP_RTYPE_2019_LOGINSCENE_HPP
 
 #include <iostream>
 #include <unordered_map>
@@ -16,26 +16,26 @@
 #include "ClientNetwork.hpp"
 #include "Entity.hpp"
 
-namespace rtype::game::scene {
+namespace rtype::client::scene {
 
-    class LobbyScene : public engine::scene::IScene {
+    class LoginScene : public engine::scene::IScene {
 
     // @MARK Constructors/Destructors
         public:
         /**
-         * @brief Construct a LobbyScene object
+         * @brief Construct a LoginScene object
          *
          * @param graphic The IGraphic to use
          * @param audio The IAudio to use
-         * @param network The ClientNetwork to use
+         * @param network The INetwork to use
          * @param framerate The frame rate to use
          */
-        explicit LobbyScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
+        explicit LoginScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
 
         /**
-         * @brief Destroy an LobbyScene object
+         * @brief Destroy an LoginScene object
          */
-        ~LobbyScene() final = default;
+        ~LoginScene() final = default;
 
     // @MARK Methods
         public:
@@ -53,20 +53,25 @@ namespace rtype::game::scene {
          *  @brief Unload the scene by removing entity, Component and ISystem in the GameEngine
          */
         void unloadScene() final;
-        void createSession();
-        void joinSession();
+
+        void connect();
 
     // @MARK Properties
         private:
         /**
-         * @brief User has joined a game session
+         * @brief Server IP
          */
-        bool _back;
+        std::string _server_ip;
 
         /**
-         * @brief Target user session
+         * @brief Server port
          */
-        std::string _target_session_user;
+        std::string _server_port;
+
+        /**
+         * @brief Username
+         */
+        std::string _username;
 
         /**
          * @brief Scene framerate
@@ -95,4 +100,4 @@ namespace rtype::game::scene {
     };
 }
 
-#endif //CPP_RTYPE_2019_LOBBYSCENE_HPP
+#endif //CPP_RTYPE_2019_LOGINSCENE_HPP

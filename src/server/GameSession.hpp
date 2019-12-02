@@ -8,11 +8,15 @@
 #ifndef SERVER_SESSION_HPP_
 #define SERVER_SESSION_HPP_
 
+#include <unordered_map>
+
 #include "Network.hpp"
+#include "GameEngine.hpp"
+#include "CollableEntity.hpp"
 
 namespace rtype::server {
 
-	class ServerSession : public network::Network {
+	class GameSession : public network::Network {
 	// @MARK Constructors/Destructors
 		public:
 		/**
@@ -20,12 +24,12 @@ namespace rtype::server {
 		 *
 		 * @param network network implementation
 		 */
-		ServerSession(network::INetwork &network);
+		GameSession(network::INetwork &network, engine::GameEngine &engine);
 
 		/**
 		 * @brief Destroy the Server Session object
 		 */
-		~ServerSession() = default;
+		~GameSession() = default;
 
 	// @MARK Methods
 		public:
@@ -34,7 +38,7 @@ namespace rtype::server {
 		 *
 		 * @param port Listening port
 		 */
-		void start(std::size_t const &port);
+		void start(std::size_t const &session_port);
 
 	// @MARK Handlers
 		private:
@@ -52,8 +56,14 @@ namespace rtype::server {
 		 */
 		void onDisconnect(network::Packet &packet);
 
+		void onInput(network::Packet &packet);
+
 	// @MARK Properties
 		private:
+		engine::GameEngine &_engine;
+        std::unordered_map<std::string, std::pair<std::string, std::size_t>> _udp_connections;
+        std::unordered_map<std::string, std::size_t> _connections;
+        std::unordered_map<std::string, engine::entity::CollableEntity> _players;
 	};
 
 }

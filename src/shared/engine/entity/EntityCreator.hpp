@@ -25,6 +25,7 @@ namespace rtype::engine::entity {
         BUTTON,
         MOUSE,
         PARALLAX,
+        COLLABLE_ENTITY,
         SPRITE,
         SOUND,
         BULLET,

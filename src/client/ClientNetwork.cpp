@@ -8,8 +8,9 @@
 #include <thread>
 
 #include "ClientNetwork.hpp"
-#include "GameNetwork.hpp"
+#include "Game.hpp"
 #include "NetworkException.hpp"
+#include "Event.hpp"
 
 namespace rtype::client {
 
@@ -61,9 +62,20 @@ ClientNetwork::joinSession(std::string username)
 }
 
 void
+ClientNetwork::sendInput(engine::event::EventType input)
+{
+	auto packet = network::Packet(game::network::INPUT);
+
+	packet << input;
+	packet << _user;
+	_network.sendUDPData(packet, _server_ip, _session_port);
+}
+
+void
 ClientNetwork::connectToCurrentSession(void)
 {
 	auto packet = network::Packet(game::network::CONNECT, _user);
+	_handlers[rtype::game::network::CONNECT] = std::bind(&ClientNetwork::onConnectSession, this, std::placeholders::_1);
 
 	while (true) {
 		try {
@@ -86,6 +98,14 @@ ClientNetwork::onConnect(network::Packet &packet)
 	if (!_is_connected) {
 		std::cerr << "fail to connect, try with another username" << std::endl;
 	}
+}
+
+void
+ClientNetwork::onConnectSession(network::Packet &packet)
+{
+	std::cout << "sessssssion" << std::endl;
+	_local_port = packet.getPayload<std::size_t>();
+	_network.createUDPEndpoint(_local_port, std::bind(&ClientNetwork::onReceivePacket, this, std::placeholders::_1));
 }
 
 void

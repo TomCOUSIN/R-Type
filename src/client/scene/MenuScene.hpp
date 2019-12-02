@@ -5,8 +5,8 @@
 ** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_LOGINSCENE_HPP
-#define CPP_RTYPE_2019_LOGINSCENE_HPP
+#ifndef CPP_RTYPE_2019_MENUSCENE_HPP
+#define CPP_RTYPE_2019_MENUSCENE_HPP
 
 #include <iostream>
 #include <unordered_map>
@@ -16,29 +16,26 @@
 #include "ClientNetwork.hpp"
 #include "Entity.hpp"
 
-namespace rtype::game::scene {
+namespace rtype::client::scene {
 
-    class LoginScene : public engine::scene::IScene {
+    class MenuScene : public engine::scene::IScene {
 
-    // @MARK Constructors/Destructors
         public:
         /**
-         * @brief Construct a LoginScene object
+         * @brief Construct a GameScene object
          *
          * @param graphic The IGraphic to use
          * @param audio The IAudio to use
-         * @param network The INetwork to use
+         * @param network The ClientNetwork to use
          * @param framerate The frame rate to use
          */
-        explicit LoginScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
+        explicit MenuScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
 
         /**
-         * @brief Destroy an LoginScene object
+         * @brief Destroy an MenuScene object
          */
-        ~LoginScene() final = default;
+        ~MenuScene() final = default;
 
-    // @MARK Methods
-        public:
         /**
          *  @brief The Scene loads everything needed for it to run properly
          */
@@ -47,31 +44,24 @@ namespace rtype::game::scene {
         /**
          *  @brief Display the scene by using the engine
          */
-        rtype::engine::scene::SCENE displayScene() final;
+        engine::scene::SCENE displayScene() final;
 
         /**
          *  @brief Unload the scene by removing entity, Component and ISystem in the GameEngine
          */
         void unloadScene() final;
 
-        void connect();
 
-    // @MARK Properties
         private:
         /**
-         * @brief Server IP
+         * @brief Boolean to play
          */
-        std::string _server_ip;
+        bool _play;
 
         /**
-         * @brief Server port
+         * @brief Boolean to quit the game
          */
-        std::string _server_port;
-
-        /**
-         * @brief Username
-         */
-        std::string _username;
+        bool _quit;
 
         /**
          * @brief Scene framerate
@@ -100,4 +90,4 @@ namespace rtype::game::scene {
     };
 }
 
-#endif //CPP_RTYPE_2019_LOGINSCENE_HPP
+#endif //CPP_RTYPE_2019_MENUSCENE_HPP

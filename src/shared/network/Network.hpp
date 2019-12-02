@@ -39,6 +39,8 @@ namespace rtype::network {
 		Network &operator=(Network &&) = delete;
 
 	// @MARK Methods
+		public:
+		void subscribeTo(Packet::PacketType type, INetwork::PacketCallback callback);
 		protected:
 		void onReceivePacket(Packet &packer);
 

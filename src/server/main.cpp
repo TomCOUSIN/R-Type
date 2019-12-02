@@ -7,7 +7,8 @@
 
 #include "Shared.hpp"
 #include "Game.hpp"
-#include "ServerNetwork.hpp"
+#include "Server.hpp"
+#include "GameEngine.hpp"
 #include "BoostNetwork.hpp"
 
 using namespace rtype;
@@ -38,7 +39,8 @@ static bool parseArgument(int ac, char const **av, std::size_t &port)
 int main(int ac, char const **av)
 {
     network::BoostNetwork network;
-    server::ServerNetwork server_network(network);
+    engine::GameEngine engine;
+    server::Server server_network(network, engine);
     // game::Game game;
     std::size_t port;
 

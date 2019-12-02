@@ -10,7 +10,7 @@
 
 #include "LoginScene.hpp"
 
-namespace rtype::game::scene {
+namespace rtype::client::scene {
 
 LoginScene::LoginScene(graphic::IGraphic &graphic
                                           , audio::IAudio &audio

@@ -15,9 +15,11 @@
 #include "IAudio.hpp"
 #include "IScene.hpp"
 #include "ClientNetwork.hpp"
+#include "GameEngine.hpp"
 #include "Entity.hpp"
+#include "Packet.hpp"
 
-namespace rtype::game::scene {
+namespace rtype::client::scene {
 
     /**
      * @brief The GameScene of the game
@@ -28,12 +30,13 @@ namespace rtype::game::scene {
         /**
          * @brief Construct a GameScene object
          *
+         * @param engine The game engine
          * @param graphic The IGraphic to use
          * @param audio The IAudio to use
          * @param network The ClientNetwork to use
          * @param framerate The frame rate to use
          */
-        explicit GameScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
+        explicit GameScene(engine::GameEngine &engine, graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
 
         /**
          * @brief Destroy an GameScene object
@@ -55,12 +58,20 @@ namespace rtype::game::scene {
          */
         void unloadScene() final;
 
+        void onCreatePlayer(rtype::network::Packet &packet);
+
+        void onMovePlayer(rtype::network::Packet &packet);
 
         private:
         /**
          * @brief Scene framerate
          */
         std::size_t _framerate;
+
+        /**
+         * @brief The game engine
+         */
+        engine::GameEngine &_engine;
 
         /**
          * @brief the IAudio to use
@@ -76,6 +87,8 @@ namespace rtype::game::scene {
          * @brief the IGraphic to use
          */
         graphic::IGraphic &_graphic;
+
+        std::string _player_id;
 
         /**
          * @brief The list of Entity

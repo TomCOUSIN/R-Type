@@ -9,6 +9,7 @@
 #define CLIENTNETWORK_HPP_
 
 #include "Network.hpp"
+#include "Event.hpp"
 
 namespace rtype::client {
 
@@ -50,6 +51,8 @@ namespace rtype::client {
 		 */
 		void joinSession(std::string username);
 
+		void sendInput(engine::event::EventType input);
+
 		private:
 		/**
 		 * @brief Connect to the remote session
@@ -76,6 +79,7 @@ namespace rtype::client {
 		 * @param packet Network packet
 		 */
 		void onConnect(network::Packet &packet);
+		void onConnectSession(network::Packet &packet);
 
 		/**
 		 * @brief On disconnect handler
@@ -128,6 +132,7 @@ namespace rtype::client {
 		/**
 		 * @brief remote session port
 		 */
+		std::size_t _local_port;
 		std::size_t _session_port;
 
 		/**

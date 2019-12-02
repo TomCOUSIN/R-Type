@@ -10,7 +10,7 @@
 
 #include "LobbyScene.hpp"
 
-namespace rtype::game::scene {
+namespace rtype::client::scene {
 
 LobbyScene::LobbyScene(graphic::IGraphic &graphic
                                           , audio::IAudio &audio

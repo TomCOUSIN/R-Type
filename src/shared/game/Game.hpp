@@ -1,93 +1,37 @@
 /*
-** EPITECH PROJECT, 2022
+** EPITECH PROJECT, 2019
 ** CPP_rtype_2019
 ** File description:
-** Created by tomcousin,
+** created by lucasmrdt
 */
 
-#ifndef CPP_RTYPE_2019_GAME_HPP
-#define CPP_RTYPE_2019_GAME_HPP
-
-#include <iostream>
-#include <unordered_map>
-#include "GameEngine.hpp"
-#include "IGraphic.hpp"
-#include "IScene.hpp"
-#include "IAudio.hpp"
-#include "ClientNetwork.hpp"
+#ifndef GAME_HPP_
+#define GAME_HPP_
 
 namespace rtype::game {
 
-    /**
-     * @brief The Game class to handle the game
-     */
-    class Game {
+    namespace network {
+        enum PACKET_TYPE {
+            CONNECT,
+            DISCONNECT,
+            CREATE_SESSION,
+            JOIN_SESSION,
+            INPUT,
+            CREATE_PLAYER,
+            MOVE_PLAYER,
+        };
+    }
 
-        public:
-        /**
-         * @brief Construct a Game object
-         */
-        Game(engine::GameEngine &engine, graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
+    namespace event {
+        enum InputEventType {
+            ARROW_UP,
+            ARROW_DOWN,
+            ARROW_RIGHT,
+            ARROW_LEFT,
+            LastInputEventType
+        };
+    }
 
-        /**
-         * @brief Destroy a Game object
-         */
-        ~Game() = default;
-
-        /**
-         * @brief Start the Game
-         */
-        void start();
-
-        /**
-         * @brief Stop the Game
-         */
-        void stop();
-
-        /**
-         * @brief Change the actual scene
-         *
-         * @param id The id of the new scene
-         */
-        void changeScene(size_t const &id);
-
-        private:
-
-        /**
-         * @brief The main loop of the game
-         */
-        void loop();
-
-        /**
-         * @brief The GameEngine to use
-         */
-        engine::GameEngine &_engine;
-
-        /**
-         * @brief The IGraphic to use
-         */
-        graphic::IGraphic &_graphic;
-
-        /**
-         * @brief The IAudio to use
-         */
-        audio::IAudio &_audio;
-
-        /**
-         * @brief The ClientNetwork to use
-         */
-        client::ClientNetwork &_network;
-
-        /**
-         * @brief The actual IScene
-         */
-        std::shared_ptr<engine::scene::IScene> _actual_scene;
-
-        /**
-         * @brief The IScene of the game
-         */
-        std::unordered_map<size_t, std::shared_ptr<engine::scene::IScene>> _scenes;
-    };
 }
 
-#endif //CPP_RTYPE_2019_GAME_HPP
+#endif /* !GAME_HPP_ */

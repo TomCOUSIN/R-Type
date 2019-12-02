@@ -29,7 +29,7 @@ void rtype::sfml::system::RenderSystem::update(float const &delta)
 
 void rtype::sfml::system::RenderSystem::addEntity(const engine::entity::Entity &entity)
 {
-    _entities.push_back(entity);
+    _entities.insert(_entities.begin(), entity);
 }
 
 void rtype::sfml::system::RenderSystem::removeEntity(const engine::entity::Entity &entity)

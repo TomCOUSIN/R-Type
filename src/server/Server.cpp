@@ -8,39 +8,40 @@
 #include <functional>
 #include <thread>
 
-#include "ServerNetwork.hpp"
-#include "GameNetwork.hpp"
-#include "ServerSession.hpp"
+#include "Server.hpp"
+#include "Game.hpp"
+#include "GameSession.hpp"
 #include "Fork.hpp"
 
 namespace rtype::server {
 
-ServerNetwork::ServerNetwork(network::INetwork &network)
+Server::Server(network::INetwork &network, engine::GameEngine &engine)
 	: network::Network(network)
+	, _engine(engine)
 {
-	_handlers.emplace(std::make_pair(rtype::game::network::CONNECT, std::bind(&ServerNetwork::onConnect, this, std::placeholders::_1)));
-	_handlers.emplace(std::make_pair(rtype::game::network::DISCONNECT, std::bind(&ServerNetwork::onDisconnect, this, std::placeholders::_1)));
-	_handlers.emplace(std::make_pair(rtype::game::network::CREATE_SESSION, std::bind(&ServerNetwork::onCreateSession, this, std::placeholders::_1)));
-	_handlers.emplace(std::make_pair(rtype::game::network::JOIN_SESSION, std::bind(&ServerNetwork::onJoinSession, this, std::placeholders::_1)));
+	_handlers.emplace(std::make_pair(rtype::game::network::CONNECT, std::bind(&Server::onConnect, this, std::placeholders::_1)));
+	_handlers.emplace(std::make_pair(rtype::game::network::DISCONNECT, std::bind(&Server::onDisconnect, this, std::placeholders::_1)));
+	_handlers.emplace(std::make_pair(rtype::game::network::CREATE_SESSION, std::bind(&Server::onCreateSession, this, std::placeholders::_1)));
+	_handlers.emplace(std::make_pair(rtype::game::network::JOIN_SESSION, std::bind(&Server::onJoinSession, this, std::placeholders::_1)));
 }
 
 void
-ServerNetwork::start(std::size_t const &port)
+Server::start(std::size_t const &port)
 {
-	_network.createTCPEndpoint(port, std::bind(&ServerNetwork::onReceivePacket, this, std::placeholders::_1));
+	_network.createTCPEndpoint(port, std::bind(&Server::onReceivePacket, this, std::placeholders::_1));
 	std::cout << "server is listening on " << port << std::endl;
 	_network.run();
 }
 
 void
-ServerNetwork::createSession(std::size_t const &session_port)
+Server::createSession(std::size_t const &session_port)
 {
 	auto new_network = _network.duplicate();
-	ServerSession(*new_network).start(session_port);
+	GameSession(*new_network, _engine).start(session_port);
 }
 
 void
-ServerNetwork::onConnect(network::Packet &packet)
+Server::onConnect(network::Packet &packet)
 {
 	auto user = packet.getPayload<std::string>();
 	auto response_packet = network::Packet(game::network::CONNECT);
@@ -58,22 +59,22 @@ ServerNetwork::onConnect(network::Packet &packet)
 }
 
 void
-ServerNetwork::onDisconnect(network::Packet &packet)
+Server::onDisconnect(network::Packet &packet)
 {
 	std::cout << "disconnect" << std::endl;
 }
 
 void
-ServerNetwork::onCreateSession(network::Packet &packet)
+Server::onCreateSession(network::Packet &packet)
 {
 	std::size_t session_port = _network.getUnusedPort();
-	auto child_starter = std::bind(&ServerNetwork::createSession, this, session_port);
+	auto child_starter = std::bind(&Server::createSession, this, session_port);
 	auto user = _user_by_socket_ids.find(packet.getSocketId());
 	auto response_packet = network::Packet(game::network::CREATE_SESSION);
 
 	if (user != _user_by_socket_ids.end()) {
 		rtype::encapsulation::Fork::start(child_starter);
-		_session_port_by_users.emplace(std::make_pair(user->second, session_port));
+		_session_port_by_users.emplace(user->second, session_port);
 		response_packet << true;
 		response_packet << session_port;
 	} else {
@@ -83,7 +84,7 @@ ServerNetwork::onCreateSession(network::Packet &packet)
 }
 
 void
-ServerNetwork::onJoinSession(network::Packet &packet)
+Server::onJoinSession(network::Packet &packet)
 {
 	auto user_session = packet.getPayload<std::string>();
 	network::Packet response_packet(game::network::JOIN_SESSION);

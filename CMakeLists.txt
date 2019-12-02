@@ -26,6 +26,7 @@ SET(INTERFACE_SRC ${SRC}interface/)
 SET(SHARED_SRC ${SRC}shared/)
 SET(SERVER_SRC ${SRC}server/)
 SET(CLIENT_SRC ${SRC}client/)
+SET(GAME_SCENE_SRC ${CLIENT_SRC}scene/)
 
 SET(ENCAPSULATION_SRC ${SHARED_SRC}encapsulation/)
 SET(GAME_SRC ${SHARED_SRC}game/)
@@ -52,7 +53,6 @@ SET(SFML_EVENT_SRC ${SFML_SRC}event/)
 SET(SFML_ENTITY_SRC ${SFML_SRC}entity/)
 SET(SFML_AUDIO_SRC ${SFML_SRC}audio/)
 
-SET(GAME_SCENE_SRC ${GAME_SRC}scene/)
 SET(GAME_COMPONENT_SRC ${GAME_SRC}component/)
 
 # Include directories
@@ -113,6 +113,8 @@ SET(COMPONENT
 SET(ENTITY
         ${ENTITY_SRC}EntityCreator.cpp
         ${ENTITY_SRC}EntityCreator.hpp
+        ${ENTITY_SRC}CollableEntity.cpp
+        ${ENTITY_SRC}CollableEntity.hpp
         ${ENTITY_SRC}Entity.hpp)
 
 SET(EXCEPTION
@@ -192,8 +194,6 @@ SET(SHARED
         ${SRC}Shared.hpp
         ${ENCAPSULATION}
         ${ENTITY}
-        ${SFML}
-        ${ENTITY}
         ${COMPONENT}
         ${EXCEPTION}
         ${NETWORK}
@@ -207,7 +207,7 @@ SET(COMMON
         ${INTERFACE}
         ${SHARED})
 
-SET(GAME
+SET(GAME_SCENE
         ${GAME_SCENE_SRC}MenuScene.cpp
         ${GAME_SCENE_SRC}MenuScene.hpp
         ${GAME_SCENE_SRC}GameScene.cpp
@@ -216,22 +216,22 @@ SET(GAME
         ${GAME_SCENE_SRC}LobbyScene.hpp
         ${GAME_SCENE_SRC}LoginScene.cpp
         ${GAME_SCENE_SRC}LoginScene.hpp
-        ${GAME_COMPONENT_SRC}Health.hpp
-        ${GAME_SRC}Game.cpp
-        ${GAME_SRC}Game.hpp)
+        ${GAME_COMPONENT_SRC}Health.hpp)
 
 SET(SERVER
-        ${CLIENT_SRC}ClientNetwork.cpp
-        ${CLIENT_SRC}ClientNetwork.hpp
-        ${SERVER_SRC}ServerSession.cpp
-        ${SERVER_SRC}ServerSession.hpp
-        ${SERVER_SRC}ServerNetwork.cpp
-        ${SERVER_SRC}ServerNetwork.hpp
+        ${SERVER_SRC}GameSession.cpp
+        ${SERVER_SRC}GameSession.hpp
+        ${SERVER_SRC}Server.cpp
+        ${SERVER_SRC}Server.hpp
         ${SERVER_SRC}main.cpp)
 
 SET(CLIENT
+        ${SFML}
+        ${GAME_SCENE}
         ${CLIENT_SRC}ClientNetwork.cpp
         ${CLIENT_SRC}ClientNetwork.hpp
+        ${CLIENT_SRC}Client.cpp
+        ${CLIENT_SRC}Client.hpp
         ${CLIENT_SRC}main.cpp)
 
 SET(UNIT_TESTS
@@ -241,8 +241,8 @@ SET(UNIT_TESTS
         ${TESTS_SRC}component_storage_tests.cpp)
 
 # Create executable
-add_executable(r-type_server ${SERVER} ${COMMON} ${GAME})
-add_executable(r-type_client ${CLIENT} ${COMMON} ${GAME})
+add_executable(r-type_server ${SERVER} ${COMMON})
+add_executable(r-type_client ${CLIENT} ${COMMON})
 
 message(${CONAN_LIBS})
 # Link library to executable

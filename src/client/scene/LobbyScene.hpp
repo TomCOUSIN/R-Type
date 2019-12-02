@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2022
 ** CPP_rtype_2019
 ** File description:
-** Created by tomcousin,
+** Created by lucasmrdt,
 */
 
-#ifndef CPP_RTYPE_2019_MENUSCENE_HPP
-#define CPP_RTYPE_2019_MENUSCENE_HPP
+#ifndef CPP_RTYPE_2019_LOBBYSCENE_HPP
+#define CPP_RTYPE_2019_LOBBYSCENE_HPP
 
 #include <iostream>
 #include <unordered_map>
@@ -16,26 +16,29 @@
 #include "ClientNetwork.hpp"
 #include "Entity.hpp"
 
-namespace rtype::game::scene {
+namespace rtype::client::scene {
 
-    class MenuScene : public engine::scene::IScene {
+    class LobbyScene : public engine::scene::IScene {
 
+    // @MARK Constructors/Destructors
         public:
         /**
-         * @brief Construct a GameScene object
+         * @brief Construct a LobbyScene object
          *
          * @param graphic The IGraphic to use
          * @param audio The IAudio to use
          * @param network The ClientNetwork to use
          * @param framerate The frame rate to use
          */
-        explicit MenuScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
+        explicit LobbyScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
 
         /**
-         * @brief Destroy an MenuScene object
+         * @brief Destroy an LobbyScene object
          */
-        ~MenuScene() final = default;
+        ~LobbyScene() final = default;
 
+    // @MARK Methods
+        public:
         /**
          *  @brief The Scene loads everything needed for it to run properly
          */
@@ -44,24 +47,26 @@ namespace rtype::game::scene {
         /**
          *  @brief Display the scene by using the engine
          */
-        engine::scene::SCENE displayScene() final;
+        rtype::engine::scene::SCENE displayScene() final;
 
         /**
          *  @brief Unload the scene by removing entity, Component and ISystem in the GameEngine
          */
         void unloadScene() final;
+        void createSession();
+        void joinSession();
 
-
+    // @MARK Properties
         private:
         /**
-         * @brief Boolean to play
+         * @brief User has joined a game session
          */
-        bool _play;
+        bool _back;
 
         /**
-         * @brief Boolean to quit the game
+         * @brief Target user session
          */
-        bool _quit;
+        std::string _target_session_user;
 
         /**
          * @brief Scene framerate
@@ -90,4 +95,4 @@ namespace rtype::game::scene {
     };
 }
 
-#endif //CPP_RTYPE_2019_MENUSCENE_HPP
+#endif //CPP_RTYPE_2019_LOBBYSCENE_HPP

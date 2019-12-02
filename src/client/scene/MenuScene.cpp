@@ -10,7 +10,7 @@
 
 #include "MenuScene.hpp"
 
-namespace rtype::game::scene {
+namespace rtype::client::scene {
 
 MenuScene::MenuScene(graphic::IGraphic &graphic
                     , audio::IAudio &audio

@@ -24,6 +24,12 @@ namespace rtype::network {
     }
 
     void
+    Network::subscribeTo(Packet::PacketType type, INetwork::PacketCallback callback)
+    {
+        _handlers.emplace(type, callback);
+    }
+
+    void
     Network::onReceivePacket(Packet &packet)
     {
         auto handler = _handlers.find(packet.getType());
