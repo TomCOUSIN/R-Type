@@ -102,6 +102,7 @@ namespace rtype::sfml::entity {
 	    std::size_t _max_chars;
 	    engine::entity::Entity _input_entity;
 	    engine::entity::Entity _value_entity;
+	    engine::entity::Entity _title_entity;
 		std::shared_ptr<engine::component::Position> _position;
 		std::shared_ptr<sfml::component::Button> _input;
 		std::shared_ptr<sfml::component::Text> _text;

@@ -14,7 +14,6 @@
 
 namespace rtype::sfml::entity {
 
-// @xxx WTF can't juste assign it in header file like others !!!
 const engine::entity::EntityType MouseEntity::type = 1 << engine::entity::ENTITY_TYPE::MOUSE;
 
 MouseEntity::MouseEntity(engine::GameEngine &game_engine):

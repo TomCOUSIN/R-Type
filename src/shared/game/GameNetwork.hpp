@@ -14,6 +14,7 @@ namespace rtype::game::network {
         CONNECT,
         DISCONNECT,
         CREATE_SESSION,
+        JOIN_SESSION,
     };
 
 }

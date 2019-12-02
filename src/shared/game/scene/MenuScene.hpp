@@ -13,7 +13,7 @@
 #include "IGraphic.hpp"
 #include "IAudio.hpp"
 #include "IScene.hpp"
-#include "ITimer.hpp"
+#include "ClientNetwork.hpp"
 #include "Entity.hpp"
 
 namespace rtype::game::scene {
@@ -22,15 +22,14 @@ namespace rtype::game::scene {
 
         public:
         /**
-         * @brief Construct a MenuScene object
+         * @brief Construct a GameScene object
          *
          * @param graphic The IGraphic to use
-         * @param timer The ITimer to use
          * @param audio The IAudio to use
+         * @param network The ClientNetwork to use
+         * @param framerate The frame rate to use
          */
-        explicit MenuScene(std::shared_ptr<graphic::IGraphic> graphic
-            , std::shared_ptr<timer::ITimer> timer
-            , std::shared_ptr<audio::IAudio> audio);
+        explicit MenuScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
 
         /**
          * @brief Destroy an MenuScene object
@@ -45,7 +44,7 @@ namespace rtype::game::scene {
         /**
          *  @brief Display the scene by using the engine
          */
-        rtype::engine::scene::SCENE displayScene() final;
+        engine::scene::SCENE displayScene() final;
 
         /**
          *  @brief Unload the scene by removing entity, Component and ISystem in the GameEngine
@@ -65,19 +64,24 @@ namespace rtype::game::scene {
         bool _quit;
 
         /**
-         * @brief the IAudio to use
+         * @brief Scene framerate
          */
-        std::shared_ptr<audio::IAudio> _audio;
+        std::size_t _framerate;
 
         /**
-         * @brief the ITimer to use
+         * @brief the IAudio to use
          */
-        std::shared_ptr<timer::ITimer> _timer;
+        audio::IAudio &_audio;
+
+        /**
+         * @brief the ClientNetwork to use
+         */
+        client::ClientNetwork &_network;
 
         /**
          * @brief the IGraphic to use
          */
-        std::shared_ptr<graphic::IGraphic> _graphic;
+        graphic::IGraphic &_graphic;
 
         /**
          * @brief The list of Entity

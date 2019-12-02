@@ -13,8 +13,8 @@
 #include "GameEngine.hpp"
 #include "IGraphic.hpp"
 #include "IScene.hpp"
-#include "ITimer.hpp"
 #include "IAudio.hpp"
+#include "ClientNetwork.hpp"
 
 namespace rtype::game {
 
@@ -27,7 +27,7 @@ namespace rtype::game {
         /**
          * @brief Construct a Game object
          */
-        Game();
+        Game(engine::GameEngine &engine, graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
 
         /**
          * @brief Destroy a Game object
@@ -61,22 +61,22 @@ namespace rtype::game {
         /**
          * @brief The GameEngine to use
          */
-        engine::GameEngine _engine;
-
-        /**
-         * @brief The ITimer to use
-         */
-        std::shared_ptr<rtype::timer::ITimer> _timer;
+        engine::GameEngine &_engine;
 
         /**
          * @brief The IGraphic to use
          */
-        std::shared_ptr<rtype::graphic::IGraphic> _graphic;
+        graphic::IGraphic &_graphic;
 
         /**
          * @brief The IAudio to use
          */
-        std::shared_ptr<rtype::audio::IAudio> _audio;
+        audio::IAudio &_audio;
+
+        /**
+         * @brief The ClientNetwork to use
+         */
+        client::ClientNetwork &_network;
 
         /**
          * @brief The actual IScene

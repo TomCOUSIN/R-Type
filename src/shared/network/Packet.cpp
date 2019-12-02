@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** CPP_babel_2019
+** CPP_rtype_2019
 ** File description:
 ** Packet.cpp
 */
@@ -12,6 +12,7 @@ namespace rtype::network {
     Packet::Packet(PacketType const &type)
     {
         _header.type = type;
+        _header.magic_number = MAGIC_NUMBER;
     }
 
     void

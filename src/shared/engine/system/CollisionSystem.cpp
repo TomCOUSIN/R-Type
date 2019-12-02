@@ -18,15 +18,8 @@ _engine(engine) {
 
 void CollisionSystem::update(float const &delta)
 {
-    engine::component::ComponentStorage position_store;
-    if (position_store.size() == 0) {
-        position_store = _engine.getComponentStorage<component::Position>();
-    }
-
-    engine::component::ComponentStorage collision_store;
-    if (collision_store.size() == 0) {
-        collision_store = _engine.getComponentStorage<component::Collision>();
-    }
+    static auto &position_store = _engine.getComponentStorage<component::Position>();
+    static auto &collision_store = _engine.getComponentStorage<component::Collision>();
 
     for (size_t i = 0; i < _entities.size(); ++i) {
         for (size_t j = i + 1; j < _entities.size(); ++j) {

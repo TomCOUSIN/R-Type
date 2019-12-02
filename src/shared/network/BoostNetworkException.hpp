@@ -1,18 +1,19 @@
 /*
 ** EPITECH PROJECT, 2019
-** CPP_babel_2019
+** CPP_rtype_2019
 ** File description:
 ** BoostNetworkException.hpp
 */
 
-#ifndef CPP_BABEL_2019_BOOSTNETWORKEXCEPTION_HPP
-#define CPP_BABEL_2019_BOOSTNETWORKEXCEPTION_HPP
+#ifndef CPP_rtype_2019_BOOSTNETWORKEXCEPTION_HPP
+#define CPP_rtype_2019_BOOSTNETWORKEXCEPTION_HPP
 
+#include "NetworkException.hpp"
 #include "BaseException.hpp"
 
 namespace rtype::network {
 
-    class BoostNetworkException : public exception::BaseException {
+    class BoostNetworkException : public NetworkException {
 
         // -
         public:
@@ -21,11 +22,11 @@ namespace rtype::network {
         // Constructor and destructor.
         public:
         explicit BoostNetworkException(const std::string &message):
-            BaseException(message, "BoostNetworkException")
+            NetworkException(message)
         {}
 
     };
 
 }
 
-#endif /* !CPP_BABEL_2019_BOOSTNETWORKEXCEPTION_HPP */
+#endif /* !CPP_rtype_2019_BOOSTNETWORKEXCEPTION_HPP */

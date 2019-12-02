@@ -1,12 +1,12 @@
 /*
 ** EPITECH PROJECT, 2019
-** CPP_babel_2019
+** CPP_rtype_2019
 ** File description:
 ** BaseException.hpp
 */
 
-#ifndef CPP_BABEL_2019_BASEEXCEPTION_HPP
-#define CPP_BABEL_2019_BASEEXCEPTION_HPP
+#ifndef CPP_rtype_2019_BASEEXCEPTION_HPP
+#define CPP_rtype_2019_BASEEXCEPTION_HPP
 
 #include <iostream>
 
@@ -36,4 +36,4 @@ namespace rtype::exception {
 
 }
 
-#endif /* !CPP_BABEL_2019_BASEEXCEPTION_HPP */
+#endif /* !CPP_rtype_2019_BASEEXCEPTION_HPP */

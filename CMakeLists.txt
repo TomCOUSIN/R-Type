@@ -27,6 +27,7 @@ SET(SHARED_SRC ${SRC}shared/)
 SET(SERVER_SRC ${SRC}server/)
 SET(CLIENT_SRC ${SRC}client/)
 
+SET(ENCAPSULATION_SRC ${SHARED_SRC}encapsulation/)
 SET(GAME_SRC ${SHARED_SRC}game/)
 SET(SFML_SRC ${SHARED_SRC}sfml/)
 SET(ENGINE_SRC ${SHARED_SRC}engine/)
@@ -37,6 +38,8 @@ SET(LOADER_SRC ${ENGINE_SRC}loader/)
 SET(SYSTEM_SRC ${ENGINE_SRC}system/)
 SET(COMPONENT_SRC ${ENGINE_SRC}component/)
 SET(EVENT_SRC ${ENGINE_SRC}event/)
+
+SET(FORK_SRC ${ENCAPSULATION_SRC}fork/)
 
 SET(COMPONENT_POSITION_SRC ${COMPONENT_SRC}position/)
 SET(COMPONENT_SPEED_SRC ${COMPONENT_SRC}speed/)
@@ -54,6 +57,7 @@ SET(GAME_COMPONENT_SRC ${GAME_SRC}component/)
 
 # Include directories
 include_directories(${SRC})
+include_directories(${CLIENT_SRC})
 include_directories(${INTERFACE_SRC})
 include_directories(${ENGINE_SRC})
 include_directories(${ENTITY_SRC})
@@ -61,6 +65,7 @@ include_directories(${EXCEPTION_SRC})
 include_directories(${NETWORK_SRC})
 include_directories(${SYSTEM_SRC})
 include_directories(${EVENT_SRC})
+include_directories(${FORK_SRC})
 include_directories(${COMPONENT_SRC})
 include_directories(${COMPONENT_POSITION_SRC})
 include_directories(${COMPONENT_SPEED_SRC})
@@ -91,6 +96,11 @@ SET(INTERFACE
         ${INTERFACE_SRC}ISystem.hpp
         ${INTERFACE_SRC}IGraphic.hpp
         ${INTERFACE_SRC}IEntityLoader.hpp)
+
+SET(ENCAPSULATION
+        ${FORK_SRC}ForkException.hpp
+        ${FORK_SRC}Fork.hpp
+        ${FORK_SRC}Fork.cpp)
 
 SET(COMPONENT
         ${COMPONENT_SRC}Speed.hpp
@@ -180,6 +190,7 @@ SET(SFML
 
 SET(SHARED
         ${SRC}Shared.hpp
+        ${ENCAPSULATION}
         ${ENTITY}
         ${SFML}
         ${ENTITY}
@@ -201,11 +212,19 @@ SET(GAME
         ${GAME_SCENE_SRC}MenuScene.hpp
         ${GAME_SCENE_SRC}GameScene.cpp
         ${GAME_SCENE_SRC}GameScene.hpp
+        ${GAME_SCENE_SRC}LobbyScene.cpp
+        ${GAME_SCENE_SRC}LobbyScene.hpp
+        ${GAME_SCENE_SRC}LoginScene.cpp
+        ${GAME_SCENE_SRC}LoginScene.hpp
         ${GAME_COMPONENT_SRC}Health.hpp
         ${GAME_SRC}Game.cpp
         ${GAME_SRC}Game.hpp)
 
 SET(SERVER
+        ${CLIENT_SRC}ClientNetwork.cpp
+        ${CLIENT_SRC}ClientNetwork.hpp
+        ${SERVER_SRC}ServerSession.cpp
+        ${SERVER_SRC}ServerSession.hpp
         ${SERVER_SRC}ServerNetwork.cpp
         ${SERVER_SRC}ServerNetwork.hpp
         ${SERVER_SRC}main.cpp)

@@ -10,6 +10,7 @@
 
 #include <functional>
 #include <string>
+#include <memory>
 
 #include "Packet.hpp"
 
@@ -24,6 +25,8 @@ namespace rtype::network {
     // @MARK Constructors/Destrcutors
         public:
         virtual ~INetwork(void) = default;
+
+        virtual std::shared_ptr<INetwork> duplicate(void) = 0;
 
     // @MARK Methods - UDP Network
         public:

@@ -45,6 +45,8 @@ namespace rtype::network {
         BoostNetwork(void);
         virtual ~BoostNetwork(void);
 
+        virtual std::shared_ptr<INetwork> duplicate(void);
+
     // @MARK Methods
         public:
         virtual void stop(void);
@@ -69,7 +71,7 @@ namespace rtype::network {
     // @MARK Methods - Boost Asio
         private:
         void readUDPData(std::shared_ptr<udp::socket> socket, PacketCallback const callback);
-        void tcpDoAccept(PacketCallback const callback);
+        void tcpDoAccept(std::shared_ptr<tcp::acceptor> acceptor, PacketCallback const callback);
         void readTCPData(tcp::socket socket, PacketCallback const callback);
 
     // @MARK Properties
@@ -78,8 +80,6 @@ namespace rtype::network {
         boost::asio::io_service _io_service;
         boost::asio::io_context _io_context;
         std::vector<std::thread> _threads;
-
-        std::unique_ptr<tcp::acceptor> _acceptor;
 
         std::unique_ptr<udp::socket> _emit_udp_socket;
         std::unique_ptr<tcp::endpoint> _tcp_server;

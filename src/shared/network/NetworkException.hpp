@@ -1,12 +1,12 @@
 /*
 ** EPITECH PROJECT, 2019
-** CPP_babel_2019
+** CPP_rtype_2019
 ** File description:
 ** Created by lucasmrdt
 */
 
-#ifndef CPP_BABEL_2019_NETWORKEXCEPTION_HPP
-#define CPP_BABEL_2019_NETWORKEXCEPTION_HPP
+#ifndef CPP_rtype_2019_NETWORKEXCEPTION_HPP
+#define CPP_rtype_2019_NETWORKEXCEPTION_HPP
 
 #include "BaseException.hpp"
 
@@ -28,4 +28,4 @@ namespace rtype::network {
 
 }
 
-#endif /* !CPP_BABEL_2019_NETWORKEXCEPTION_HPP */
+#endif /* !CPP_rtype_2019_NETWORKEXCEPTION_HPP */

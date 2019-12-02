@@ -26,12 +26,12 @@ _mouse(engine), _engine(engine), _window(sf::VideoMode(1920, 1080), "Rtype") {}
 void rtype::sfml::graphic::SfmlGraphic::init()
 {
     _engine.loadSystem<sfml::system::InputSystem>(_engine, _window);
-    _engine.loadSystem<sfml::system::RenderSystem>(_engine, _window);
     _engine.loadSystem<sfml::system::PositionSystem>(_engine);
     _engine.loadSystem<sfml::system::ButtonSystem>(_engine, _window);
     _engine.loadSystem<sfml::system::AnimationSystem>(_engine);
     _engine.loadSystem<sfml::system::ParallaxSystem>(_engine);
     _engine.loadSystem<sfml::system::BulletSystem>(_engine);
+    _engine.loadSystem<sfml::system::RenderSystem>(_engine, _window);
     _engine.loadComponentStorage<engine::component::Position>();
     _engine.loadComponentStorage<engine::component::Speed>();
     _engine.loadComponentStorage<sfml::component::Button>();
@@ -114,6 +114,13 @@ void rtype::sfml::graphic::SfmlGraphic::setVisible(
 
 void rtype::sfml::graphic::SfmlGraphic::removeElement(const rtype::engine::entity::Entity &entity)
 {
+    for (auto &input : _inputs) {
+        if (input->getInputEntity() == entity) {
+            input->destroyEntityInput();
+            return;
+        }
+    }
+
     for (auto &button : _buttons) {
         if (button->getButtonEntity() == entity) {
             button->destroyEntityButton();

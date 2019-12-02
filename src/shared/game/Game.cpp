@@ -5,55 +5,64 @@
 ** Created by tomcousin,
 */
 
-#include "SfmlGraphic.hpp"
-#include "SfmlTimer.hpp"
-#include "SfmlAudio.hpp"
 #include "MenuScene.hpp"
+#include "LoginScene.hpp"
+#include "LoginScene.hpp"
+#include "LobbyScene.hpp"
 #include "GameScene.hpp"
 #include "Game.hpp"
 
-rtype::game::Game::Game() :
-_engine(),
-_timer(new rtype::sfml::timer::SfmlTimer()),
-_graphic(new rtype::sfml::graphic::SfmlGraphic(_engine)),
-_audio(new rtype::sfml::audio::SfmlAudio(_engine)),
-_actual_scene(nullptr),
-_scenes()
+namespace rtype::game {
+
+Game::Game(engine::GameEngine &engine
+          , graphic::IGraphic &graphic
+          , audio::IAudio &audio
+          , client::ClientNetwork &network
+          , std::size_t framerate)
+    : _engine(engine)
+    , _graphic(graphic)
+    , _audio(audio)
+    , _network(network)
+    , _actual_scene(nullptr)
+    , _scenes()
 {
-    _scenes.emplace(std::pair(0, new rtype::game::scene::MenuScene(_graphic, _timer, _audio)));
-    _scenes.emplace(std::pair(1, new rtype::game::scene::GameScene(_graphic, _timer, _audio)));
-    _graphic->init();
+    _scenes.emplace(std::pair(engine::scene::LOGIN, new scene::LoginScene(_graphic, _audio, _network, framerate)));
+    _scenes.emplace(std::pair(engine::scene::MENU, new scene::MenuScene(_graphic, _audio, _network, framerate)));
+    _scenes.emplace(std::pair(engine::scene::LOBBY, new scene::LobbyScene(_graphic, _audio, _network, framerate)));
+    _scenes.emplace(std::pair(engine::scene::GAME, new scene::GameScene(_graphic, _audio, _network, framerate)));
+    _graphic.init();
 }
 
-void rtype::game::Game::start()
+void Game::start()
 {
     _actual_scene = _scenes.find(0)->second;
     _actual_scene->loadScene();
     loop();
 }
 
-void rtype::game::Game::changeScene(size_t const &id)
+void Game::changeScene(size_t const &id)
 {
     _actual_scene->unloadScene();
     _actual_scene = _scenes.find(id)->second;
     _actual_scene->loadScene();
 }
 
-void rtype::game::Game::loop()
+void Game::loop()
 {
-    while (_graphic->isWindowOpen()) {
-        switch (_actual_scene->displayScene()) {
-        case engine::scene::MENU: changeScene(0); break;
-        case engine::scene::GAME: changeScene(1); break;
-        case engine::scene::QUIT: return;
-        default: break;
+    while (_graphic.isWindowOpen()) {
+        auto redirected_scene = _actual_scene->displayScene();
+        if (redirected_scene == engine::scene::QUIT) {
+            break;
         }
+        changeScene(redirected_scene);
     }
 }
 
-void rtype::game::Game::stop()
+void Game::stop()
 {
     for (auto &scene : _scenes) {
         scene.second->unloadScene();
     }
+}
+
 }

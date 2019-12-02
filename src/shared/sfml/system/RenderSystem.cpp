@@ -45,10 +45,7 @@ void rtype::sfml::system::RenderSystem::removeEntity(const engine::entity::Entit
 
 void rtype::sfml::system::RenderSystem::renderSprite(const engine::entity::Entity &entity)
 {
-    engine::component::ComponentStorage sprite_store;
-    if (sprite_store.size() == 0) {
-        sprite_store = _engine.getComponentStorage<component::Sprite>();
-    }
+    static auto &sprite_store = _engine.getComponentStorage<component::Sprite>();
 
     if (sprite_store.entityHasComponent(entity)) {
         auto sprite = sprite_store.getComponent<component::Sprite>(entity);
@@ -58,10 +55,7 @@ void rtype::sfml::system::RenderSystem::renderSprite(const engine::entity::Entit
 
 void rtype::sfml::system::RenderSystem::renderButton(const engine::entity::Entity &entity)
 {
-    engine::component::ComponentStorage button_store;
-    if (button_store.size() == 0) {
-        button_store = _engine.getComponentStorage<component::Button>();
-    }
+    static auto &button_store = _engine.getComponentStorage<component::Button>();
 
     if (button_store.entityHasComponent(entity)) {
         auto button = button_store.getComponent<component::Button>(entity);
@@ -71,10 +65,7 @@ void rtype::sfml::system::RenderSystem::renderButton(const engine::entity::Entit
 
 void rtype::sfml::system::RenderSystem::renderText(const engine::entity::Entity &entity)
 {
-    engine::component::ComponentStorage text_store;
-    if (text_store.size() == 0) {
-        text_store = _engine.getComponentStorage<component::Text>();
-    }
+    static auto &text_store = _engine.getComponentStorage<component::Text>();
 
     if (text_store.entityHasComponent(entity)) {
         auto text = text_store.getComponent<component::Text>(entity);

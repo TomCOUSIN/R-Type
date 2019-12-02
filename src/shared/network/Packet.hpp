@@ -1,12 +1,12 @@
 /*
 ** EPITECH PROJECT, 2019
-** CPP_babel_2019
+** CPP_rtype_2019
 ** File description:
 ** Created by lucasmrdt
 */
 
-#ifndef CPP_BABEL_2019_PACKET_HPP
-#define CPP_BABEL_2019_PACKET_HPP
+#ifndef CPP_rtype_2019_PACKET_HPP
+#define CPP_rtype_2019_PACKET_HPP
 
 #include <cstddef>
 #include <string>
@@ -17,6 +17,10 @@
 namespace rtype::network {
 
     class Packet {
+
+    // @MARK Defines
+        public:
+        #define MAGIC_NUMBER (4242)
 
     // @MARK Types
         public:
@@ -103,6 +107,22 @@ namespace rtype::network {
          * @return packet's port
          */
         const std::size_t getPort(void) const noexcept;
+
+        /**
+         * @brief Extract payload to element
+         *
+         * @tparam T Element type
+         * @param element The element in which the payload is exported
+         * @return Packet
+         */
+        template <typename T>
+        T getPayload(void) noexcept
+        {
+            T payload;
+
+            *this >> payload;
+            return payload;
+        }
 
         /**
          * @brief Get the packet's size
@@ -246,7 +266,6 @@ namespace rtype::network {
     // @MARK Properties
         public:
         static const std::size_t HEADER_SIZE = sizeof(Header);
-        static const std::uint16_t MAGIC_NUMBER = 4242;
 
         private:
         Header _header;
@@ -259,4 +278,4 @@ namespace rtype::network {
 
 }
 
-#endif /* !CPP_BABEL_2019_PACKET_HPP */
+#endif /* !CPP_rtype_2019_PACKET_HPP */

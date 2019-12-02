@@ -27,10 +27,12 @@ NetworkSession::doRead(void)
     auto self(shared_from_this());
 
     packet->setSocketId(_socket_id);
+    packet->setIp(_socket.remote_endpoint().address().to_string());
+    packet->setPort(_socket.remote_endpoint().port());
     auto read_payload_cb = [this, self, packet](boost::system::error_code ec, std::size_t length) {
         if (ec) {
 #ifdef DEBUG
-            std::cout << "error: " << ec.message() << std::endl;
+            std::cout << "error payload: " << ec.message() << " is valid ? " << packet->isValid() << std::endl;
 #endif
             return;
         }
@@ -40,11 +42,17 @@ NetworkSession::doRead(void)
     auto read_header_cb = [this, self, packet, read_payload_cb](boost::system::error_code ec, std::size_t length) {
         if (ec || !length) {
 #ifdef DEBUG
-            std::cout << "error: " << ec.message() << std::endl;
+            std::cout << "error header: " << ec.message() << std::endl;
 #endif
             return;
         }
         packet->parseHeader();
+        if (!packet->isValid()) {
+#ifdef DEBUG
+            std::cout << "invalid header" << std::endl;
+#endif
+            return;
+        }
         _socket.async_read_some(boost::asio::buffer(packet->payload(), packet->getPayloadSize()), read_payload_cb);
     };
     _socket.async_read_some(boost::asio::buffer(packet->header(), Packet::HEADER_SIZE), read_header_cb);
@@ -65,8 +73,9 @@ NetworkSession::doWrite(Packet &packet)
              , buffer.begin() + Packet::HEADER_SIZE);
     _socket.async_write_some(boost::asio::buffer(buffer), [](boost::system::error_code ec, std::size_t length) {
 #ifdef DEBUG
-        std::cout << "error: " << ec.message() << std::endl;
-        std::cout << "nb written: " << length << std::endl;
+    if (ec) {
+        std::cout << "error write: " << ec.message() << std::endl;
+    }
 #endif
     });
 }
@@ -81,11 +90,16 @@ BoostNetwork::BoostNetwork(void):
 BoostNetwork::~BoostNetwork(void)
 {
     for (auto &t : _threads) {
-        std::cout << "thread " << t.joinable() << std::endl;
         if (t.joinable()) {
             t.join();
         }
     }
+}
+
+std::shared_ptr<INetwork>
+BoostNetwork::duplicate(void)
+{
+    return std::make_shared<BoostNetwork>();
 }
 
 void
@@ -111,8 +125,10 @@ std::size_t
 BoostNetwork::getUnusedPort(void)
 {
     tcp::acceptor acceptor(_io_service, tcp::endpoint(tcp::v4(), 0));
+    auto unused_port = acceptor.local_endpoint().port();
 
-    return acceptor.local_endpoint().port();
+    acceptor.close();
+    return unused_port;
 }
 
 std::size_t
@@ -172,9 +188,9 @@ BoostNetwork::readUDPData(std::shared_ptr<udp::socket> socket, PacketCallback co
 void
 BoostNetwork::createTCPEndpoint(std::size_t const &port, PacketCallback const callback)
 {
-    _acceptor = std::make_unique<tcp::acceptor>(_io_context, tcp::endpoint(tcp::v4(), port));
+    auto acceptor = std::make_shared<tcp::acceptor>(_io_context, tcp::endpoint(tcp::v4(), port));
 
-    tcpDoAccept(callback);
+    tcpDoAccept(acceptor, callback);
 }
 
 std::size_t
@@ -183,7 +199,11 @@ BoostNetwork::connectToTCPServer(std::string const &ip, std::size_t const &port,
     auto tcp_socket = tcp::socket(_io_context);
     auto socket_id = getUniqueSocketId();
 
-    tcp_socket.connect(tcp::endpoint(address::from_string(ip), port));
+    try {
+        tcp_socket.connect(tcp::endpoint(address::from_string(ip), port));
+    } catch (std::exception) {
+        throw BoostNetworkException("Connection refused.");
+    }
     if (!tcp_socket.is_open()) {
         throw BoostNetworkException("Connection not established.");
     }
@@ -209,22 +229,22 @@ BoostNetwork::sendTCPData(Packet &packet, std::size_t const &socket_id)
 }
 
 void
-BoostNetwork::tcpDoAccept(PacketCallback const callback)
+BoostNetwork::tcpDoAccept(std::shared_ptr<tcp::acceptor> acceptor, PacketCallback const callback)
 {
-    std::cout << "a" << std::endl;
-    _acceptor->async_accept(
-        [this, callback](boost::system::error_code ec, tcp::socket socket)
+    acceptor->async_accept(
+        [this, callback, acceptor](boost::system::error_code ec, tcp::socket socket)
         {
-            std::cout << "b" << std::endl;
             if (ec) {
-                std::cout << ec.message() << std::endl;
+#ifdef DEBUG
+                std::cout << "error accept: " << ec.message() << std::endl;
                 return;
+#endif
             }
             auto socket_id = getUniqueSocketId();
             auto tcp_session = std::make_shared<NetworkSession>(std::move(socket), socket_id, callback);
             _tcp_sessions_by_id[socket_id] = tcp_session;
             tcp_session->doRead();
-            tcpDoAccept(callback);
+            tcpDoAccept(acceptor, callback);
         }
     );
 }

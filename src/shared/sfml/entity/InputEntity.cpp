@@ -48,11 +48,12 @@ namespace rtype::sfml::entity {
         auto title_entity = _game_engine.createEntity();
         _input_entity = input_entity;
         _value_entity = value_entity;
+        _title_entity = title_entity;
 
         _game_engine.linkEntityWithComponent(input_entity, component::Button::type, _input);
         _game_engine.linkEntityWithComponent(input_entity, engine::component::Position::type, _position);
         _game_engine.linkEntityWithComponent<engine::component::Collision>(input_entity, width, height, InputEntity::type);
-        _game_engine.linkEntityWithComponent<engine::component::Position>(title_entity, x, y - 100);
+        _game_engine.linkEntityWithComponent<engine::component::Position>(title_entity, x - width * 1.2, y);
         _game_engine.linkEntityWithComponent<component::Text>(title_entity, title, 24);
         _game_engine.linkEntityWithComponent(value_entity, component::Text::type, _text);
         _game_engine.linkEntityWithComponent(value_entity, engine::component::Position::type, _position);
@@ -98,6 +99,7 @@ namespace rtype::sfml::entity {
             _input->shape.setFillColor(sf::Color::White);
             _text->text.setFillColor(sf::Color::Black);
         } else {
+            _on_submit(_value);
             _input->shape.setFillColor(sf::Color::Black);
             _text->text.setFillColor(sf::Color::White);
         }
@@ -106,11 +108,17 @@ namespace rtype::sfml::entity {
     void InputEntity::onMouseCollide(engine::event::Event const &event)
     {
         _input->hover = true;
+        _input->shape.setFillColor(sf::Color::White);
+        _text->text.setFillColor(sf::Color::Black);
     }
 
     void InputEntity::onMouseEndCollide(engine::event::Event const &event)
     {
         _input->hover = false;
+        if (!_input->clicked) {
+            _input->shape.setFillColor(sf::Color::Black);
+            _text->text.setFillColor(sf::Color::White);
+        }
     }
 
     void InputEntity::onTextEntered(engine::event::Event const &event)
@@ -124,7 +132,7 @@ namespace rtype::sfml::entity {
 
     void InputEntity::onBackspace(engine::event::Event const &event)
     {
-        if (_value.size() > 0) {
+        if (_input->clicked && _value.size() > 0) {
             _value = _value.substr(0, _value.size() - 1);
             _text->update(_value);
         }
@@ -146,5 +154,6 @@ namespace rtype::sfml::entity {
     {
         _game_engine.destroyEntity(_input_entity);
         _game_engine.destroyEntity(_value_entity);
+        _game_engine.destroyEntity(_title_entity);
     }
 }

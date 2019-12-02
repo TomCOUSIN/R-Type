@@ -5,12 +5,11 @@
 ** Created by tomcousin,
 */
 
-#ifndef CPP_RTYPE_2019_GAMESCENE_HPP
-#define CPP_RTYPE_2019_GAMESCENE_HPP
+#ifndef CPP_RTYPE_2019_LOGINSCENE_HPP
+#define CPP_RTYPE_2019_LOGINSCENE_HPP
 
 #include <iostream>
 #include <unordered_map>
-
 #include "IGraphic.hpp"
 #include "IAudio.hpp"
 #include "IScene.hpp"
@@ -19,27 +18,27 @@
 
 namespace rtype::game::scene {
 
-    /**
-     * @brief The GameScene of the game
-     */
-    class GameScene : public engine::scene::IScene {
+    class LoginScene : public engine::scene::IScene {
 
+    // @MARK Constructors/Destructors
         public:
         /**
-         * @brief Construct a GameScene object
+         * @brief Construct a LoginScene object
          *
          * @param graphic The IGraphic to use
          * @param audio The IAudio to use
-         * @param network The ClientNetwork to use
+         * @param network The INetwork to use
          * @param framerate The frame rate to use
          */
-        explicit GameScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
+        explicit LoginScene(graphic::IGraphic &graphic, audio::IAudio &audio, client::ClientNetwork &network, std::size_t framerate);
 
         /**
-         * @brief Destroy an GameScene object
+         * @brief Destroy an LoginScene object
          */
-        ~GameScene() final = default;
+        ~LoginScene() final = default;
 
+    // @MARK Methods
+        public:
         /**
          *  @brief The Scene loads everything needed for it to run properly
          */
@@ -55,8 +54,25 @@ namespace rtype::game::scene {
          */
         void unloadScene() final;
 
+        void connect();
 
+    // @MARK Properties
         private:
+        /**
+         * @brief Server IP
+         */
+        std::string _server_ip;
+
+        /**
+         * @brief Server port
+         */
+        std::string _server_port;
+
+        /**
+         * @brief Username
+         */
+        std::string _username;
+
         /**
          * @brief Scene framerate
          */
@@ -84,4 +100,4 @@ namespace rtype::game::scene {
     };
 }
 
-#endif //CPP_RTYPE_2019_GAMESCENE_HPP
+#endif //CPP_RTYPE_2019_LOGINSCENE_HPP

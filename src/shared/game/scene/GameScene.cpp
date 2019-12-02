@@ -5,41 +5,49 @@
 ** Created by tomcousin,
 */
 
+#include <thread>
+
 #include "GameScene.hpp"
 #include "InputEvent.hpp"
 
-rtype::game::scene::GameScene::GameScene(std::shared_ptr<graphic::IGraphic> graphic
-    , std::shared_ptr<timer::ITimer> timer
-    , std::shared_ptr<audio::IAudio> audio) :
-_timer(timer), _graphic(graphic), _audio(audio) {}
+namespace rtype::game::scene {
 
-void rtype::game::scene::GameScene::loadScene()
+GameScene::GameScene(graphic::IGraphic &graphic
+                                        , audio::IAudio &audio
+                                        , client::ClientNetwork &network
+                                        , std::size_t framerate)
+    : _graphic(graphic)
+    , _audio(audio)
+    , _network(network)
+    , _framerate(framerate)
+{}
+
+void GameScene::loadScene()
 {
-    _entities.emplace(std::pair("level", _audio->createMusic("./assets/sounds/level1.ogg")));
-    _entities.emplace("parallax", _graphic->createParallax("./assets/parallax/Background.jpg", "./assets/parallax/Foreground.png", 2));
-    _entities.emplace("sprite", _graphic->createSprite("./assets/spaceship.gif", 300, 300, 33, 17, 3, 3, 1, true, 10, 10, true));
-    _entities.emplace("shot_sound", _audio->createSound("./assets/sounds/shot.wav", rtype::sfml::event::InputEvent::InputEventType::SPACE));
-    _audio->play(_entities["level"]);
+    _entities.emplace(std::pair("level", _audio.createMusic("./assets/sounds/level1.ogg")));
+    _entities.emplace("parallax", _graphic.createParallax("./assets/parallax/Background.jpg", "./assets/parallax/Foreground.png", 2));
+    _entities.emplace("sprite", _graphic.createSprite("./assets/spaceship.gif", 300, 300, 33, 17, 3, 3, 1, true, 10, 10, true));
+    _entities.emplace("shot_sound", _audio.createSound("./assets/sounds/shot.wav", rtype::sfml::event::InputEvent::InputEventType::SPACE));
+    _entities.emplace("shot_sound", _audio.createSound("./assets/sounds/shot.wav", rtype::sfml::event::InputEvent::InputEventType::SPACE));
+    _audio.play(_entities["level"]);
 }
 
-rtype::engine::scene::SCENE rtype::game::scene::GameScene::displayScene()
+rtype::engine::scene::SCENE GameScene::displayScene()
 {
-    _timer->start();
-    while (_graphic->isWindowOpen()) {
-        if (_timer->getElapsedTime() >= 0.005f) {
-            _graphic->update(_timer->getElapsedTime());
-            _timer->restart();
-        }
+    while (_graphic.isWindowOpen()) {
+        _graphic.update(_framerate);
+        std::this_thread::sleep_for(std::chrono::milliseconds(_framerate));
     }
     return rtype::engine::scene::MENU;
 }
 
-void rtype::game::scene::GameScene::unloadScene()
+void GameScene::unloadScene()
 {
-    _audio->stop(_entities["level"]);
-    _graphic->removeElement(_entities["sprite"]);
-    _graphic->removeElement(_entities["parallax"]);
-    _audio->destroy(_entities["level"]);
-    _audio->destroy(_entities["shot_sound"]);
+    _audio.stop(_entities["level"]);
+    for (auto &entity : _entities) {
+        _graphic.removeElement(entity.second);
+    }
     _entities.clear();
+}
+
 }

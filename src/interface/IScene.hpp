@@ -14,12 +14,14 @@ namespace rtype::engine::scene {
      * @brief Enum to handle which scene to load
      */
     enum SCENE {
-        QUIT,
+        LOGIN,
         MENU,
-        SETTINGS,
         GAME,
+        LOBBY,
+        QUIT,
+        SETTINGS,
         WIN,
-        LOSE
+        LOSE,
     };
 
     /**
