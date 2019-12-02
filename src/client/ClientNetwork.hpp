@@ -10,6 +10,7 @@
 
 #include "Network.hpp"
 #include "Event.hpp"
+#include "Position.hpp"
 
 namespace rtype::client {
 
@@ -52,6 +53,10 @@ namespace rtype::client {
 		void joinSession(std::string username);
 
 		void sendInput(engine::event::EventType input);
+
+		void sendMouse(engine::component::Position position);
+
+		void startGame(void);
 
 		private:
 		/**

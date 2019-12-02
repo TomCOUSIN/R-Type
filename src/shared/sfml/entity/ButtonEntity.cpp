@@ -50,12 +50,12 @@ namespace rtype::sfml::entity {
         _game_engine.linkEntityWithComponent(text_entity, component::Text::type, _text);
         _game_engine.linkEntityWithComponent<engine::component::Collision>(button_entity, width, height, type);
 
-        _game_engine.linkEntityWithSystem<system::PositionSystem>(text_entity);
-        _game_engine.linkEntityWithSystem<system::RenderSystem>(text_entity);
         _game_engine.linkEntityWithSystem<system::ButtonSystem>(button_entity);
         _game_engine.linkEntityWithSystem<system::PositionSystem>(button_entity);
         _game_engine.linkEntityWithSystem<system::RenderSystem>(button_entity);
         _game_engine.linkEntityWithSystem<engine::system::CollisionSystem>(button_entity);
+        _game_engine.linkEntityWithSystem<system::PositionSystem>(text_entity);
+        _game_engine.linkEntityWithSystem<system::RenderSystem>(text_entity);
 
         _game_engine.subscribeTo(
             engine::event::CollisionEvent(engine::event::CollisionEvent::BEGIN_COLLIDE, button_entity, MouseEntity::type),

@@ -24,6 +24,8 @@ GameSession::GameSession(network::INetwork &network, engine::GameEngine &engine)
 	_handlers.emplace(std::make_pair(rtype::game::network::CONNECT, std::bind(&GameSession::onConnect, this, std::placeholders::_1)));
 	_handlers.emplace(std::make_pair(rtype::game::network::DISCONNECT, std::bind(&GameSession::onDisconnect, this, std::placeholders::_1)));
 	_handlers.emplace(std::make_pair(rtype::game::network::INPUT, std::bind(&GameSession::onInput, this, std::placeholders::_1)));
+	_handlers.emplace(std::make_pair(rtype::game::network::MOUSE, std::bind(&GameSession::onMouse, this, std::placeholders::_1)));
+	_handlers.emplace(std::make_pair(rtype::game::network::START_GAME, std::bind(&GameSession::onStartGame, this, std::placeholders::_1)));
 }
 
 void
@@ -42,33 +44,6 @@ GameSession::start(std::size_t const &session_port)
 void
 GameSession::onConnect(network::Packet &packet)
 {
-	auto user_port = _network.getUnusedPort();
-	auto user = packet.getPayload<std::string>();
-	auto player = engine::entity::CollableEntity(_engine, 300, 300, 33, 17, 3, 3);
-
-	auto connection_packet = network::Packet(game::network::CONNECT, user_port);
-	_network.sendTCPData(connection_packet, packet.getSocketId());
-
-	auto response_packet = network::Packet(game::network::CREATE_PLAYER);
-	response_packet << *player.getPosition();
-	response_packet << user;
-	for (auto &id : _connections) {
-		_network.sendTCPData(response_packet, id.second);
-	}
-
-	_connections.emplace(user, packet.getSocketId());
-	_udp_connections.emplace(user, std::make_pair(packet.getIp(), user_port));
-	_players.emplace(user, player);
-
-	for (auto &player : _players) {
-		auto p = network::Packet(game::network::CREATE_PLAYER);
-		p << *player.second.getPosition();
-		p << std::string(player.first);
-		std::cout << "send " << player.first << " to " << user << std::endl;
-		_network.sendTCPData(p, packet.getSocketId());
-	}
-
-	std::cout << "connect success of " << user << std::endl;
 }
 
 void
@@ -118,5 +93,60 @@ GameSession::onInput(network::Packet &packet)
 		_network.sendUDPData(response_packet, id.second.first, id.second.second);
 	}
 }
+
+
+void
+GameSession::onMouse(network::Packet &packet)
+{
+	auto position = packet.getPayload<engine::component::Position>();
+	auto user = packet.getPayload<std::string>();
+	auto entity = _players.find(user);
+
+	if (entity == _players.end()) {
+		std::cout << "unfound user " << user << " in current players" << std::endl;
+		return;
+	}
+
+	auto entity_position = entity->second.getPosition();
+	entity_position->x = position.x;
+	entity_position->y = position.y;
+
+	auto response_packet = network::Packet(game::network::MOVE_PLAYER);
+	response_packet << *entity_position;
+	response_packet << user;
+	for (auto &id : _udp_connections) {
+		_network.sendUDPData(response_packet, id.second.first, id.second.second);
+	}
+}
+
+
+void
+GameSession::onStartGame(network::Packet &packet)
+{
+	auto user_port = packet.getPayload<std::size_t>();
+	auto user = packet.getPayload<std::string>();
+	auto player = engine::entity::CollableEntity(_engine, 300, 300, 33, 17, 3, 3);
+
+	auto response_packet = network::Packet(game::network::CREATE_PLAYER);
+	response_packet << *player.getPosition();
+	response_packet << user;
+	for (auto &id : _tcp_connections) {
+		_network.sendTCPData(response_packet, id.second);
+	}
+
+	_tcp_connections.emplace(user, packet.getSocketId());
+	_udp_connections.emplace(user, std::make_pair(packet.getIp(), user_port));
+	_players.emplace(user, player);
+
+	for (auto &player : _players) {
+		auto p = network::Packet(game::network::CREATE_PLAYER);
+		p << *player.second.getPosition();
+		p << std::string(player.first);
+		std::cout << "send " << player.first << " to " << user << std::endl;
+		_network.sendTCPData(p, packet.getSocketId());
+	}
+	std::cout << "connect success of " << user << std::endl;
+}
+
 
 }

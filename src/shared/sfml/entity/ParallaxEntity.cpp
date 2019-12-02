@@ -48,8 +48,8 @@ _foreground_sprite(std::make_shared<component::Sprite>(foreground_path, 3840,108
     _game_engine.linkEntityWithSystem<system::PositionSystem>(foreground);
     _game_engine.linkEntityWithSystem<system::ParallaxSystem>(background);
     _game_engine.linkEntityWithSystem<system::ParallaxSystem>(foreground);
-    _game_engine.linkEntityWithSystem<system::RenderSystem>(foreground);
     _game_engine.linkEntityWithSystem<system::RenderSystem>(background);
+    _game_engine.linkEntityWithSystem<system::RenderSystem>(foreground);
 }
 
 void rtype::sfml::entity::ParallaxEntity::destroyParallax()

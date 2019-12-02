@@ -17,8 +17,10 @@ namespace rtype::game {
             CREATE_SESSION,
             JOIN_SESSION,
             INPUT,
+            MOUSE,
             CREATE_PLAYER,
             MOVE_PLAYER,
+            START_GAME,
         };
     }
 
@@ -28,6 +30,7 @@ namespace rtype::game {
             ARROW_DOWN,
             ARROW_RIGHT,
             ARROW_LEFT,
+            MOUSE_MOUVED,
             LastInputEventType
         };
     }

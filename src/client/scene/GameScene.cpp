@@ -25,24 +25,26 @@ GameScene::GameScene(engine::GameEngine &engine
     , _network(network)
     , _framerate(framerate)
 {
-    auto on_input = [this](engine::event::Event const &event) { _network.sendInput(event.getEventType()); };
-    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_DOWN), on_input);
-    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_UP), on_input);
-    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_RIGHT), on_input);
-    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_LEFT), on_input);
-
-    _network.subscribeTo(game::network::CREATE_PLAYER, std::bind(&GameScene::onCreatePlayer, this, std::placeholders::_1));
-    _network.subscribeTo(game::network::MOVE_PLAYER, std::bind(&GameScene::onMovePlayer, this, std::placeholders::_1));
-
 }
 
 void GameScene::loadScene()
 {
+    auto on_input = [this](engine::event::Event const &event) { _network.sendInput(event.getEventType()); };
+    auto on_mouse = [this](engine::event::Event const &event) { _network.sendMouse(*event.getEventData<engine::component::Position>()); };
+    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_DOWN), on_input);
+    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_UP), on_input);
+    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_RIGHT), on_input);
+    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::ARROW_LEFT), on_input);
+    _engine.subscribeTo(engine::event::Event(engine::event::EVENT_SENDER::INPUT, game::event::MOUSE_MOUVED), on_mouse);
+
+    _network.subscribeTo(game::network::CREATE_PLAYER, std::bind(&GameScene::onCreatePlayer, this, std::placeholders::_1));
+    _network.subscribeTo(game::network::MOVE_PLAYER, std::bind(&GameScene::onMovePlayer, this, std::placeholders::_1));
+
     _entities.emplace(std::pair("level", _audio.createMusic("./assets/sounds/level1.ogg")));
-    // _entities.emplace("parallax", _graphic.createParallax("./assets/parallax/Background.jpg", "./assets/parallax/Foreground.png", 2));
-    // _entities.emplace("shot_sound", _audio.createSound("./assets/sounds/shot.wav", rtype::sfml::event::InputEvent::InputEventType::SPACE));
+    _entities.emplace("parallax", _graphic.createParallax("./assets/parallax/Background.jpg", "./assets/parallax/Foreground.png", 2));
     _entities.emplace("shot_sound", _audio.createSound("./assets/sounds/shot.wav", rtype::sfml::event::InputEvent::InputEventType::SPACE));
     _audio.play(_entities["level"]);
+    _network.startGame();
 }
 
 rtype::engine::scene::SCENE GameScene::displayScene()
@@ -74,7 +76,6 @@ void GameScene::onMovePlayer(rtype::network::Packet &packet)
         std::cerr << "can't found entity " << user << std::endl;
         return;
     }
-    std::cout << "move " << user << " at " << target_position.x << ":" << target_position.y << std::endl;
     auto position = position_store.getComponent<engine::component::Position>(entity->second);
     position->x = target_position.x;
     position->y = target_position.y;
@@ -84,9 +85,8 @@ void GameScene::onCreatePlayer(rtype::network::Packet &packet)
 {
     auto position = packet.getPayload<engine::component::Position>();
     auto remote_entity = packet.getPayload<std::string>();
-    std::cout << ">>: " << remote_entity << " at " << position.x << ":" << position.y << std::endl;
     auto sprite = _graphic.createSprite("./assets/spaceship.gif", position.x, position.y, 33, 17, 3, 3, 1, false, 10, 10, false);
-    _entities.emplace(remote_entity, sprite); // @tmp
+    _entities.emplace(remote_entity, sprite);
 }
 
 }

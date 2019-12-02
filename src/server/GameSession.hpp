@@ -58,11 +58,15 @@ namespace rtype::server {
 
 		void onInput(network::Packet &packet);
 
+		void onMouse(network::Packet &packet);
+
+		void onStartGame(network::Packet &packet);
+
 	// @MARK Properties
 		private:
 		engine::GameEngine &_engine;
         std::unordered_map<std::string, std::pair<std::string, std::size_t>> _udp_connections;
-        std::unordered_map<std::string, std::size_t> _connections;
+        std::unordered_map<std::string, std::size_t> _tcp_connections;
         std::unordered_map<std::string, engine::entity::CollableEntity> _players;
 	};
 

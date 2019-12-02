@@ -72,10 +72,32 @@ ClientNetwork::sendInput(engine::event::EventType input)
 }
 
 void
+ClientNetwork::sendMouse(engine::component::Position position)
+{
+	auto packet = network::Packet(game::network::MOUSE);
+
+	packet << position;
+	packet << _user;
+	_network.sendUDPData(packet, _server_ip, _session_port);
+}
+
+void
+ClientNetwork::startGame(void)
+{
+	auto port = _network.getUnusedPort();
+	auto packet = network::Packet(game::network::START_GAME);
+
+	packet << port;
+	packet << _user;
+	_network.createUDPEndpoint(port, std::bind(&ClientNetwork::onReceivePacket, this, std::placeholders::_1));
+	_network.sendTCPData(packet, _session_id);
+}
+
+void
 ClientNetwork::connectToCurrentSession(void)
 {
-	auto packet = network::Packet(game::network::CONNECT, _user);
-	_handlers[rtype::game::network::CONNECT] = std::bind(&ClientNetwork::onConnectSession, this, std::placeholders::_1);
+	// auto packet = network::Packet(game::network::CONNECT, _user);
+	// _handlers[rtype::game::network::CONNECT] = std::bind(&ClientNetwork::onConnectSession, this, std::placeholders::_1);
 
 	while (true) {
 		try {
@@ -85,10 +107,9 @@ ClientNetwork::connectToCurrentSession(void)
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 	}
-	_network.sendTCPData(packet, _session_id);
+	// _network.sendTCPData(packet, _session_id);
 	_has_joined_session = true;
 }
-
 
 void
 ClientNetwork::onConnect(network::Packet &packet)
@@ -105,7 +126,6 @@ ClientNetwork::onConnectSession(network::Packet &packet)
 {
 	std::cout << "sessssssion" << std::endl;
 	_local_port = packet.getPayload<std::size_t>();
-	_network.createUDPEndpoint(_local_port, std::bind(&ClientNetwork::onReceivePacket, this, std::placeholders::_1));
 }
 
 void
