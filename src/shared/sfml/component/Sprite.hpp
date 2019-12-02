@@ -37,12 +37,15 @@ namespace rtype {
                     float const &height,
                     float const &scale_width = 1.0f,
                     float const &scale_height = 1.0f,
-                    size_t const &sprite_count = 1.0f) :
+                    size_t const &sprite_count = 1.0f,
+                    engine::component::CENTERED centered = engine::component::NONE) :
                 size(width, height), scale(scale_width, scale_height), sprite_count(sprite_count), actual_sprite(0)
                 {
                     if (texture.loadFromFile(texture_path)) {
                         sprite.setTexture(texture);
                         sprite.setScale(scale);
+                        sprite.setOrigin(centered & engine::component::CENTERED::X ? width/2 : 0
+                                        , centered & engine::component::CENTERED::Y ? height/2 : 0);
                         sprite.setTextureRect(sf::IntRect(0, 0, width, height));
                     }
                 }

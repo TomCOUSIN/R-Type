@@ -28,7 +28,7 @@ rtype::sfml::entity::SpriteEntity::SpriteEntity(engine::GameEngine &engine,
 {
     _sprite_entity = engine.createEntity();
 
-    engine.linkEntityWithComponent<sfml::component::Sprite>(_sprite_entity, texture_path, width, height, scale_width, scale_height, sprite_count);
+    engine.linkEntityWithComponent<sfml::component::Sprite>(_sprite_entity, texture_path, width, height, scale_width, scale_height, sprite_count, engine::component::CENTERED::ALL);
     engine.linkEntityWithComponent(_sprite_entity, engine::component::Position::type, _position);
     engine.linkEntityWithComponent(_sprite_entity, engine::component::Speed::type, _speed);
     engine.linkEntityWithSystem<sfml::system::PositionSystem>(_sprite_entity);
