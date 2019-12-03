@@ -91,6 +91,21 @@ RFC NNNN              Instructions to RFC Authors          December 2019
    |                            Payload                            |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+Magic Number:  16 bits
+
+    The Magic Number MUST be 4242.
+
+Packet Type:  32 bits
+
+    The Packet Type.
+
+Payload Size:  16 bits
+
+    The Payload Size.
+
+Payload:  - bits
+
+    The Payload provided with the packet.
 
 Marandat                     Informational                      [Page 3]
 
